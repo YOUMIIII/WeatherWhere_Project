@@ -1,5 +1,66 @@
 @import url('reset.css');
 @import url('common.css');
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+
+body{
+    max-width:670px;
+    width:100%;
+    margin:auto;
+    font-family: 'Nanum Gothic', sans-serif;
+    font-size: 30px;
+    font-weight: 300;
+    line-height: 40px;
+}
+
+.mainT{
+    font-size: 40px;
+    font-weight: 300;
+    line-height: 150px;
+    padding-top:230px;
+    box-sizing:border-box;
+    text-align:center;
+}
+
+.formBox{
+    width:100%;
+    padding:0 90px;
+    box-sizing:border-box;
+}
+
+.id{
+    margin-left:27px;
+}
+
+.saveId{
+    font-size:20px;
+}
+
+form label{
+    line-height:80px;
+}
+
+input{
+     width:360px;
+     height:50px;
+     border-top-width:0px;
+     border-right-width:0px;
+     border-bottom-width:1px;
+     border-left-width:0px;
+}
+
+input[type="checkbox"]{
+    width:13px;
+    height:13px;
+}
+
+#loginBtn{
+     width:100%;
+     height:80px;
+     text-align:center;
+     font-size:30px;
+     border:none;
+     margin-top:20px;
+}
 
 #saveIdLabel{
             font-size=10px;
