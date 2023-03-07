@@ -2,20 +2,62 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" type="text/css" href="../../css/default.css">
+    <title>회원가입</title>
+    <link rel="stylesheet" type="text/css" href="../../css/signUp.css">
 </head>
 <body class="signup">
-<h1 class="mainT text-center">회원가입</h1>
+<h1 class="mainT">회원가입</h1>
 <p class="subT">*는 필수 입력란 입니다</p>
 
-<form action="#" method="POST">
-    <p>
+<form class="formBox" action="#" method="POST">
+    <table>
+        <tr>
+            <td><label for="userId">* 아이디</label></td>
+            <td><input type="text" id="userId" placeholder="아이디유효성" required></td>
+            <td><input type="button" value="중복확인" onclick="#"></td>
+        </tr>
+        <tr>
+            <td><label for="userPw">* 비밀번호</label></td>
+            <td><input type="password" id="userPw" placeholder="비번유효성" required></td>
+        </tr>
+        <tr>
+            <td><label for="userPwCk">* 비밀번호 확인</label></td>
+            <td><input type="password" id="userPwCk" placeholder="비번유효성" required></td>
+        </tr>
+        <tr>
+            <td><label for="userEmail">* 이메일</label></td>
+            <td><input type="email" id="userEmail" placeholder="메일적는이유" required></td>
+        </tr>
+        <tr>
+            <td><label for="userLocation">* 설정지역</label></td>
+            <td>
+                <select id="userLocation">
+                    <option value="seoul">서울특별시</option>
+                    <option value="gyeonggido">경기도</option>
+                    <option value="gangwondo">강원도</option>
+                </select>
+                <select id="userLocation2">
+                        <option value="seoul">용인시</option>
+                        <option value="gyeonggido">성남시</option>
+                        <option value="gangwondo">광주시</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="userPhoto">프로필 사진</label></td>
+            <td><input type="file" id="userPhoto"></td>
+        </tr>
+    </table>
+    <div class="submitBtn">
+    <input type="submit" value="가입">
+    </div>
+    <!--
+    <p id="id">
         <label for="userId">* 아이디</label>
         <input type="text" id="userId" placeholder="아이디유효성" required>
-        <input type="button" id="idCheck" value="중복확인" onclick="#">
+        <input type="button" value="중복확인" onclick="#">
     </p>
-    <p>
+    <p id="pw">
         <label for="userPw">* 비밀번호</label>
         <input type="password" id="userPw" placeholder="비번유효성" required>
     </p>
@@ -44,9 +86,10 @@
         <label for="userPhoto">프로필 사진</label>
         <input type="file" id="userPhoto">
     </p>
-    <p>
-        <input type="submit" value="가입">
-    </p>
+    -->
+
+
+
 </form>
 </body>
 </html>

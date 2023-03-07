@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>홈</title>
+    <link rel="stylesheet" type="text/css" href="../../css/main.css">
+    <script>
+        <!-- 메뉴 버튼 클릭하면 각 url로 src값 변경 -->
+        function changeFrame(url){
+              document.getElementById("content").src = url;
+        }
+    </script>
+</head>
+<body>
+    <div class="main">
+        <div class="leftBar">
+            <h1 id="logo">웨더웨어</h1>
+            <div id="profile">
+              <img src="../../img/profile2.png" width="150px">
+              <h1 id="id">jojo39님</h1>
+            </div>
+          <div id="nav">
+            <nav>
+              <ul>
+                <li><input type="button" id="home" value="홈" onclick="changeFrame('home.html')"></li>
+                <li><input type="button" id="schedule" value="스케줄 관리" onclick="changeFrame('../schedule/schedule.html')"></li>
+                <li><input type="button" id="info" value="지역별 정보" onclick="changeFrame('../info/info.html')"></li>
+                <li><input type="button" id="mypage" value="마이페이지" onclick="changeFrame('../mypage/mypage.html')"></li>
+              </ul>
+            </nav>
+          </div>
+          <div id="logout">
+            <input type="button" value="로그아웃">
+          </div>
+        </div>
+
+      <div class="right">
+        <iframe src="home.html" width="100%" height="100%" id="content"></iframe>
+      </div>
+  </div>
+  <footer>
+    <address></address>
+  </footer>
+
+</body>
+</html>

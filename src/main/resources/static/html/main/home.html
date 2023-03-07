@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>홈</title>
+    <link rel="stylesheet" type="text/css" href="../../css/home.css">
+    <script>
+    <!-- 시스템 날짜 가져오기 -->
+        function showDate(){
+            let today = new Date();
+
+            var now = (today.getMonth() + 1) + '월 ' + today.getDate() + '일';
+
+            var h1 = document.getElementById("today");
+            h1.innerHTML = "<h1>" + now + "</h1>";
+        }
+    </script>
+</head>
+
+<body onload="showDate()">
+    <div class="introduce">
+        <div id="today"></div>
+        <h2 id="subT">우리동네 날씨와 추천코디를 참고해서 오늘도 완벽한 외출을 도와드릴게요!</h2>
+    </div>
+
+    <div class="mainLayout" id="weatherBox">
+        <h1>구미동 돌마로</h1>
+        <h2>대체로 화창</h2>
+        <img src="../../img/sunny.png" width="100px">
+        <h1>7</h1>
+        <h2>최고 <span>10</span> / 최저 <span>-5</span></h2>
+    </div>
+    <div class="mainLayout" id="cody">
+        <h1>오늘의 추천 코디</h1>
+        <div>
+            <h2>아침, 밤 외출예정</h2>
+            <img src="../../img/cloth2.png" width="200px">
+            <h2>패딩, 두꺼운코트, 목도리, 기모제품</h2>
+        </div>
+        <div>
+            <h2>낮 외출예정</h2>
+            <img src="../../img/cloth2.png" width="200px">
+            <h2>코트, 가죽자켓, 히트텍, 니트, 레깅스</h2>
+        </div>
+    </div>
+    <div class="mainLayout">
+        <table>
+            <tr>
+                <th>시간</th>
+                <th>기온</th>
+                <th>상태</th>
+                <th>강수확률</th>
+            </tr>
+            <tr>
+                <td>오전 6시</td>
+                <td>-4</td>
+                <td>맑음</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>오전 8시</td>
+                <td>-2</td>
+                <td>맑음</td>
+                <td>0%</td>
+            </tr>
+            <tr>
+                <td>오전 10시</td>
+                <td>4</td>
+                <td>맑음</td>
+                <td>0%</td>
+            </tr>
+            <tr>
+                <td>오후 12시</td>
+                <td>8</td>
+                <td>맑음</td>
+                <td>0%</td>
+            </tr>
+            <tr>
+                <td>오후 2시</td>
+                <td>10</td>
+                <td>맑음</td>
+                <td>0%</td>
+            </tr>
+            <tr>
+                <td>오후 4시</td>
+                <td>10</td>
+                <td>맑음</td>
+                <td>0%</td>
+            </tr>
+            <tr>
+                <td>오후 6시</td>
+                <td>9</td>
+                <td>맑음</td>
+                <td>0%</td>
+            </tr>
+            <tr>
+                <td>오후 8시</td>
+                <td>5</td>
+                <td>맑음</td>
+                <td>0%</td>
+            </tr>
+            <tr>
+                <td>오후 10시</td>
+                <td>3</td>
+                <td>맑음</td>
+                <td>0%</td>
+            </tr>
+        </table>
+    </div>
+    <div class="mainLayout">
+        <h1>오늘 외출 스케줄</h1>
+    </div>
+</body>
+</html>
