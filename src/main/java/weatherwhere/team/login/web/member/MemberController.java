@@ -2,6 +2,7 @@ package weatherwhere.team.login.web.member;
 
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -14,23 +15,23 @@ import weatherwhere.team.login.domain.member.MemberRepository;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Controller
 @RequestMapping("/members")
 @RequiredArgsConstructor
 public class MemberController {
 
-    private MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
 
     @GetMapping("/add") //회원등록 폼으로 보내기
     public String addForm(@ModelAttribute("member") Member member){ //"member"생략 가능하지만 나중에 타임리프로 인식이 안될경우가 있어서 그냥 적었다함
         return "members/signUp";
     }
 
-
     @PostMapping("/add")
     public String save(@ModelAttribute Member member) {
         memberRepository.save(member);
-        return "/login";
+        return "redirect:/login";
     }
 
     @ModelAttribute("userLocations")

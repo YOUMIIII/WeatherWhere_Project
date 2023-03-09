@@ -16,13 +16,13 @@
 </head>
 <body id="login">
 <h1 class="mainT">로그인</h1>
-<form action="#" method="POST">
+<form th:action th:object="${loginForm}" method="POST">
 <div class="formBox">
         <p class="id">
-            <input type="text" id="userId" placeholder="아이디">
+            <input type="text" id="userId" th:field="*{loginId}" placeholder="아이디">
         </p>
         <p>
-            <input type="password" id="userPw" placeholder="비밀번호">
+            <input type="password" id="userPw" th:field="*{loginPw}" placeholder="비밀번호">
         </p>
         <table>
             <tr>
