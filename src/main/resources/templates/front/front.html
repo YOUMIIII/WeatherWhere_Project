@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>로그인</title>
+    <!-- 네이버 로그인 소스   -->
     <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <!-- 네이버 로그인 소스 끝   -->
     <link rel="stylesheet" type="text/css" href="css/default.css">
     <style>
     </style>
 </head>
 <body id="login">
 <h1 class="mainT">로그인</h1>
-    <form action="#" method="POST">
+<form action="#" method="POST">
 <div class="formBox">
         <p class="id">
             <input type="text" id="userId" placeholder="아이디">
@@ -33,7 +37,8 @@
             </tr>
         </table>
 
-        <script type="text/javascript">
+    <!-- 네이버 로그인 소스   -->
+    <script type="text/javascript">
             var naver_id_login = new naver_id_login("8PN1YmdvvarAm2s1bSj2", "http://localhost:8080/callback.html");
             var state = naver_id_login.getUniqState();
             naver_id_login.setButton("white", 3,50);
@@ -42,6 +47,8 @@
             naver_id_login.setPopup();
             naver_id_login.init_naver_id_login();
         </script>
+    <!-- 네이버 로그인 소스 끝   -->
+
 </div>
         <p class="saveId">
             <input type="checkbox" id="saveId" value="saveId">
@@ -49,7 +56,7 @@
         </p>
     </form>
     <p class="signInLinks">
-        <a href="html/sign/signUp.html">회원가입</a> /
+        <a th:href="@{/members/add}">회원가입</a> /
         <a href="../static/html/sign/findId.html">아이디 찾기</a> /
         <a href="../static/html/sign/findPw.html">비밀번호 찾기</a>
     </p>

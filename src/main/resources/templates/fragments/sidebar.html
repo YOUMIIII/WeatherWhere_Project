@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="main" th:fragment="sidebar">
+    <div class="leftBar">
+      <h1 id="logo">웨더웨어</h1>
+      <div id="profile">
+        <img src="../../img/profile2.png" width="150px">
+        <h1 id="id"><span>jojo39</span>님</h1>
+      </div>
+      <div id="nav">
+        <nav>
+          <ul>
+            <li><input type="button" id="home" value="홈" onclick="changeFrame('home.html')"></li>
+            <li><input type="button" id="schedule" value="스케줄 관리" onclick="changeFrame('../schedule/schedule.html')"></li>
+            <li><input type="button" id="info" value="지역별 정보" onclick="changeFrame('../info/info.html')"></li>
+            <li><input type="button" id="mypage" value="마이페이지" onclick="changeFrame('../mypage/mypage.html')"></li>
+          </ul>
+        </nav>
+      </div>
+      <div id="logout">
+        <input type="button" value="로그아웃">
+      </div>
+    </div>
+  </div>
+</body>
+</html>
