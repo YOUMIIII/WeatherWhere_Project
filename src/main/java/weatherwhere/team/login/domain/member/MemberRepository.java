@@ -33,6 +33,10 @@ public class MemberRepository {
                 .findFirst();
     }
 
+    public Member findById(Long id){
+        return store.get(id);
+    }
+
     public List<Member> findAll(){
         return new ArrayList<>(store.values()); //map에서 키는 빼고 값만 가져오기
     }

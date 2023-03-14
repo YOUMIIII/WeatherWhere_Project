@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <html xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,9 +9,7 @@
     <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
     <!-- 네이버 로그인 소스 끝   -->
-    <link rel="stylesheet" type="text/css" href="css/default.css">
-    <style>
-    </style>
+    <link rel="stylesheet" type="text/css" href="../css/default.css" th:href="@{/css/default.css}">
 </head>
 <body id="login">
 <h1 class="mainT">로그인</h1>
@@ -41,7 +38,7 @@
     <script type="text/javascript">
             var naver_id_login = new naver_id_login("8PN1YmdvvarAm2s1bSj2", "http://localhost:8080/callback.html");
             var state = naver_id_login.getUniqState();
-            naver_id_login.setButton("white", 3,50);
+            naver_id_login.setButton("white", 3, 50);
             naver_id_login.setDomain("http://localhost:8080");
             naver_id_login.setState(state);
             naver_id_login.setPopup();
@@ -55,10 +52,11 @@
             <label for="saveId">아이디 저장</label>
         </p>
     </form>
+
     <p class="signInLinks">
         <a th:href="@{/members/add}">회원가입</a> /
-        <a href="../static/html/sign/findId.html">아이디 찾기</a> /
-        <a href="../static/html/sign/findPw.html">비밀번호 찾기</a>
+        <a th:href="@{/members/findId}">아이디 찾기</a> /
+        <a th:href="@{/members/findPassword}">비밀번호 찾기</a>
     </p>
 </body>
 </html>

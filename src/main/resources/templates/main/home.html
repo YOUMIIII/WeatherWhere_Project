@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
+<html lang="ko">
 <head>
     <head>
         <meta charset="UTF-8">
         <title>홈</title>
-        <link rel="stylesheet" type="text/css" href="../../css/home.css">
+        <link rel="stylesheet" type="text/css" href="../../static/css/home.css" th:href="@{/css/home.css}">
         <script>
     <!-- 시스템 날짜 가져오기 -->
         function showDate(){
@@ -20,99 +20,104 @@
     </head>
 </head>
 <body onload="showDate()">
-    <div th:insert="~{fragments/sidebar :: sidebar}">
+    <div>
+        <div class="leftBar" th:insert="~{main/sidebar :: sidebar}">
+        </div>
     </div>
-    <div class="introduce">
-        <div id="today"></div>
-        <h2 id="subT">우리동네 날씨와 추천코디를 참고해서 오늘도 완벽한 외출을 도와드릴게요!</h2>
-    </div>
+    <div class="maincontent">
+        <div class="introduce">
+            <div id="today"></div>
+            <h2 id="subT">우리동네 날씨와 추천코디를 참고해서 오늘도 완벽한 외출을 도와드릴게요!</h2>
+        </div>
 
-    <div class="mainLayout" id="weatherBox">
-        <h1>구미동 돌마로</h1>
-        <h2>대체로 화창</h2>
-        <img src="../../img/sunny.png" width="100px">
-        <h1>7</h1>
-        <h2>최고 <span>10</span> / 최저 <span>-5</span></h2>
-    </div>
-    <div class="mainLayout" id="cody">
-        <h1>오늘의 추천 코디</h1>
-        <div>
-            <h2>아침, 밤 외출예정</h2>
-            <img src="../../img/cloth2.png" width="200px">
-            <h2>패딩, 두꺼운코트, 목도리, 기모제품</h2>
+        <div class="mainLayout" id="weatherBox">
+            <div id="location"><div class="icon"><img src="../../static/img/locationIcon.png" th:src="@{img/locationIcon.png}"></div><div class="weatherContents"><span>경기도</span> <span>성남시</span></div></div>
+            <div id="temperature"><div class="icon"><img src="../../static/img/temperatureIcon.png" th:src="@{img/temperatureIcon.png}" ></div><div class="weatherContents">기온<br> <span class="subTemperature">최고 </span><span class="subTemperature">15</span> <span class="subTemperature"> / 최저 </span> <span class="subTemperature">0</span></div><div class="temperatureValue"><span>15</span>C</div></div>
+            <div id="rain"><div class="icon"><img src="../../static/img/rainIcon.png" th:src="@{img/rainIcon.png}"></div><div class="weatherContents">강수확률<br> <span class="subTemperature">습도</span><span class="subTemperature">20</span></div><div class="rainValue"><span>0</span>%</div></div>
+            <div id="temperatureTable">
+            <table>
+                <tr>
+                    <th>시간</th>
+                    <th>기온</th>
+                    <th>상태</th>
+                    <th>강수확률</th>
+                </tr>
+                <tr>
+                    <td>오전 6시</td>
+                    <td>-4</td>
+                    <td>맑음</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>오전 8시</td>
+                    <td>-2</td>
+                    <td>맑음</td>
+                    <td>0%</td>
+                </tr>
+                <tr>
+                    <td>오전 10시</td>
+                    <td>4</td>
+                    <td>맑음</td>
+                    <td>0%</td>
+                </tr>
+                <tr>
+                    <td>오후 12시</td>
+                    <td>8</td>
+                    <td>맑음</td>
+                    <td>0%</td>
+                </tr>
+                <tr>
+                    <td>오후 2시</td>
+                    <td>10</td>
+                    <td>맑음</td>
+                    <td>0%</td>
+                </tr>
+                <tr>
+                    <td>오후 4시</td>
+                    <td>10</td>
+                    <td>맑음</td>
+                    <td>0%</td>
+                </tr>
+                <tr>
+                    <td>오후 6시</td>
+                    <td>9</td>
+                    <td>맑음</td>
+                    <td>0%</td>
+                </tr>
+                <tr>
+                    <td>오후 8시</td>
+                    <td>5</td>
+                    <td>맑음</td>
+                    <td>0%</td>
+                </tr>
+                <tr>
+                    <td>오후 10시</td>
+                    <td>3</td>
+                    <td>맑음</td>
+                    <td>0%</td>
+                </tr>
+            </table>
+            </div>
         </div>
-        <div>
-            <h2>낮 외출예정</h2>
-            <img src="../../img/cloth2.png" width="200px">
-            <h2>코트, 가죽자켓, 히트텍, 니트, 레깅스</h2>
+        <div class="mainLayout" id="cody">
+            <h1>오늘의 추천 코디</h1>
+            <div>
+                <h2>아침, 밤 외출예정</h2>
+                <img src="../../static/img/cloth2.png" th:src="@{/img/cloth2.png}" width="200px">
+                <h2>패딩, 두꺼운코트, 목도리, 기모제품</h2>
+            </div>
+            <div>
+                <h2>낮 외출예정</h2>
+                <img src="../../static/img/cloth2.png" th:src="@{/img/cloth2.png}" width="200px">
+                <h2>코트, 가죽자켓, 히트텍, 니트, 레깅스</h2>
+            </div>
         </div>
-    </div>
-    <div class="mainLayout">
-        <table>
-            <tr>
-                <th>시간</th>
-                <th>기온</th>
-                <th>상태</th>
-                <th>강수확률</th>
-            </tr>
-            <tr>
-                <td>오전 6시</td>
-                <td>-4</td>
-                <td>맑음</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>오전 8시</td>
-                <td>-2</td>
-                <td>맑음</td>
-                <td>0%</td>
-            </tr>
-            <tr>
-                <td>오전 10시</td>
-                <td>4</td>
-                <td>맑음</td>
-                <td>0%</td>
-            </tr>
-            <tr>
-                <td>오후 12시</td>
-                <td>8</td>
-                <td>맑음</td>
-                <td>0%</td>
-            </tr>
-            <tr>
-                <td>오후 2시</td>
-                <td>10</td>
-                <td>맑음</td>
-                <td>0%</td>
-            </tr>
-            <tr>
-                <td>오후 4시</td>
-                <td>10</td>
-                <td>맑음</td>
-                <td>0%</td>
-            </tr>
-            <tr>
-                <td>오후 6시</td>
-                <td>9</td>
-                <td>맑음</td>
-                <td>0%</td>
-            </tr>
-            <tr>
-                <td>오후 8시</td>
-                <td>5</td>
-                <td>맑음</td>
-                <td>0%</td>
-            </tr>
-            <tr>
-                <td>오후 10시</td>
-                <td>3</td>
-                <td>맑음</td>
-                <td>0%</td>
-            </tr>
-        </table>
-    </div>
-    <div class="mainLayout">
-        <h1>오늘 외출 스케줄</h1>
+        <div class="mainLayout">
+
+        </div>
+        <div class="mainLayout">
+            <h1>오늘 외출 스케줄</h1>
+        </div>
     </div>
 </body>
 </html>

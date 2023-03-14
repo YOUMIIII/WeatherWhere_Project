@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="../../static/css/home.css" th:href="@{/css/home.css}">
+</head>
+<body>
+    <div>
+        <div class="leftBar" th:insert="~{main/sidebar :: sidebar}">
+        </div>
+    </div>
+    <div class="introduce">
+        <h1>스케줄 관리</h1>
+        <h2 id="subT"><span>jojo39</span>님의 외출 스케줄 입니다!</h2>
+    </div>
+    <div class="mainLayout" id="todayschedule">
+        <h1>오늘의 외출 스케줄</h1>
+        <ul>
+            <li>08:00 출근</li>
+            <li>18:00 퇴근</li>
+            <li>19:00 만두산책</li>
+        </ul>
+    </div>
+    <div class="mainLayout" id="routine">
+        <h1>나만의 외출 루틴 체크리스트</h1>
+    </div>
+    <div class="mainLayout" id="weekly">
+        <table>
+            <tr>
+                <th>1</th>
+                <th>2</th>
+                <th>3</th>
+                <th>4</th>
+                <th>5</th>
+                <th>6</th>
+                <th>7</th>
+            </tr>
+            <tr>
+                <td><ul></ul></td>
+                <td>
+                    <ul>
+                        <li>08:00 출근</li>
+                        <li>18:00 퇴근</li>
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        <li>08:00 출근</li>
+                        <li>18:00 퇴근</li>
+                        <li>18:00 개발팀회식</li>
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        <li>08:00 출근</li>
+                        <li>18:00 퇴근</li>
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        <li>08:00 출근</li>
+                        <li>18:00 퇴근</li>
+                        <li>19:00 만두산책</li>
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        <li>08:00 출근</li>
+                        <li>18:00 퇴근</li>
+                    </ul>
+                </td>
+                <td><ul></ul></td>
+            </tr>
+        </table>
+    </div>
+
+
+</body>
+</html>

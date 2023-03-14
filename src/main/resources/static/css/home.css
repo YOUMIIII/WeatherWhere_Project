@@ -1,9 +1,74 @@
 @import url('common.css');
+@import url('sidebar.css');
 
-body{ /* 모든 서브페이지 최대한 통일하기 */
+body{
+    background-color:white;
+    color:#2D3037;
+}
+
+.leftBar{
+    width:15%;
+    height:100%;
+    padding-top:70px;
+    position:fixed; /* 메인컨텐츠에 내용이 많아져도 leftbar는 고정 */
+    text-align:center;
+    background-color:#494F5B;
+}
+
+.maincontent{ /* 모든 페이지 최대한 통일하기 */
     width:100%;
     height:100%;
     font-size: 18px;
+    margin-left:20%
+}
+
+.introduce{ /* 모든페이지 메인 제목 */
+    float:left;
+    padding-top: 40px;
+    padding-left:20px;
+    padding-bottom:5px;
+    line-height: 55px;
+    font-size: 30px; /* h1*/
+    width:80%;
+}
+
+.introduce #subT{ /* 제목설명 h2 */
+    font-size: 20px;
+    line-height: 30px;
+}
+
+.mainLayout div table th{
+    padding:10px;
+    font-size:15px;
+}
+
+
+.mainLayout div table td{
+    padding:10px;
+    width:15%; /*값 조정 필요*/
+    text-align:center;
+    font-size:15px;
+    color:#2D3037;
+}
+
+#temperatureTable{
+    margin:20px 20px;
+    background-color:white;
+    border-radius:15px;
+}
+
+.mainLayout{
+    float:left;
+    width: 400px;
+    border-radius: 15px;
+    background-color: #EBEBEB;
+    margin-left : 10px;
+    margin-right: 20px;
+    margin-top : 20px;
+}
+
+.mainLayout h1{ /* 각 박스의 제목 */
+    font-size:25px;
 }
 
 #cody{
@@ -16,69 +81,60 @@ body{ /* 모든 서브페이지 최대한 통일하기 */
     margin-right:20px;
 }
 
-#weatherBox{ /* 현재날씨박스 */
-    text-align:center;
+#weatherBox{
+    width:380px;
 }
 
-.mainLayout table td{
-    border-bottom:1px solid black;
-    width:15%; /*값 조정 필요*/
-    text-align:center;
-    font-size:18px;
+#location div, #temperature div, #rain div{  /* 현재날씨박스 */
+    text-align:left;
+    vertical-align:middle;
+    align-items: center;
+    display: inline-block;
+    margin-left:5px;
+    margin-top:5px;
 }
 
-.leftBar{
-    float:left; /* 메인안에 leftBar, right클래스 옆으로 레이아웃잡기 */
-    width:20%;
-    height:100%;
-    text-align:center;
-    border-right:1px solid black;
+.icon{
+    margin-right:10px;
 }
 
-.right{
-    float:left;
-    width:79%;
-    height:800px;
-}
 
-#logo{
-    font-size:20px;
-    padding-top:50px;
-}
-
-#profile{
-    padding-top:20%;
-}
-
-#id{
-    font-size:20px;
-
-}
-#nav{
-    padding:30px;
-    line-height: 80px;
-
-}
-#nav li input{
-    font-size:25px;
-    width:100%;
-    height:70px;
-    border:0px;
+#location, #temperature, #rain{
     background-color:white;
-    cursor:pointer; /* 커서 올라가면 손가락모양 */
+    border-radius:15px;
+    width:90%;
+    height:85px;
 }
 
-#logout{
-    padding:20%;
+#location{
+    margin-top:20px;
+    margin-left:20px;
 }
 
-#logout input{
-    width:120px;
-    font-size:20px;
-    padding:10px;
-    border:none;
-    background-color:#D9D9D9;
-    cursor:pointer; /* 커서 올라가면 손가락모양 */
+#temperature, #rain{
+    margin-top:10px;
+    margin-left:20px;
 }
+
+.subTemperature{
+    font-size:13px;
+}
+
+.temperatureValue, .temperatureValue span{
+    text-align:right;
+    padding-left:20%;
+    color:#F4BB53;
+}
+
+.rainValue{
+    text-align:right;
+    padding-left:30%;
+    color:#609ED1;
+}
+
+
+
+
+
 
 

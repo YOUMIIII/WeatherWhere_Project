@@ -1,27 +1,34 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+</head>
 <body>
 <div class="main" th:fragment="sidebar">
-    <div class="leftBar">
+    <div>
       <h1 id="logo">웨더웨어</h1>
+    </div>
       <div id="profile">
-        <img src="../../img/profile2.png" width="150px">
-        <h1 id="id"><span>jojo39</span>님</h1>
+        <img src="../../static/img/profile2.png" th:src="@{img/profile2.png}" width="100px">
+        <h1 class="id"><span class="id" th:text="${member.userId}">jojo39</span>님</h1>
       </div>
       <div id="nav">
         <nav>
           <ul>
-            <li><input type="button" id="home" value="홈" onclick="changeFrame('home.html')"></li>
-            <li><input type="button" id="schedule" value="스케줄 관리" onclick="changeFrame('../schedule/schedule.html')"></li>
-            <li><input type="button" id="info" value="지역별 정보" onclick="changeFrame('../info/info.html')"></li>
-            <li><input type="button" id="mypage" value="마이페이지" onclick="changeFrame('../mypage/mypage.html')"></li>
+            <li><a th:href="@{/}"><div class="menuIcon"><img th:src="@{img/menu1.png}" width="100%"><div class="menuIconHover"><img th:src="@{img/menu1_hover.png}" width="100%"></div></div></a></li>
+            <li><a th:href="@{/schedule}"><div class="menuIcon"><img th:src="@{img/menu2.png}" width="100%"><div class="menuIconHover"><img th:src="@{img/menu2_hover.png}" width="100%"></div></div></a></li>
+            <li><a href="#"><div class="menuIcon"><img th:src="@{img/menu3.png}" width="100%"><div class="menuIconHover"><img th:src="@{img/menu3_hover.png}" width="100%"></div></div></a></li>
+            <li><a href="#"><div class="menuIcon"><img th:src="@{img/menu4.png}" width="100%"><div class="menuIconHover"><img th:src="@{img/menu4_hover.png}" width="100%"></div></div></a></li>
           </ul>
         </nav>
       </div>
       <div id="logout">
-        <input type="button" value="로그아웃">
+        <a th:href="@{/logout}" >
+          로그아웃
+        </a>
       </div>
     </div>
-  </div>
+
 </body>
 </html>

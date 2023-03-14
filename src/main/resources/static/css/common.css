@@ -56,27 +56,3 @@ a {
     color: #000000;
 }
 
-.introduce{ /* 모든페이지 메인 제목 */
-    margin-top: 50px;
-    line-height: 70px;
-    font-size: 35px; /* h1*/
-    margin-left : 50px;
-}
-
-.introduce #subT{ /* 제목설명 h2 */
-    font-size: 20px;
-    line-height: 30px;
-}
-
-.mainLayout{
-    float:left;
-    width: 400px;
-    line-height: 40px;
-    border:1px solid black;
-    margin-left : 50px;
-    margin-top : 10px;
-}
-
-.mainLayout h1{ /* 각 박스의 제목 */
-    font-size:25px;
-}
