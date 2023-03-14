@@ -1,0 +1,61 @@
+@import url('common.css');
+@charset "utf-8"
+
+
+#profile{
+    padding-top:30%;
+}
+
+#logo, #profile .id{
+    font-size:18px;
+    color: #D7DEEB;
+    padding-bottom:30px;
+}
+
+#profile .id{
+    padding-top:10px;
+    font-size:20px;
+}
+
+#nav{
+    padding-top:50px;
+}
+
+#nav li input{
+    /* font-size:15px; */
+    width:100%;
+    height:70px;
+    border:0px;
+    background-color:white;
+    cursor:pointer; /* 커서 올라가면 손가락모양 */
+}
+
+#logout{
+    padding-top:90%;
+}
+
+#logout a{
+    font-size:15px;
+    color:#D0DBFF;
+    text-decoration:underline;
+    cursor:pointer; /* 커서 올라가면 손가락모양 */
+}
+
+#logout a:hover{
+    color:#FFFFFF;
+}
+
+.menuIcon{
+    position:relative;
+}
+
+.menuIconHover{
+    position:absolute;
+    left:0px;
+    top:0px;
+    display:none;
+}
+
+.menuIcon:hover .menuIconHover{
+    display:block;
+}

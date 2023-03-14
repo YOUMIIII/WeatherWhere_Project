@@ -1,0 +1,140 @@
+@import url('common.css');
+@import url('sidebar.css');
+
+body{
+    background-color:white;
+    color:#2D3037;
+}
+
+.leftBar{
+    width:15%;
+    height:100%;
+    padding-top:70px;
+    position:fixed; /* 메인컨텐츠에 내용이 많아져도 leftbar는 고정 */
+    text-align:center;
+    background-color:#494F5B;
+}
+
+.maincontent{ /* 모든 페이지 최대한 통일하기 */
+    width:100%;
+    height:100%;
+    font-size: 18px;
+    margin-left:20%
+}
+
+.introduce{ /* 모든페이지 메인 제목 */
+    float:left;
+    padding-top: 40px;
+    padding-left:20px;
+    padding-bottom:5px;
+    line-height: 55px;
+    font-size: 30px; /* h1*/
+    width:80%;
+}
+
+.introduce #subT{ /* 제목설명 h2 */
+    font-size: 20px;
+    line-height: 30px;
+}
+
+.mainLayout div table th{
+    padding:10px;
+    font-size:15px;
+}
+
+
+.mainLayout div table td{
+    padding:10px;
+    width:15%; /*값 조정 필요*/
+    text-align:center;
+    font-size:15px;
+    color:#2D3037;
+}
+
+#temperatureTable{
+    margin:20px 20px;
+    background-color:white;
+    border-radius:15px;
+}
+
+.mainLayout{
+    float:left;
+    width: 400px;
+    border-radius: 15px;
+    background-color: #EBEBEB;
+    margin-left : 10px;
+    margin-right: 20px;
+    margin-top : 20px;
+}
+
+.mainLayout h1{ /* 각 박스의 제목 */
+    font-size:25px;
+}
+
+#cody{
+    width:600px;
+    height:300px;
+}
+
+#cody div{
+    float:left;
+    margin-right:20px;
+}
+
+#weatherBox{
+    width:380px;
+}
+
+#location div, #temperature div, #rain div{  /* 현재날씨박스 */
+    text-align:left;
+    vertical-align:middle;
+    align-items: center;
+    display: inline-block;
+    margin-left:5px;
+    margin-top:5px;
+}
+
+.icon{
+    margin-right:10px;
+}
+
+
+#location, #temperature, #rain{
+    background-color:white;
+    border-radius:15px;
+    width:90%;
+    height:85px;
+}
+
+#location{
+    margin-top:20px;
+    margin-left:20px;
+}
+
+#temperature, #rain{
+    margin-top:10px;
+    margin-left:20px;
+}
+
+.subTemperature{
+    font-size:13px;
+}
+
+.temperatureValue, .temperatureValue span{
+    text-align:right;
+    padding-left:20%;
+    color:#F4BB53;
+}
+
+.rainValue{
+    text-align:right;
+    padding-left:30%;
+    color:#609ED1;
+}
+
+
+
+
+
+
+

@@ -1,0 +1,82 @@
+@import url('common.css');
+
+body{
+    max-width:670px;
+    width:100%;
+    margin:auto;
+    font-size: 22px;
+    font-weight: 300;
+    line-height: 50px;
+}
+
+.mainT{
+    font-size: 30px;
+    font-weight: 300;
+    line-height: 120px;
+    padding-top:140px;
+    box-sizing:border-box;
+    text-align:center;
+}
+
+.formBox{
+    width:100%;
+    padding:15px 100px; /*위아래 15, 왼오 100*/
+    box-sizing:border-box;
+    text-align:center;
+    line-height:80px;
+}
+
+#userId{
+    font-size: 20px;
+}
+
+#userPw{
+    font-size: 20px;
+}
+
+.saveId{
+    font-size:20px;
+    padding:0px 140px; /*위아래 5, 왼오 140*/
+}
+
+input{
+     width:380px;
+     height:60px;
+     border-top-width:0px;
+     border-right-width:0px;
+     border-bottom-width:1px;
+     border-left-width:0px;
+}
+
+input[type="checkbox"]{
+    width:13px;
+    height:13px;
+}
+
+#loginBtn{
+     width:100%;
+     height:60px;
+     font-size:22px;
+     border:none;
+     cursor:pointer; /* 커서 올라가면 손가락모양 */
+}
+
+.signInLinks{
+    text-align:center;
+    margin-top:40px;
+    color:#6F6F6F;
+}
+
+a{
+   text-decoration: none;
+   color:#000000;
+}
+
+a:hover{
+    color:#7DD8FF;
+}
+
+table{
+    margin:auto;
+}
+

@@ -1,0 +1,19 @@
+@import url('common.css');
+
+body{ /* 모든 서브페이지 최대한 통일하기 */
+    width:100%;
+    height:100%;
+    font-size: 18px;
+}
+
+#weekly{
+    width:90%;
+    text-align:center;
+}
+
+.mainLayout table td{
+    border:1px solid black;
+    width:200px; /*값 조정 필요*/
+    text-align:center;
+    font-size:18px;
+}
