@@ -1,4 +1,4 @@
-package weatherwhere.team.login.web.login;
+package weatherwhere.team.web.login;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import weatherwhere.team.login.domain.login.LoginService;
 import weatherwhere.team.login.domain.member.Member;
-import weatherwhere.team.login.web.SessionConst;
+import weatherwhere.team.web.SessionConst;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -22,12 +22,12 @@ public class LoginController {
     private final LoginService loginService;
 
     @GetMapping("/login") //로그인 폼을 보여주는 매핑
-    public String loginForm(@ModelAttribute("loginForm") LoginForm form){
+    public String loginForm(@ModelAttribute("loginForm") weatherwhere.team.login.web.login.LoginForm form){
         return "login/login";
     }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute LoginForm form, BindingResult bindingResult, HttpServletRequest request){
+    public String login(@ModelAttribute weatherwhere.team.login.web.login.LoginForm form, BindingResult bindingResult, HttpServletRequest request){
         if(bindingResult.hasErrors()){
             return "login/login";
         }

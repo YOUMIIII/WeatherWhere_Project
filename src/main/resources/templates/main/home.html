@@ -35,12 +35,18 @@
             <div id="temperature"><div class="icon"><img src="../../static/img/temperatureIcon.png" th:src="@{img/temperatureIcon.png}" ></div><div class="weatherContents">기온<br> <span class="subTemperature">최고 </span><span class="subTemperature">15</span> <span class="subTemperature"> / 최저 </span> <span class="subTemperature">0</span></div><div class="temperatureValue"><span>15</span>C</div></div>
             <div id="rain"><div class="icon"><img src="../../static/img/rainIcon.png" th:src="@{img/rainIcon.png}"></div><div class="weatherContents">강수확률<br> <span class="subTemperature">습도</span><span class="subTemperature">20</span></div><div class="rainValue"><span>0</span>%</div></div>
             <div id="temperatureTable">
-            <table>
+            <table th:object="${region}">
                 <tr>
                     <th>시간</th>
                     <th>기온</th>
                     <th>상태</th>
                     <th>강수확률</th>
+                </tr>
+                <tr th:each="weather : *{weathers}">
+                    <td th:text="${weather.time}"></td>
+                    <td th:text="${weather.temp}"></td>
+                    <td th:text="${weather.sky}"></td>
+                    <td th:text="${weather.pop}"></td>
                 </tr>
                 <tr>
                     <td>오전 6시</td>

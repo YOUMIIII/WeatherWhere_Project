@@ -1,4 +1,4 @@
-package weatherwhere.team.login;
+package weatherwhere.team;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

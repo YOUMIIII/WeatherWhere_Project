@@ -21,10 +21,16 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	runtimeOnly 'com.h2database:h2'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	//외부 라이브러리 (json 읽고 쓰기)
+	implementation 'org.json:json:20220320'
+	//외부 라이브러리 (쿼리 파라미터 로그 남기기)
+	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.5.6'//3.0이상은 추가설정 필요. 실제 운영단계에서는 성능테스트 하고 사용하기
 }
 
 tasks.named('test') {

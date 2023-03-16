@@ -1,0 +1,48 @@
+#하위 항목은 2칸 띄어쓰기하고 시작하며, 설정명과 설정값은 1칸만 뗍니다 ( 예시 ddl-auto: create)
+spring:
+  profiles:
+    active: dev #프로필 없음 로그 처리용
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/weathertest
+    username: sa
+    password:
+    #initialization-mode: always
+    hikari:
+      data-source-properties:
+        rewriteBatchedStatements: true
+  driver-class-name: org.h2.Driver
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+
+  jpa:
+    hibernate:
+      ddl-auto: create #시작할 때 drop, 이후 create
+    properties:
+      hibernate:
+        #show_sql: true
+        format_sql: true
+        jdbc.batch_size: ${batchSize}
+  #    open-in-view: false #true로 바꾸면 지연로딩 에러납니다
+
+batchSize: 500
+
+logging.level:
+  org.hibernate.SQL: debug
+#  org.hibernate.type: trace #스프링부트 2.x , hibernate5
+#  org.hibernate.orm.jdbc.bind:  trace #스프링부트 3.x , hibernate6
+  org.springframework.jdbc.core: trace
+
+resources:
+  location: C:/app/JavaProject/22delta23alpha/HtmlPractice/storage #하드코딩함
+
+weatherApi:
+  serviceKey: FtoUNBRuw9X2Wrr5nb2PAV2ow7GS%2BZHdFi4%2FpEUTNc2BKku4jOaBb0qOyGZxLr10X%2Fy7c1Z2AmPgi1ohvs7wRQ%3D%3D
+
+server:
+  servlet:
+    session:
+      tracking-modes: cookie
+      timeout: 1800
+      #server.servlet.session.tracking-modes=cookie
+      #server.servlet.session.timeout=1800

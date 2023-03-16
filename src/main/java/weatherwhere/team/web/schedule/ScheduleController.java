@@ -1,4 +1,4 @@
-package weatherwhere.team.login.web.schedule;
+package weatherwhere.team.web.schedule;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import weatherwhere.team.login.domain.member.Member;
 import weatherwhere.team.login.domain.member.MemberRepository;
-import weatherwhere.team.login.web.SessionConst;
+import weatherwhere.team.web.SessionConst;
 
 @Controller
 @RequiredArgsConstructor
