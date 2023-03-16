@@ -4,10 +4,13 @@ package weatherwhere.team.login.web.member;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import weatherwhere.team.login.domain.member.Location;
 import weatherwhere.team.login.domain.member.Member;
 import weatherwhere.team.login.domain.member.MemberRepository;
@@ -29,8 +32,29 @@ public class MemberController {
     }
 
     @PostMapping("/add")
-    public String save(@ModelAttribute Member member) {
-        memberRepository.save(member);
+    public String save(@Validated @ModelAttribute("member") MemberJoinForm form, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        if(!(form.getUserPw().equals(form.getUserPwCheck()))){
+            bindingResult.reject("pwError","작성하신 비밀번호가 일치하지 않습니다.");
+        }
+
+
+        if(bindingResult.hasErrors()){
+            //폼에 유효성 문제가 있을 경우 다시 회원가입 페이지로.
+            return "/members/signUp";
+        }
+
+        Member member = new Member();
+        member.setUserId(form.getUserId());
+        member.setUserPw(form.getUserPw());
+        member.setUserMail(form.getUserMail());
+        member.setUserLocation(form.getUserLocation());
+        member.setUserLocation2(form.getUserLocation2());
+        member.setUserPhoto(form.getUserPhoto());
+
+        Member savedMember = memberRepository.save(member);
+        redirectAttributes.addAttribute("itemId", savedMember.getId());
+        redirectAttributes.addAttribute("status", true);
+
         return "redirect:/login";
     }
 

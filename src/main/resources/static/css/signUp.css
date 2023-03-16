@@ -1,47 +1,76 @@
 @import url('common.css');
 
 body{
-    max-width:900px;
+    max-width:700px;
     width:100%;
     margin:auto;
-    font-size: 18px;
-    font-weight: 300;
-    line-height: 60px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 50px;
+}
+
+.logoWrap{
+    text-align:center;
+    margin:50px;
+    font-size:20px;
 }
 
 .formBox{
-    margin:auto;
+    margin-bottom:70px;
+    border:solid 1px #e5e5e5;
 }
 
 .mainT{
     font-size: 30px;
-    font-weight: 300;
     line-height: 30px;
-    padding-top:140px;
+    padding-top:40px;
     box-sizing:border-box;
     text-align:center;
 }
 
 .subT{
     font-size: 15px;
-    font-weight: 300;
     color:#505050;
     text-align:center;
 }
 
-table{
-    margin:auto;
+.loginInfoWrap, .memberInfoWrap, .policyWrap{
+    width:90%;
+    margin-left:10%;
+    margin-top:5%;
 }
 
-td{
-    height:65px;
-    text-align:right;
-    padding-right:15px;
+h3{
+    font-size:15px;
+    font-weight:700;
+}
+
+.info div{
+    display:inline-block;
+}
+
+.info{
+    margin-bottom:15px;
+}
+
+.label{
+    width:25%;
+}
+
+p{
+    margin-left:26%;
+    color:red;
+    font-size:14px;
 }
 
 input{
-     width:310px;
+     width:360px;
      height:40px;
+     border-color:#8D8D8D;
+     border-top-width:0px;
+     border-right-width:0px;
+     border-bottom-width:0.5px;
+     border-left-width:0px;
 }
 
 select{
@@ -49,17 +78,46 @@ select{
     height:40px;
 }
 
-input[type="button"]{
-    width:100px;
-    border:none;
+.btn{
+    text-align:center;
+    margin-top:50px;
+    margin-bottom:70px;
 }
 
-input[type="submit"]{
+input[type="submit"], input[type="button"], input[type="reset"]{
     width:100px;
     border:none;
-    margin:30px 45%;
-    font-size:18px;
+    font-size:15px;
+    margin-left:5px;
+    margin-right:5px;
 }
+
+input[type="checkbox"]{
+    width:18px;
+    height:100%;
+    margin-right:10px;
+    vertical-align:middle;
+}
+
+.policyWrap{
+    line-height:35px;
+    margin-bottom:30px;
+}
+
+.checkBox div{
+    display:inline-block;
+}
+
+.essential{
+    color:#3090d6;
+}
+
+.choice{
+    color:#999;
+}
+
+
+
 
 
 

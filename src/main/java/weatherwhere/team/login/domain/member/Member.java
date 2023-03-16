@@ -1,8 +1,6 @@
 package weatherwhere.team.login.domain.member;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 @Data
 public class Member {
@@ -14,9 +12,5 @@ public class Member {
     private String userLocation;
     private String userLocation2;
     private String userPhoto;
-
-
-
-
 
 }

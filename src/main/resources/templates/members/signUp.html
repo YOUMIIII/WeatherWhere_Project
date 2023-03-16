@@ -4,52 +4,82 @@
 <head>
     <meta charset="UTF-8">
     <title>회원가입</title>
-    <link rel="stylesheet" type="text/css" href="../../css/signUp.css">
+    <link rel="stylesheet" type="text/css" href="../../static/css/signUp.css" th:href="@{/css/signUp.css}">
+    <script type="text/javascript" src="../../static/js/checkbox.js" th:src="@{/js/checkbox.js}"></script>
+    <style>
+        .field-error {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+    </style>
 </head>
 <body class="signup">
-    <h1 class="mainT">회원가입</h1>
-    <p class="subT">*는 필수 입력란 입니다</p>
-
+    <div class="logoWrap">
+        웨더웨어
+    </div>
     <form class="formBox" th:action th:object="${member}" method="POST">
-        <table>
-            <tr>
-                <td><label for="userId">* 아이디</label></td>
-                <td><input type="text" id="userId" th:field="*{userId}" placeholder="아이디유효성" ></td>
-                <td><input type="button" value="중복확인" onclick="#"></td>
-            </tr>
-            <tr>
-                <td><label for="userPw">* 비밀번호</label></td>
-                <td><input type="password" id="userPw" th:field="*{userPw}" placeholder="비번유효성" ></td>
-            </tr>
-            <tr>
-                <td><label for="userPwCk">* 비밀번호 확인</label></td>
-                <td><input type="password" id="userPwCk" th:field="*{userPwCheck}" placeholder="비번유효성" ></td>
-            </tr>
-            <tr>
-                <td><label for="userEmail">* 이메일</label></td>
-                <td><input type="email" id="userEmail" th:field="*{userMail}" placeholder="메일적는이유" ></td>
-            </tr>
-            <tr>
-                <td><label>* 설정지역</label></td>
-                <td>
+        <h1 class="mainT">회원가입</h1>
+        <div class="subT">*는 필수 입력란 입니다</div>
+        <div class="loginInfoWrap">
+            <h3 class="infoT">로그인 정보</h3>
+            <div class="info">
+                <div class="label"><label for="userId">아이디</label></div>
+                <div><input type="text" id="userId" th:field="*{userId}" th:errorclass="field-error" placeholder="영문자 최소 2자, 최대 10자로 입력해주세요." ></div>
+                <p class="field-error" th:errors="*{userId}"></p>
+            </div>
+            <div class="info">
+                <div class="label"><label for="userPw">비밀번호</label></div>
+                <div><input type="password" name="userPw" id="userPw" th:field="*{userPw}" th:errorclass="field-error" placeholder="영문자, 숫자, 특수문자 최소 8글자, 최대16글자로 입력해주세요." onkeyup="safetyPasswordPattern(this);"></div>
+                <p id="pwT" class="field-error" th:errors="*{userPw}"></p>
+            </div>
+            <div class="info">
+                <div class="label"><label for="userPwCk">비밀번호 확인</label></div>
+                <div><input type="password" id="userPwCk" th:field="*{userPwCheck}" onkeyup="samePassword(this);" ></div>
+                <p id="pwChT" class="field-error" th:if="${#fields.hasGlobalErrors()}" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
+            </div>
+        </div>
+
+        <div class="memberInfoWrap">
+            <h3 class="infoT">회원 정보</h3>
+            <div class="info">
+                <div class="label">이메일</div>
+                <div><input type="text" id="userEmail" th:field="*{userMail}" th:errorclass="field-error" placeholder="비밀번호찾기시 이용되니 사용중인 이메일을 작성해주세요" onkeyup="mailPattern(this);"></div>
+                <p id="mailT" class="field-error" th:errors="*{userMail}"></p>
+            </div>
+            <div class="info">
+                <div class="label">설정지역</div>
+                <div>
                     <select th:field="*{userLocation}">
-                        <option value="">지역선택1</option>
-                        <option th:each="userLocation : ${userLocations}" th:value="${userLocation.code}" th:text="${userLocation.displayName}">서울특별시</option>
-    <!--                    <option value="gangwondo">강원도</option>-->
+                        <option value="">시/도 선택</option>
+                        <option th:each="userLocation : ${userLocations}" th:value="${userLocation.code}" th:text="${userLocation.displayName}" th:errorclass="field-error">서울특별시</option>
+                    <!--                    <option value="gangwondo">강원도</option>-->
                     </select>
+                </div>
+                <div>
                     <select id="userLocation2" th:field="*{userLocation2}">
-                        <option value="">지역선택2</option>
-                        <option th:each="userLocation2 : ${userLocation2}" th:value="${userLocation2.code}" th:text="${userLocation2.displayName}">용인시</option>
+                        <option value="">시/군/구 선택</option>
+                        <option th:each="userLocation2 : ${userLocation2}" th:value="${userLocation2.code}" th:text="${userLocation2.displayName}" th:errorclass="field-error">용인시</option>
                     </select>
-                </td>
-            </tr>
-            <tr>
-                <td><label for="userPhoto">프로필 사진</label></td>
-                <td><input type="text" id="userPhoto" th:field="*{userPhoto}"></td>
-            </tr>
-        </table>
-        <div class="submitBtn">
-            <input type="submit" value="가입">
+                </div>
+                <p class="field-error" th:errors="*{userLocation}"></p>
+            </div>
+            <div class="info">
+                <div class="label">프로필 사진</div>
+                <div><input type="text" id="userPhoto" th:field="*{userPhoto}"></div>
+                <p></p>
+            </div>
+        </div>
+        <div class="policyWrap">
+            <h3 class="infoT">가입 약관 동의</h3>
+            <div class="checkBox"><div><input type="checkbox" id="chkAll" onclick="allCheckboxes('chk[]', this.checked)"></div><div class="policyT">모든 약관에 동의합니다.</div></div>
+            <div class="checkBox"><div><input type="checkbox" id="essencialCheck1" name = 'chk[]'; onclick="isAllCheck(this.name, 'chkAll');"></div><div class="policyT">웨더웨어 이용 약관에 동의합니다.<span class="essential"> (필수)</span></div></div>
+            <div class="checkBox"><div><input type="checkbox" id="essencialCheck2" name = 'chk[]' onclick="isAllCheck(this.name, 'chkAll'); agreeCheck(this.form);"></div><div class="policyT">개인정보 수집 및 이용에 동의합니다.<span class="essential"> (필수)</span></div></div>
+            <div class="checkBox"><div><input type="checkbox" name = 'chk[]' onclick="isAllCheck(this.name, 'chkAll');"></div><div class="policyT">마케팅 활용 및 광고성 정보 수신에 동의합니다.<span class="choice"> (선택)</span></div></div>
+        </div>
+        <div class="btn">
+            <input type="submit" name="submitBtn" value="가입" disabled>
+            <input type="reset" name="resetBtn" value="다시 작성">
+            <input type="button" th:href="@{/login}" name="cancelBtn" value="취소">
         </div>
     </form>
 </body>
