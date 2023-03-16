@@ -2,8 +2,8 @@ package weatherwhere.team;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import weatherwhere.team.login.domain.member.Member;
-import weatherwhere.team.login.domain.member.MemberRepository;
+import weatherwhere.team.domain.member.Member;
+import weatherwhere.team.domain.member.MemberRepository;
 
 import javax.annotation.PostConstruct;
 

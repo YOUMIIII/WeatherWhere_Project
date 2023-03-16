@@ -1,9 +1,9 @@
-package weatherwhere.team.login.domain.login;
+package weatherwhere.team.domain.login;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import weatherwhere.team.login.domain.member.Member;
-import weatherwhere.team.login.domain.member.MemberRepository;
+import weatherwhere.team.domain.member.Member;
+import weatherwhere.team.domain.member.MemberRepository;
 
 @Service
 @RequiredArgsConstructor

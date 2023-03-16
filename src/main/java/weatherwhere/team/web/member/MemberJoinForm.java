@@ -1,4 +1,4 @@
-package weatherwhere.team.login.web.member;
+package weatherwhere.team.web.member;
 
 import lombok.Data;
 

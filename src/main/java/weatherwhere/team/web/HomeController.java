@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import weatherwhere.team.domain.Region;
-import weatherwhere.team.login.domain.member.Member;
-import weatherwhere.team.login.domain.member.MemberRepository;
+import weatherwhere.team.domain.member.Member;
+import weatherwhere.team.domain.member.MemberRepository;
 import weatherwhere.team.service.RegionService;
 
 

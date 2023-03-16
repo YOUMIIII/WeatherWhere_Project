@@ -1,4 +1,4 @@
-package weatherwhere.team.login.web.member;
+package weatherwhere.team.web.member;
 
 
 import lombok.RequiredArgsConstructor;
@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import weatherwhere.team.login.domain.member.Location;
-import weatherwhere.team.login.domain.member.Member;
-import weatherwhere.team.login.domain.member.MemberRepository;
+import weatherwhere.team.domain.member.Location;
+import weatherwhere.team.domain.member.Member;
+import weatherwhere.team.domain.member.MemberRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +32,7 @@ public class MemberController {
     }
 
     @PostMapping("/add")
-    public String save(@Validated @ModelAttribute("member") MemberJoinForm form, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String save(@Validated @ModelAttribute("member") weatherwhere.team.web.member.MemberJoinForm form, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if(!(form.getUserPw().equals(form.getUserPwCheck()))){
             bindingResult.reject("pwError","작성하신 비밀번호가 일치하지 않습니다.");
         }
