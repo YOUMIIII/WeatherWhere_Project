@@ -11,6 +11,7 @@ public class Member {
     private String userMail;
     private String userLocation;
     private String userLocation2;
+    private Long userLocationNum;
     private String userPhoto;
 
 }

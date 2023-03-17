@@ -21,6 +21,7 @@ public class TestDataInit {
         member.setUserMail("test@naver.com");
         member.setUserLocation("경기도");
         member.setUserLocation2("용인시");
+        member.setUserLocationNum(1645L);
         member.setUserPhoto("photo");
 
         memberRepository.save(member);

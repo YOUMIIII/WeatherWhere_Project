@@ -20,8 +20,8 @@ public class HomeController {
     private final RegionService regionService;
 
 
-    @GetMapping("/{regionId}")
-    public String homeLoginSpring(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, @PathVariable("regionId") Long regionId, Model model) {
+    @GetMapping("/")
+    public String homeLoginSpring(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model) {
         //로그인
         //세션에 회원 데이터가 없으면 home
         if (loginMember == null) {
@@ -30,7 +30,7 @@ public class HomeController {
 
         //세션이 유지되면 로그인으로 이동
         model.addAttribute("member", loginMember);
-        Region region=regionService.updateRegionWeather(regionId);
+        Region region=regionService.updateRegionWeather(loginMember.getUserLocationNum());
         model.addAttribute("region", region);
         return "main/home"; //홈으로 리턴
     }

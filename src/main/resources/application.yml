@@ -3,7 +3,7 @@ spring:
   profiles:
     active: dev #프로필 없음 로그 처리용
   datasource:
-    url: jdbc:h2:tcp://localhost/~/weathertest
+    url: jdbc:h2:tcp://localhost/~/weathertest #자신의 h2 파일명으로
     username: sa
     password:
     #initialization-mode: always
@@ -29,12 +29,12 @@ batchSize: 500
 
 logging.level:
   org.hibernate.SQL: debug
-#  org.hibernate.type: trace #스프링부트 2.x , hibernate5
-#  org.hibernate.orm.jdbc.bind:  trace #스프링부트 3.x , hibernate6
+  #  org.hibernate.type: trace #스프링부트 2.x , hibernate5
+  #  org.hibernate.orm.jdbc.bind:  trace #스프링부트 3.x , hibernate6
   org.springframework.jdbc.core: trace
 
 resources:
-  location: C:/app/JavaProject/22delta23alpha/HtmlPractice/storage #하드코딩함
+  location: C:/app/JavaProject/22delta23alpha/HtmlPractice/storage #자신의 프로젝트의 storage 절대경로
 
 weatherApi:
   serviceKey: FtoUNBRuw9X2Wrr5nb2PAV2ow7GS%2BZHdFi4%2FpEUTNc2BKku4jOaBb0qOyGZxLr10X%2Fy7c1Z2AmPgi1ohvs7wRQ%3D%3D
