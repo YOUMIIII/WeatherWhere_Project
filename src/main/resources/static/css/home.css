@@ -16,7 +16,7 @@ body{
 }
 
 .maincontent{ /* 모든 페이지 최대한 통일하기 */
-    width:100%;
+    max-width:1100px;
     height:100%;
     font-size: 18px;
     margin-left:20%
@@ -37,11 +37,64 @@ body{
     line-height: 30px;
 }
 
+.mainLayout{
+    float:left;
+    width: 500px;
+    border-radius: 15px;
+    background-color: #EBEBEB;
+    margin-left : 10px;
+    margin-right: 40px;
+    margin-top : 20px;
+}
+
+.mainLayout h1{ /* 각 박스의 제목 */
+    font-size:20px;
+    margin:25px;
+}
+
+#temperature{
+    margin:20px 20px;
+    width:90%;
+    border-radius:15px;
+    background-color:white;
+}
+
+#temperature div{
+    display:inline-block;
+    margin-top:30px;
+    margin-left:20px;
+    margin-bottom:30px;
+    vertical-align:middle;
+}
+
+.temperatureInfo p{
+    text-align:center;
+    margin:10px 30px 10px 30px;
+}
+
+#temLocation{
+    font-size:15px;
+}
+
+#temNumber{
+    font-size:120px;
+}
+
+#temMaxMin{
+    font-size:15px;
+}
+
+#temperatureTable{
+    margin:20px 20px;
+    background-color:white;
+    border-radius:15px;
+    width:90%;
+}
+
 .mainLayout div table th{
     padding:10px;
     font-size:15px;
 }
-
 
 .mainLayout div table td{
     padding:10px;
@@ -51,88 +104,73 @@ body{
     color:#2D3037;
 }
 
-#temperatureTable{
-    margin:20px 20px;
-    background-color:white;
-    border-radius:15px;
-}
-
-.mainLayout{
-    float:left;
-    width: 400px;
-    border-radius: 15px;
-    background-color: #EBEBEB;
-    margin-left : 10px;
-    margin-right: 20px;
-    margin-top : 20px;
-}
-
-.mainLayout h1{ /* 각 박스의 제목 */
-    font-size:25px;
-}
-
 #cody{
-    width:600px;
-    height:300px;
+    width:45%;
 }
 
-#cody div{
-    float:left;
-    margin-right:20px;
-}
-
-#weatherBox{
-    width:380px;
-}
-
-#location div, #temperature div, #rain div{  /* 현재날씨박스 */
-    text-align:left;
-    vertical-align:middle;
-    align-items: center;
-    display: inline-block;
-    margin-left:5px;
-    margin-top:5px;
-}
-
-.icon{
-    margin-right:10px;
-}
-
-
-#location, #temperature, #rain{
+.codyBox{
     background-color:white;
     border-radius:15px;
     width:90%;
-    height:85px;
-}
-
-#location{
-    margin-top:20px;
-    margin-left:20px;
-}
-
-#temperature, #rain{
+    margin-left:25px;
     margin-top:10px;
-    margin-left:20px;
+    margin-bottom:10px;
 }
 
-.subTemperature{
-    font-size:13px;
+.codyBox div{
+    display:inline-block;
+    vertical-align:middle;
 }
 
-.temperatureValue, .temperatureValue span{
-    text-align:right;
-    padding-left:20%;
-    color:#F4BB53;
+.codyImg{
+    padding:10px;
 }
 
-.rainValue{
-    text-align:right;
-    padding-left:30%;
-    color:#609ED1;
+.codyName{
+    width:280px;
 }
 
+#schedule{
+    width: 45%;
+}
 
+#schedule div{
+    display:inline-block;
+}
+
+.scheduleBox{
+    border-radius:15px;
+    width:90%;
+    border-radius:15px;
+    margin-left:25px;
+    margin-top:10px;
+    margin-bottom:10px;
+}
+
+#scheduleFirst{
+    background-color: #58C5C5;
+}
+
+#scheduleSecond{
+    background-color: #E4978E;
+}
+
+.scheduleContents{
+    background-color:white;
+    width:95%;
+    border-radius:15px;
+}
+
+.scheduleContents div div{
+    display:inline-block;
+    vertical-align:middle;
+    margin:10px 0px 5px 20px;
+}
+
+.scheduleContext{
+    width:200px;
+    font-size:15px;
+}
 
 
 

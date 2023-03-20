@@ -31,9 +31,14 @@
         </div>
 
         <div class="mainLayout" id="weatherBox">
-            <div id="location"><div class="icon"><img src="../../static/img/locationIcon.png" th:src="@{img/locationIcon.png}"></div><div class="weatherContents"><span>경기도</span> <span>성남시</span></div></div>
-            <div id="temperature"><div class="icon"><img src="../../static/img/temperatureIcon.png" th:src="@{img/temperatureIcon.png}" ></div><div class="weatherContents">기온<br> <span class="subTemperature">최고 </span><span class="subTemperature">15</span> <span class="subTemperature"> / 최저 </span> <span class="subTemperature">0</span></div><div class="temperatureValue"><span>15</span>C</div></div>
-            <div id="rain"><div class="icon"><img src="../../static/img/rainIcon.png" th:src="@{img/rainIcon.png}"></div><div class="weatherContents">강수확률<br> <span class="subTemperature">습도</span><span class="subTemperature">20</span></div><div class="rainValue"><span>0</span>%</div></div>
+            <div id="temperature">
+                <div class="temperatureInfo" id="temperatureInfoText">
+                    <p id="temLocation">성남시 분당구</p><p id="temNumber">15</p><p id="temMaxMin">최고 15 / 최저 0</p>
+                </div>
+                <div class="temperatureInfo">
+                    <img src="../../static/img/home/weather_sun.png" th:src="@{img/home/weather_sun.png}" width="140px">
+                </div>
+            </div>
             <div id="temperatureTable">
             <table th:object="${region}">
                 <tr>
@@ -48,81 +53,65 @@
                     <td th:text="${weather.sky}"></td>
                     <td th:text="${weather.pop}"></td>
                 </tr>
-                <tr>
-                    <td>오전 6시</td>
-                    <td>-4</td>
-                    <td>맑음</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>오전 8시</td>
-                    <td>-2</td>
-                    <td>맑음</td>
-                    <td>0%</td>
-                </tr>
-                <tr>
-                    <td>오전 10시</td>
-                    <td>4</td>
-                    <td>맑음</td>
-                    <td>0%</td>
-                </tr>
-                <tr>
-                    <td>오후 12시</td>
-                    <td>8</td>
-                    <td>맑음</td>
-                    <td>0%</td>
-                </tr>
-                <tr>
-                    <td>오후 2시</td>
-                    <td>10</td>
-                    <td>맑음</td>
-                    <td>0%</td>
-                </tr>
-                <tr>
-                    <td>오후 4시</td>
-                    <td>10</td>
-                    <td>맑음</td>
-                    <td>0%</td>
-                </tr>
-                <tr>
-                    <td>오후 6시</td>
-                    <td>9</td>
-                    <td>맑음</td>
-                    <td>0%</td>
-                </tr>
-                <tr>
-                    <td>오후 8시</td>
-                    <td>5</td>
-                    <td>맑음</td>
-                    <td>0%</td>
-                </tr>
-                <tr>
-                    <td>오후 10시</td>
-                    <td>3</td>
-                    <td>맑음</td>
-                    <td>0%</td>
-                </tr>
             </table>
             </div>
         </div>
         <div class="mainLayout" id="cody">
             <h1>오늘의 추천 코디</h1>
-            <div>
-                <h2>아침, 밤 외출예정</h2>
-                <img src="../../static/img/cloth2.png" th:src="@{/img/cloth2.png}" width="200px">
-                <h2>패딩, 두꺼운코트, 목도리, 기모제품</h2>
+            <div class="codyBox">
+                <div class="codyImg"><img src="../../static/img/clothes1.png" th:src="@{/img/clothes1.png}" width="60px"></div>
+                <div class="codyName">자켓, 가디건</div>
+                <div><button>옷장보기</button></div>
             </div>
-            <div>
-                <h2>낮 외출예정</h2>
-                <img src="../../static/img/cloth2.png" th:src="@{/img/cloth2.png}" width="200px">
-                <h2>코트, 가죽자켓, 히트텍, 니트, 레깅스</h2>
+            <div class="codyBox">
+                <div class="codyImg"><img src="../../static/img/clothes2.png" th:src="@{/img/clothes2.png}" width="60px"></div>
+                <div class="codyName">스타킹, 청바지, 면바지</div>
+                <div><button>옷장보기</button></div>
             </div>
         </div>
-        <div class="mainLayout">
-
-        </div>
-        <div class="mainLayout">
-            <h1>오늘 외출 스케줄</h1>
+        <div class="mainLayout" id="schedule">
+            <div><h1>오늘 외출 스케줄</h1></div> <div><button>스케줄관리</button></div>
+            <div class="scheduleBox" id="scheduleFirst">
+                <div class="scheduleContents">
+                    <div class="time">
+                        <div><img src="../../static/img/home/schedule_time.png" th:src="@{/img/home/schedule_time.png}" width="35px"></div>
+                        <div class="scheduleContext">09:00 am - 18:00pm</div>
+                    </div>
+                    <div class="location">
+                        <div><img src="../../static/img/home/schedule_location.png" th:src="@{/img/home/schedule_location.png}" width="35px"></div>
+                        <div class="scheduleContext">서울시 강남구</div>
+                    </div>
+                    <div class="scheduleName">
+                        <div><img src="../../static/img/home/schedule_name.png" th:src="@{/img/home/schedule_name.png}" width="35px"></div>
+                        <div class="scheduleContext">근무</div>
+                    </div>
+                    <div class="progress">
+                        <div><img src="../../static/img/home/schedule_progress.png" th:src="@{/img/home/schedule_progress.png}" width="35px"></div>
+                        <div class="scheduleContext">진행중</div>
+                    </div>
+                </div>
+            </div>
+            <div class="scheduleBox" id="scheduleSecond">
+                <div class="scheduleContents">
+                    <div class="time">
+                        <div><img src="../../static/img/home/schedule_time.png" th:src="@{/img/home/schedule_time.png}" width="35px"></div>
+                        <div class="scheduleContext">19:00 pm - 21:00pm</div>
+                    </div>
+                    <div class="location">
+                        <div><img src="../../static/img/home/schedule_location.png" th:src="@{/img/home/schedule_location.png}" width="35px"></div>
+                        <div class="scheduleContext">성남시 분당구</div>
+                    </div>
+                    <div class="scheduleName">
+                        <div><img src="../../static/img/home/schedule_name.png" th:src="@{/img/home/schedule_name.png}" width="35px"></div>
+                        <div class="scheduleContext">율동공원 산책</div>
+                    </div>
+                    <div class="progress">
+                        <div><img src="../../static/img/home/schedule_progress.png" th:src="@{/img/home/schedule_progress.png}" width="35px"></div>
+                        <div class="scheduleContext">진행예정</div>
+                    </div>
+                </div>
+            </div>
+            <div class="scheduleBox"></div>
         </div>
     </div>
 </body>

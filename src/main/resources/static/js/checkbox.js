@@ -52,7 +52,6 @@ function safetyPasswordPattern(str) {
         if(pass.length < 8 || pass.length > 16) {
             message = "비밀번호는 최소 8글자, 최대 16글자 이하로 입력해주세요";
             color = "red";
-
         }
 
         // 문자열의 길이가 8 ~ 16 인경우
@@ -96,7 +95,7 @@ function safetyPasswordPattern(str) {
     document.getElementById("pwT").style.color = color;
 }
 
-//필수항목체크해야 가입 버튼 활성화 되는거 다시 수정하기
+//필수항목체크해야 가입 버튼 활성화 되는거(다시 수정하기)
  function agreeCheck(frm){
     if (frm.submitBtn.disabled==true)
         frm.submitBtn.disabled=false

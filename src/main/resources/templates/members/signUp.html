@@ -79,7 +79,7 @@
         <div class="btn">
             <input type="submit" name="submitBtn" value="가입" disabled>
             <input type="reset" name="resetBtn" value="다시 작성">
-            <input type="button" th:href="@{/login}" name="cancelBtn" value="취소">
+            <input type="button" th:onclick="|location.href='@{/login}'|" name="cancelBtn" value="취소">
         </div>
     </form>
 </body>

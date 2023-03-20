@@ -9,7 +9,7 @@
     <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
     <!-- 네이버 로그인 소스 끝   -->
-    <link rel="stylesheet" type="text/css" href="../css/default.css" th:href="@{/css/default.css}">
+    <link rel="stylesheet" type="text/css" href="../../static/css/default.css" th:href="@{/css/default.css}">
 </head>
 <body id="login">
 <h1 class="mainT">로그인</h1>
@@ -21,24 +21,23 @@
         <p>
             <input type="password" id="userPw" th:field="*{loginPw}" placeholder="비밀번호">
         </p>
-        <table>
-            <tr>
-                <td width="200px">
-                    <div class="loginBtn">
-                        <input type="submit" id="loginBtn" value="로그인">
-                    </div>
-                </td>
-                <td>
+            <div class="loginBtn">
+                <input type="submit" id="loginBtn" value="로그인">
+            </div>
+
+
+
+
+
+
                     <div id="naver_id_login"></div>
-                </td>
-            </tr>
-        </table>
+
 
     <!-- 네이버 로그인 소스   -->
     <script type="text/javascript">
             var naver_id_login = new naver_id_login("8PN1YmdvvarAm2s1bSj2", "http://localhost:8080/callback.html");
             var state = naver_id_login.getUniqState();
-            naver_id_login.setButton("white", 3, 50);
+            naver_id_login.setButton("white", 1, 50);
             naver_id_login.setDomain("http://localhost:8080");
             naver_id_login.setState(state);
             naver_id_login.setPopup();
