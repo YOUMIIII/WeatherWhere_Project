@@ -5,16 +5,16 @@ spring:
   profiles:
 #    active: none
 #    active: dev-dy
-#    active: dev-youmi
+    active: dev-youmi
 #    active: dev-yw
   datasource:
-    username: sa
-    password:
+    username: teampj
+    password: 1234
     #initialization-mode: always
     hikari:
       data-source-properties:
         rewriteBatchedStatements: true
-  driver-class-name: org.h2.Driver
+  driver-class-name: oracle.jdbc.OracleDriver
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
@@ -54,7 +54,7 @@ spring:
     activate:
       on-profile: dev-youmi
   datasource:
-    url: jdbc:h2:tcp://localhost/~/weatherwhere
+    url: jdbc:oracle:thin:@//localhost:1521/xe
 resources:
   location: /Users/youmi/IdeaProjects/HtmlPractice/storage
 
@@ -81,5 +81,3 @@ logging.level:
   org.springframework.jdbc.core: trace
 resources:
   location: C:/app/JavaProject/22delta23alpha/HtmlPractice/storage
-
-
