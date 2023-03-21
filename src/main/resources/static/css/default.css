@@ -1,29 +1,77 @@
 @import url('common.css');
 
-body{
+/*body{
     max-width:670px;
     width:100%;
     margin:auto;
     font-size: 22px;
     font-weight: 300;
     line-height: 50px;
+}*/
+
+#loginScreen{
+    display:flex; /*로그인 화면 2등분*/
+    height:100%;
 }
 
-.mainT{
-    font-size: 30px;
-    font-weight: 300;
-    line-height: 120px;
-    padding-top:140px;
-    box-sizing:border-box;
-    text-align:center;
+#loginSidebar{
+    background-color:#EFD491;
+    width:410px;
+    height:100%;
 }
 
-.formBox{
+#logo{
+    padding-top:100px;
+    padding-left:50px;
+}
+
+#loginText{
+    padding-top:40px;
+    padding-left:50px;
+    font-size:30px;
+    color:#806328;
+    line-height:50px;
+}
+
+#loginImg{
+    margin-top:120px;
+    padding-bottom:50px;
     width:100%;
-    padding:15px 100px; /*위아래 15, 왼오 100*/
-    box-sizing:border-box;
-    text-align:center;
-    line-height:80px;
+}
+
+#loginMain{
+    padding:13% 20% 0% 20%;
+    font-size:25px;
+    font-weight:700;
+}
+
+#formBox{
+    width:100%;
+    margin-top: 20px;
+    line-height:60px;
+}
+
+#hrLine div{
+    vertical-align:middle;
+    display:inline-block;
+    font-size:20px;
+    color:#BBBBBB;
+}
+
+.hrLine{
+    width:40%;
+}
+
+hr{
+    width:100%;
+    background-color:#BBBBBB;
+    border:0px;
+    height:1px;
+}
+
+#hrOr{
+    margin-left:20px;
+    margin-right:20px;
 }
 
 #userId{
@@ -35,13 +83,14 @@ body{
 }
 
 .saveId{
-    font-size:20px;
-    padding:0px 140px; /*위아래 5, 왼오 140*/
+    font-size:15px;
+    font-weight:400;
+    padding:0px 0px;
 }
 
 input{
-     width:380px;
-     height:60px;
+     width:300px;
+     height:40px;
      border-top-width:0px;
      border-right-width:0px;
      border-bottom-width:1px;
@@ -51,26 +100,43 @@ input{
 input[type="checkbox"]{
     width:13px;
     height:13px;
+    cursor:pointer;
 }
 
 input[type="submit"]{
-    width:360px;
-    height:60px;
-    margin-top:30px;
-    font-size:22px;
+    width:140px;
+    height:50px;
+    margin-top:0px;
+    margin-bottom:30px;
+    font-size:20px;
+    background-color:#494F5B;
+    color:white;
     border:none;
+    border-radius:10px;
     cursor:pointer; /* 커서 올라가면 손가락모양 */
+}
+
+#otherLogin{
+    margin-top:20px;
+    display:flex;
+}
+
+#otherLogin div{
+    margin-right:20px;
 }
 
 .signInLinks{
     text-align:center;
     margin-top:40px;
     color:#6F6F6F;
+   font-size:18px;
+   font-weight:400;
 }
 
 a{
    text-decoration: none;
-   color:#000000;
+   color:#F6F6F;
+   cursor:pointer;
 }
 
 a:hover{

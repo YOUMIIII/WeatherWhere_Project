@@ -11,33 +11,91 @@
     <!-- 네이버 로그인 소스 끝   -->
     <link rel="stylesheet" type="text/css" href="../../static/css/default.css" th:href="@{/css/default.css}">
 </head>
-<body id="login">
-<h1 class="mainT">로그인</h1>
-<form th:action th:object="${loginForm}" method="POST">
-<div class="formBox">
-        <p class="id">
-            <input type="text" id="userId" th:field="*{loginId}" placeholder="아이디">
-        </p>
-        <p>
-            <input type="password" id="userPw" th:field="*{loginPw}" placeholder="비밀번호">
-        </p>
+<body>
+<div id="loginScreen">
+    <section id="loginSidebar">
+        <header><img id="logo" src="../../static/img/login/logo.png" th:src="@{/img/login/logo.png}" width="190px"></header>
+        <div id="loginText">오늘도 당신의 하루를<br>웨더웨어와 함께하세요.</div>
+        <div id="loginImg"><img src="../../static/img/login/logodrawing.png" th:src="@{/img/login/logodrawing.png}" width="100%"></div>
+    </section>
+    <section id="loginMain">
+        <div id="login">로그인</div>
+        <div id="formBox">
+            <form th:action th:object="${loginForm}" method="POST">
+            <p class="id">
+                <input type="text" id="userId" th:field="*{loginId}" placeholder="아이디">
+            </p>
+            <p>
+                <input type="password" id="userPw" th:field="*{loginPw}" placeholder="비밀번호">
+            </p>
+            <p class="saveId">
+                <input type="checkbox" id="saveId" value="saveId">
+                <label for="saveId">아이디 저장</label>
+            </p>
             <div class="loginBtn">
                 <input type="submit" id="loginBtn" value="로그인">
             </div>
+            </form>
+        </div>
+        <div id="hrLine">
+            <div class="hrLine"><hr></div><div id="hrOr">  or  </div><div class="hrLine"><hr></div>
+        </div>
+        <div id="otherLogin">
+            <div id="naver_id_login"></div>
+            <div>
+                <a href="javascript:loginWithKakao();"><img src="../../static/img/login/kakao_login.png" th:src="@{/img/login/kakao_login.png}" alt="카카오계정 로그인" width="60px"/></a>
 
+                <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+                <script>
+                    window.Kakao.init('b2266f1c41b42e9866421244b4824275');
+                    </script>
 
+                    <script>
+                      function loginWithKakao() {
+                        Kakao.Auth.authorize({
+                          redirectUri: 'http://localhost:8080/kakaologin.html',
+                        });
+                      }
 
+                      // 아래는 데모를 위한 UI 코드입니다.
+                      displayToken()
+                      function displayToken() {
+                        var token = getCookie('authorize-access-token');
 
+                        if(token) {
+                          Kakao.Auth.setAccessToken(token);
+                          Kakao.Auth.getStatusInfo()
+                            .then(function(res) {
+                              if (res.status === 'connected') {
+                                document.getElementById('token-result').innerText
+                                  = 'login success, token: ' + Kakao.Auth.getAccessToken();
+                              }
+                            })
+                            .catch(function(err) {
+                              Kakao.Auth.setAccessToken(null);
+                            });
+                        }
+                      }
 
-
-                    <div id="naver_id_login"></div>
-
-
+                      function getCookie(name) {
+                        var parts = document.cookie.split(name + '=');
+                        if (parts.length === 2) { return parts[1].split(';')[0]; }
+                      }
+                    </script>
+            </div>
+        </div>
+        <p class="signInLinks">
+            <a th:href="@{/members/add}">회원가입</a> /
+            <a th:href="@{/members/findId}">아이디 찾기</a> /
+            <a th:href="@{/members/findPassword}">비밀번호 찾기</a>
+        </p>
+    </section>
+</div>
     <!-- 네이버 로그인 소스   -->
     <script type="text/javascript">
             var naver_id_login = new naver_id_login("8PN1YmdvvarAm2s1bSj2", "http://localhost:8080/callback.html");
             var state = naver_id_login.getUniqState();
-            naver_id_login.setButton("white", 1, 50);
+            naver_id_login.setButton("green", 1, 60);
             naver_id_login.setDomain("http://localhost:8080");
             naver_id_login.setState(state);
             naver_id_login.setPopup();
@@ -45,17 +103,5 @@
         </script>
     <!-- 네이버 로그인 소스 끝   -->
 
-</div>
-        <p class="saveId">
-            <input type="checkbox" id="saveId" value="saveId">
-            <label for="saveId">아이디 저장</label>
-        </p>
-    </form>
-
-    <p class="signInLinks">
-        <a th:href="@{/members/add}">회원가입</a> /
-        <a th:href="@{/members/findId}">아이디 찾기</a> /
-        <a th:href="@{/members/findPassword}">비밀번호 찾기</a>
-    </p>
 </body>
 </html>

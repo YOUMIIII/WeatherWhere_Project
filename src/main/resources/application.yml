@@ -55,8 +55,6 @@ spring:
       on-profile: dev-youmi
   datasource:
     url: jdbc:h2:tcp://localhost/~/weatherwhere
-
-
 resources:
   location: /Users/youmi/IdeaProjects/HtmlPractice/storage
 
