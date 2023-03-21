@@ -1,9 +1,13 @@
+#자신의 profile 을 활성화하고 시작합니다.
+  #맨 위에는 어느 프로파일이 active한지와 공용설정을 적습니다. --- 아래는 각 팀원의 개인설정을 씁니다.
 #하위 항목은 2칸 띄어쓰기하고 시작하며, 설정명과 설정값은 1칸만 뗍니다 ( 예시 ddl-auto: create)
 spring:
   profiles:
-    active: dev #프로필 없음 로그 처리용
+#    active: none
+#    active: dev-dy
+#    active: dev-youmi
+#    active: dev-yw
   datasource:
-    url: jdbc:h2:tcp://localhost/~/weatherwhere
     username: sa
     password:
     #initialization-mode: always
@@ -31,10 +35,7 @@ logging.level:
   org.hibernate.SQL: debug
 #  org.hibernate.type: trace #스프링부트 2.x , hibernate5
 #  org.hibernate.orm.jdbc.bind:  trace #스프링부트 3.x , hibernate6
-  org.springframework.jdbc.core: trace
-
-resources:
-  location: /Users/youmi/IdeaProjects/HtmlPractice/storage #하드코딩함
+  #org.springframework.jdbc.core: trace
 
 weatherApi:
   serviceKey: FtoUNBRuw9X2Wrr5nb2PAV2ow7GS%2BZHdFi4%2FpEUTNc2BKku4jOaBb0qOyGZxLr10X%2Fy7c1Z2AmPgi1ohvs7wRQ%3D%3D
@@ -46,3 +47,41 @@ server:
       timeout: 1800
       #server.servlet.session.tracking-modes=cookie
       #server.servlet.session.timeout=1800
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev-youmi
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/weatherwhere
+
+
+resources:
+  location: /Users/youmi/IdeaProjects/HtmlPractice/storage
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev-dy
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/example #example을 h2 데이터베이스명으로 교체
+logging.level:
+  org.springframework.jdbc.core: trace
+resources:
+  location: #storage 폴더에서 csv 파일을 찾고 우클릭 - copy path - absolute path - > 붙여넣기 -> 경로에서 /init/xypoint.csv 는 지우기 (끝에 슬래쉬 남으면 안 됩니다)
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev-yw
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/weathertest
+logging.level:
+  org.springframework.jdbc.core: trace
+resources:
+  location: C:/app/JavaProject/22delta23alpha/HtmlPractice/storage
+
+
