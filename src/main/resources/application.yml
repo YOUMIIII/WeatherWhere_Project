@@ -4,11 +4,13 @@
 spring:
   profiles:
 #    active: none
-#    active: dev-dy
-    active: dev-youmi
+    active: dev-dy
+#    active: dev-youmi
 #    active: dev-yw
   datasource:
-    username: teampj
+#    username: 유미꺼
+#    username: 예워니꺼
+    username: c##dayi
     password: 1234
     #initialization-mode: always
     hikari:
@@ -68,11 +70,10 @@ spring:
     activate:
       on-profile: dev-dy
   datasource:
-    url: jdbc:h2:tcp://localhost/~/example #example을 h2 데이터베이스명으로 교체
-logging.level:
-  org.springframework.jdbc.core: trace
+    url: jdbc:oracle:thin:@//localhost:1521/xe
 resources:
-  location: #storage 폴더에서 csv 파일을 찾고 우클릭 - copy path - absolute path - > 붙여넣기 -> 경로에서 /init/xypoint.csv 는 지우기 (끝에 슬래쉬 남으면 안 됩니다)
+  location: D:\dayi\git\intellij\team\TeamProject\storage
+  #storage 폴더에서 csv 파일을 찾고 우클릭 - copy path - absolute path - > 붙여넣기 -> 경로에서 /init/xypoint.csv 는 지우기 (끝에 슬래쉬 남으면 안 됩니다)
 
 ---
 spring:
