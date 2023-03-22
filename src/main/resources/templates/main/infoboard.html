@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>정보게시판</title>
+    <link rel="stylesheet" type="text/css" href="../../static/css/infoboard.css" th:href="@{/css/infoboard.css}">
+</head>
+<body>
+  <div>
+    <div class="leftBar" th:insert="~{main/sidebar :: sidebar}">
+    </div>
+  </div>
+  <div class="maincontent">
+      <div id="top">
+        <div class="introduce">
+          <div>지역별 정보</div>
+          <h2 id="subT">지역을 선택하고 그 지역의 궁금한 정보를 질문하고 답하며 소통해요!<br>
+            또한 만약 우리동네 자랑거리가 있다면 자랑해주세요! (맛집소개, 갈만한 곳 추천 등) </h2>
+        </div>
+        <div id="temperature">
+           <div class="temperatureInfo" id="temperatureInfoText">
+              <p id="temLocation">성남시 분당구</p><p id="temNumber">15</p><p id="temMaxMin">최고 15 / 최저 0</p>
+           </div>
+           <div class="temperatureInfo">
+              <img src="../../static/img/home/weather_sun.png" th:src="@{/img/home/weather_sun.png}" width="60px">
+           </div>
+        </div>
+      </div>
+
+      <div id="mainLayout">
+          <div id="option">
+              <div id="optionselect">
+                  <select >
+                      <option value="">시/도 선택</option>
+                      <option>서울특별시</option>
+                  </select>
+                  <select id="userLocation2">
+                      <option value="">시/군/구 선택</option>
+                      <option>세종특별자치시</option>
+                  </select>
+              </div>
+              <div>
+                  <select id="searchoption">
+                      <option value="">옵션선택</option>
+                      <option>제목</option>
+                      <option>작성자</option>
+                  </select>
+              </div>
+              <div>
+                  <input type="text" id="searchbox">
+              </div>
+              <div>
+                  <button>검색</button>
+              </div>
+          </div>
+          <div id="board">
+              <table>
+                  <tr>
+                      <th>번호</th>
+                      <th>상세지역</th>
+                      <th>유형</th>
+                      <th class="boardtitle">제목</th>
+                      <th>작성자</th>
+                      <th>작성일</th>
+                      <th>조회수</th>
+                  </tr>
+                  <tr th:each="board: ${boardList}">
+                      <td th:text="${board.id}">106</td>
+                      <td>분당구</td>
+                      <td>질문</td>
+                      <td class="boardtitle" id="boardtitle"><a th:href="@{|/board/${board.id}|(page=${boardList.number + 1})}" th:text="${board.boardTitle}">2001아울렛에 아기랑 갈만한 음식점 있나요?</a></td>
+                      <td th:text="${board.boardWriter}">youmiiii</td>
+                      <td th:text="*{#temporals.format(board.boardCreatedTime, 'yy/MM/dd')}">23/04/13</td>
+                      <td th:text="${board.boardHits}">3</td>
+                      <!--<td th:text="${board.id}">106</td>
+                      <td><a th:href="@{|/board/${board.id}|(page=${boardList.number + 1})}" th:text="${board.boardTitle}"></a></td>
+                      <td th:text="${board.boardWriter}"></td>
+                      <td th:text="*{#temporals.format(board.boardCreatedTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                      <td th:text="${board.boardHits}"></td>-->
+                  </tr>
+              </table>
+              <div id="writeboard">
+                  <button>새글작성</button>
+              </div>
+              <div id="paging">
+                  <!-- 첫번째 페이지로 이동 -->
+                  <!-- /board/paging?page=1 -->
+                  <a th:href="@{/board/paging(page=1)}">&lt;&lt;</a>
+                  <!-- 이전 링크 활성화 비활성화 -->
+                  <!-- boardList.getNumber() 사용자:2페이지 getNumber()=1 -->
+                  <a th:href="${boardList.first} ? '#' : @{/board/paging(page=${boardList.number})}">&lt;</a>
+
+                  <!-- 페이지 번호 링크(현재 페이지는 숫자만)
+                          for(int page=startPage; page<=endPage; page++)-->
+                  <span th:each="page: ${#numbers.sequence(startPage, endPage)}">
+            <!-- 현재페이지는 링크 없이 숫자만 -->
+                      <span th:if="${page == boardList.number + 1}" th:text="${page}"></span>
+                                  <!-- 현재페이지 번호가 아닌 다른 페이지번호에는 링크를 보여줌 -->
+                      <span th:unless="${page == boardList.number + 1}">
+                          <a th:href="@{/board/paging(page=${page})}" th:text="${page}"></a>
+                      </span>
+                  </span>
+
+                  <!-- 다음 링크 활성화 비활성화
+                      사용자: 2페이지, getNumber: 1, 3페이지-->
+                  <a th:href="${boardList.last} ? '#' : @{/board/paging(page=${boardList.number + 2})}">&gt;</a>
+                  <!-- 마지막 페이지로 이동 -->
+                  <a th:href="@{/board/paging(page=${boardList.totalPages})}">&gt;&gt;</a>
+              </div>
+          </div>
+      </div>
+
+  </div>
+</body>
+</html>

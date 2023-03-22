@@ -6,37 +6,6 @@ body{
     color:#2D3037;
 }
 
-.leftBar{
-    width:15%;
-    height:100%;
-    padding-top:70px;
-    position:fixed; /* 메인컨텐츠에 내용이 많아져도 leftbar는 고정 */
-    text-align:center;
-    background-color:#494F5B;
-}
-
-.maincontent{ /* 모든 페이지 최대한 통일하기 */
-    max-width:1100px;
-    height:100%;
-    font-size: 18px;
-    margin-left:20%
-}
-
-.introduce{ /* 모든페이지 메인 제목 */
-    float:left;
-    padding-top: 40px;
-    padding-left:20px;
-    padding-bottom:5px;
-    line-height: 55px;
-    font-size: 30px; /* h1*/
-    width:80%;
-}
-
-.introduce #subT{ /* 제목설명 h2 */
-    font-size: 20px;
-    line-height: 30px;
-}
-
 .mainLayout{
     float:left;
     width: 500px;

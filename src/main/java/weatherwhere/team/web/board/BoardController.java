@@ -7,10 +7,12 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import weatherwhere.team.domain.member.Member;
 import weatherwhere.team.repository.board.BoardDTO;
 import weatherwhere.team.repository.board.CommentDTO;
 import weatherwhere.team.service.BoardService;
 import weatherwhere.team.service.CommentService;
+import weatherwhere.team.web.SessionConst;
 
 import java.io.IOException;
 import java.util.List;
@@ -82,7 +84,7 @@ public class BoardController {
 
     // /board/paging?page=1
     @GetMapping("/paging")
-    public String paging(@PageableDefault(page = 1) Pageable pageable, Model model) {
+    public String paging(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, @PageableDefault(page = 1) Pageable pageable, Model model) {
 //        pageable.getPageNumber();
         Page<BoardDTO> boardList = boardService.paging(pageable);
         int blockLimit = 3;
@@ -100,7 +102,8 @@ public class BoardController {
         model.addAttribute("boardList", boardList);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
-        return "paging";
+        model.addAttribute("member", loginMember);
+        return "main/infoboard";
 
     }
 

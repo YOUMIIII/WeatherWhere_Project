@@ -4,13 +4,13 @@
 spring:
   profiles:
 #    active: none
-    active: dev-dy
-#    active: dev-youmi
+#    active: dev-dy
+    active: dev-youmi
 #    active: dev-yw
   datasource:
-#    username: 유미꺼
+    username: teampj
 #    username: 예워니꺼
-    username: c##dayi
+#    username: c##dayi
     password: 1234
     #initialization-mode: always
     hikari:

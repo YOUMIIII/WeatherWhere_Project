@@ -1,0 +1,103 @@
+@import url('common.css');
+@import url('sidebar.css');
+
+
+#top{
+    display:flex;
+}
+
+#temperature{
+    margin:50px 20px;
+    width:20%;
+    border-radius:15px;
+    border:1px solid black;
+}
+
+#temperature div{
+    display:inline-block;
+    vertical-align:middle;
+}
+
+.temperatureInfo p{
+    text-align:left;
+    margin:10px;
+}
+
+#temLocation{
+    font-size:15px;
+}
+
+#temNumber{
+    font-size:20px;
+}
+
+#temMaxMin{
+    font-size:15px;
+}
+
+#optionselect{
+    margin-left:20px;
+    margin-right:280px;
+}
+
+#option div{
+    display:inline-block;
+}
+
+select{
+    width:120px;
+    height:30px;
+}
+
+#searchbox{
+    width:280px;
+    height:25px;
+}
+
+#board{
+    width:90%;
+    margin-left:15px;
+    margin-top: 30px;
+}
+
+table{
+    horizontal-align:middle;
+    width:100%;
+    font-size:15px;
+}
+
+th, td{
+    text-align:center;
+    vertical-align:middle;
+    width:50px;
+    height:45px;
+    border-bottom:0.3px solid #2D3037;
+}
+
+th{
+    background-color:#A3ABBB;
+}
+
+.boardtitle{
+    width:200px;
+}
+
+#boardtitle{
+    text-align:left;
+}
+
+#paging{
+    margin-top:20px;
+    text-align:center;
+}
+
+#paging a{
+    font-size:14px;
+    margin:10px;
+    cursor:pointer;
+
+}
+#writeboard{
+    text-align:right;
+    margin-top:15px;
+}

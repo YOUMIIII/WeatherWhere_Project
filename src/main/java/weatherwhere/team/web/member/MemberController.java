@@ -3,6 +3,7 @@ package weatherwhere.team.web.member;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import weatherwhere.team.domain.member.Location;
 import weatherwhere.team.domain.member.Member;
+import weatherwhere.team.repository.RegionJdbcRepository;
 import weatherwhere.team.repository.member.MemberRepository;
 
 import java.util.ArrayList;
@@ -25,6 +27,10 @@ import java.util.List;
 public class MemberController {
 
     private final MemberRepository memberRepository;
+    private final RegionJdbcRepository regionJdbcRepository;
+
+    @Value("${resources.location}")
+    private String resourceLocation;
 
     @GetMapping("/join") //회원등록 폼으로 보내기
     public String addForm(@ModelAttribute("memberJoinForm") MemberJoinForm member){ //"member"생략 가능하지만 나중에 타임리프로 인식이 안될경우가 있어서 그냥 적었다함
@@ -58,6 +64,8 @@ public class MemberController {
 
         return "redirect:/login";
     }
+
+
 
     @ModelAttribute("userLocations")
     public List<Location> userLocations() {
