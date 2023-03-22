@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import weatherwhere.team.domain.member.Location;
 import weatherwhere.team.domain.member.Member;
-import weatherwhere.team.domain.member.MemberRepository;
+import weatherwhere.team.repository.member.MemberRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,13 +26,13 @@ public class MemberController {
 
     private final MemberRepository memberRepository;
 
-    @GetMapping("/add") //회원등록 폼으로 보내기
-    public String addForm(@ModelAttribute("member") Member member){ //"member"생략 가능하지만 나중에 타임리프로 인식이 안될경우가 있어서 그냥 적었다함
+    @GetMapping("/join") //회원등록 폼으로 보내기
+    public String addForm(@ModelAttribute("memberJoinForm") MemberJoinForm member){ //"member"생략 가능하지만 나중에 타임리프로 인식이 안될경우가 있어서 그냥 적었다함
         return "members/signUp";
     }
 
-    @PostMapping("/add")
-    public String save(@Validated @ModelAttribute("member") weatherwhere.team.web.member.MemberJoinForm form, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    @PostMapping("/join")
+    public String save(@Validated @ModelAttribute("memberJoinForm") weatherwhere.team.web.member.MemberJoinForm form, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if(!(form.getUserPw().equals(form.getUserPwCheck()))){
             bindingResult.reject("pwError","작성하신 비밀번호가 일치하지 않습니다.");
         }
@@ -47,8 +47,9 @@ public class MemberController {
         member.setUserId(form.getUserId());
         member.setUserPw(form.getUserPw());
         member.setUserMail(form.getUserMail());
-        member.setUserLocation(form.getUserLocation());
-        member.setUserLocation2(form.getUserLocation2());
+        /*member.setUserLocation(form.getUserLocation());
+        member.setUserLocation2(form.getUserLocation2());*/
+        member.setUserLocationNum(1645L);
         member.setUserPhoto(form.getUserPhoto());
 
         Member savedMember = memberRepository.save(member);

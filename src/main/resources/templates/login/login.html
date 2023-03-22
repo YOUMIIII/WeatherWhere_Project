@@ -10,6 +10,7 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
     <!-- 네이버 로그인 소스 끝   -->
     <link rel="stylesheet" type="text/css" href="../../static/css/default.css" th:href="@{/css/default.css}">
+
 </head>
 <body>
 <div id="loginScreen">
@@ -27,6 +28,9 @@
             </p>
             <p>
                 <input type="password" id="userPw" th:field="*{loginPw}" placeholder="비밀번호">
+            </p>
+            <p id="loginError" class="field-error" th:if="${#fields.hasGlobalErrors()}" th:each="err : ${#fields.globalErrors()}" th:text="${err}">
+                입력하신 아이디나 비밀번호를 확인해주세요.
             </p>
             <p class="saveId">
                 <input type="checkbox" id="saveId" value="saveId">
@@ -85,7 +89,7 @@
             </div>
         </div>
         <p class="signInLinks">
-            <a th:href="@{/members/add}">회원가입</a> /
+            <a th:href="@{/members/join}">회원가입</a> /
             <a th:href="@{/members/findId}">아이디 찾기</a> /
             <a th:href="@{/members/findPassword}">비밀번호 찾기</a>
         </p>

@@ -1,25 +1,27 @@
 package weatherwhere.team.web.login;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import weatherwhere.team.domain.login.LoginService;
 import weatherwhere.team.domain.member.Member;
+import weatherwhere.team.repository.member.MemberRepository;
 import weatherwhere.team.web.SessionConst;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 
-
+@Slf4j
 @RequiredArgsConstructor
 @Controller
 public class LoginController {
 
-    private final LoginService loginService;
+//    private final LoginService loginService;
+    private final MemberRepository memberRepository;
 
     @GetMapping("/login") //로그인 폼을 보여주는 매핑
     public String loginForm(@ModelAttribute("loginForm") weatherwhere.team.web.login.LoginForm form){
@@ -32,10 +34,10 @@ public class LoginController {
             return "login/login";
         }
 
-        Member loginMember = loginService.login(form.getLoginId(), form.getLoginPw());
+        Member loginMember = memberRepository.login(form.getLoginId(), form.getLoginPw());
 
         if(loginMember == null){
-            bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
+            bindingResult.reject("loginFail", "입력하신 아이디나 비밀번호를 확인해주세요.");
             return "login/login";
         }
 
@@ -44,7 +46,6 @@ public class LoginController {
         HttpSession session =  request.getSession(); //()안에 false-기존세션반환, 없으면 null반환 / true(default)-기존세선반환, 없으면 새로운 세션 생성해서 반환
         //세션에 로그인 회원 정보 보관
         session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
-
         return "redirect:/";
     }
 

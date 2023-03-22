@@ -147,3 +147,10 @@ table{
     margin:auto;
 }
 
+.field-error {
+            border-color: #dc3545;
+            color: #dc3545;
+            font-size:15px;
+            font-weight:400;
+}
+

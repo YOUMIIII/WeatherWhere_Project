@@ -6,7 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import weatherwhere.team.domain.member.Member;
-import weatherwhere.team.domain.member.MemberRepository;
+import weatherwhere.team.repository.member.MemberRepository;
 import weatherwhere.team.web.SessionConst;
 
 @Controller

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="weatherwhere.team.repository.member.MemberMapper">
+    <insert id="save">
+        <selectKey keyProperty="id" order="BEFORE" resultType="long">
+            select idNum.nextval from dual
+        </selectKey>
+        insert into member (id, userId, userPw, userMail, userLocationNum, userPhoto)
+        values (#{id}, #{userId}, #{userPw}, #{userMail}, #{userLocationNum}, #{userPhoto})
+    </insert>
+
+    <select id="login" resultType="Member">
+        select id, userId, userPw, userMail, userLocationNum, userPhoto from member
+        where userId = #{userId} and userPw = #{userPw}
+    </select>
+
+</mapper>
