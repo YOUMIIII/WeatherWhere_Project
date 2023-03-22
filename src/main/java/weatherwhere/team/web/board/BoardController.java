@@ -104,7 +104,6 @@ public class BoardController {
         model.addAttribute("endPage", endPage);
         model.addAttribute("member", loginMember);
         return "main/infoboard";
-
     }
 
 }

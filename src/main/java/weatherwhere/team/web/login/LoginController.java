@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import weatherwhere.team.domain.member.Member;
 import weatherwhere.team.repository.member.MemberRepository;
 import weatherwhere.team.web.SessionConst;
@@ -29,7 +30,7 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute weatherwhere.team.web.login.LoginForm form, BindingResult bindingResult, HttpServletRequest request){
+    public String login(@ModelAttribute weatherwhere.team.web.login.LoginForm form, BindingResult bindingResult, @RequestParam(defaultValue = "/")String redirectURL, HttpServletRequest request){
         if(bindingResult.hasErrors()){
             return "login/login";
         }
@@ -46,7 +47,7 @@ public class LoginController {
         HttpSession session =  request.getSession(); //()안에 false-기존세션반환, 없으면 null반환 / true(default)-기존세선반환, 없으면 새로운 세션 생성해서 반환
         //세션에 로그인 회원 정보 보관
         session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
-        return "redirect:/";
+        return "redirect:" + redirectURL;
     }
 
     @GetMapping("/logout")
