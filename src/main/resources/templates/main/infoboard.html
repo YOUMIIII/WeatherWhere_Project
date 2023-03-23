@@ -58,7 +58,6 @@
               <table>
                   <tr>
                       <th>번호</th>
-                      <th>상세지역</th>
                       <th>유형</th>
                       <th class="boardtitle">제목</th>
                       <th>작성자</th>
@@ -67,7 +66,6 @@
                   </tr>
                   <tr th:each="board: ${boardList}">
                       <td th:text="${board.id}">106</td>
-                      <td>분당구</td>
                       <td>질문</td>
                       <td class="boardtitle" id="boardtitle"><a th:href="@{|/board/${board.id}|(page=${boardList.number + 1})}" th:text="${board.boardTitle}">2001아울렛에 아기랑 갈만한 음식점 있나요?</a></td>
                       <td th:text="${board.boardWriter}">youmiiii</td>
@@ -81,7 +79,7 @@
                   </tr>
               </table>
               <div id="writeboard">
-                  <button>새글작성</button>
+                  <button th:onclick="|location.href='@{/board/save}'|">새글작성</button>
               </div>
               <div id="paging">
                   <!-- 첫번째 페이지로 이동 -->
@@ -112,5 +110,8 @@
       </div>
 
   </div>
+  <!-- 사이드바html에 페이지별 버튼 활성화 추가하고 싶었는데 타임리프 fragment는 메인화면으로 js를 못 가져와서 모든 페이지 하단에 추가함 -->
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+  <script type="text/javascript" th:src="@{/js/menuactive.js}"></script>
 </body>
 </html>

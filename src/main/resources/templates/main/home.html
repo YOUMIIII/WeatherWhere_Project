@@ -2,7 +2,6 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <html lang="ko">
 <head>
-    <head>
         <meta charset="UTF-8">
         <title>홈</title>
         <link rel="stylesheet" type="text/css" href="../../static/css/home.css" th:href="@{/css/home.css}">
@@ -17,7 +16,6 @@
             h1.innerHTML = "<h1>" + now + "</h1>";
         }
     </script>
-    </head>
 </head>
 <body onload="showDate()">
     <div>
@@ -36,7 +34,7 @@
                     <p id="temLocation">성남시 분당구</p><p id="temNumber">15</p><p id="temMaxMin">최고 15 / 최저 0</p>
                 </div>
                 <div class="temperatureInfo">
-                    <img src="../../static/img/home/weather_sun.png" th:src="@{img/home/weather_sun.png}" width="140px">
+                    <img src="../../static/img/home/weather_sun.png" th:src="@{/img/home/weather_sun.png}" width="140px">
                 </div>
             </div>
             <div id="temperatureTable">
@@ -59,12 +57,12 @@
         <div class="mainLayout" id="cody">
             <h1>오늘의 추천 코디</h1>
             <div class="codyBox">
-                <div class="codyImg"><img src="../../static/img/clothes1.png" th:src="@{/img/clothes1.png}" width="60px"></div>
+                <div class="codyImg"><img th:src="@{/img/clothes1.png}" width="60px"></div>
                 <div class="codyName">자켓, 가디건</div>
                 <div><button>옷장보기</button></div>
             </div>
             <div class="codyBox">
-                <div class="codyImg"><img src="../../static/img/clothes2.png" th:src="@{/img/clothes2.png}" width="60px"></div>
+                <div class="codyImg"><img th:src="@{/img/clothes2.png}" width="60px"></div>
                 <div class="codyName">스타킹, 청바지, 면바지</div>
                 <div><button>옷장보기</button></div>
             </div>
@@ -114,5 +112,8 @@
             <div class="scheduleBox"></div>
         </div>
     </div>
+    <!-- 사이드바html에 페이지별 버튼 활성화 추가하고 싶었는데 타임리프 fragment는 메인화면으로 js를 못 가져와서 모든 페이지 하단에 추가함 -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <script type="text/javascript" th:src="@{/js/menuactive.js}"></script>
 </body>
 </html>

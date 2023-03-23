@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>새글작성</title>
+  <link rel="stylesheet" type="text/css" href="../../../static/css/infoboard.css" th:href="@{/css/infoboard.css}">
+</head>
+<body>
+  <div>
+    <div class="leftBar" th:insert="~{main/sidebar :: sidebar}">
+    </div>
+  </div>
+  <div class="maincontent">
+    <div class="introduce">
+      <div id="subT">지역별 정보</div>
+      <div>새글 작성</div>
+    </div>
+      <div id="form">
+        <form>
+          <div class="formlist">
+            <div class="input">
+              <select id="boardType">
+                <option>질문해요💛</option><option>추천해요💜</option></select>
+            </div>
+          </div>
+          <div class="formlist">
+            <div class="input">
+            <input type="text" id="boardTitle" placeholder="글 제목">
+            </div>
+          </div>
+          <div class="formlist">
+            <p>
+            <textarea id="boardContents" rows="25" placeholder="이 지역에 대해 궁금한 점이나 자랑하고 싶은 곳을 추천해주세요😄"></textarea>
+            </p>
+          </div>
+          <div>
+            <input type="file">
+          </div>
+          <div class="button">
+            <input type="submit" value="게시글작성">
+            <input type="button" value="목록보기" th:onclick="|location.href='@{/board/paging}'|">
+          </div>
+        </form>
+      </div>
+  </div>
+  <!-- 사이드바html에 페이지별 버튼 활성화 추가하고 싶었는데 타임리프 fragment는 메인화면으로 js를 못 가져와서 모든 페이지 하단에 추가함 -->
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+  <script type="text/javascript" th:src="@{/js/menuactive.js}"></script>
+</body>
+</html>

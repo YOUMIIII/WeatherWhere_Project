@@ -3,7 +3,8 @@
 
 
 #profile{
-    padding-top:30%;
+    padding-top:200px;
+    height:163px;
 }
 
 #logo, #profile .id{
@@ -12,9 +13,13 @@
     padding-bottom:30px;
 }
 
-#profile .id{
+.id{
     padding-top:10px;
     font-size:20px;
+}
+
+.main{
+    height:665px;
 }
 
 #nav{
@@ -31,7 +36,7 @@
 }
 
 #logout{
-    padding-top:90%;
+    padding-top:190px;
 }
 
 #logout a{
@@ -57,5 +62,9 @@
 }
 
 .menuIcon:hover .menuIconHover{
+    display:block;
+}
+
+li.active .menuIconHover{
     display:block;
 }

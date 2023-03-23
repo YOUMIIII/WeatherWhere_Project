@@ -101,3 +101,55 @@ th{
     text-align:right;
     margin-top:15px;
 }
+
+/* write.html */
+
+
+#form{
+    margin-top:20px;
+    margin-left:20px;
+    margin-right:20px;
+    border-radius:15px;
+    background-color:#EBEBEB;
+    width:90%;
+}
+
+#form form{
+    padding:15px;
+}
+
+.formlist{
+    margin:10px;
+}
+
+#boardTitle{
+    width:100%;
+    height:40px;
+    margin-top:10px;
+    border-top-width:0px;
+    border-left-width:0px;
+    border-right-width:0px;
+    border-bottom-width:0.5px;
+    border-color:#AAAAAA;
+    border-radius:5px;
+}
+
+#boardContents{
+    width:100%;
+    height:70%;
+    margin-top:20px;
+    border-color:#AAAAAA;
+    border-width:0.5px;
+    border-radius:5px;
+}
+
+.button{
+    text-align:center;
+}
+
+input[type="submit"]{
+
+    margin:20px;
+    /* 버튼 스타일 나중에 수정하기*/
+
+}

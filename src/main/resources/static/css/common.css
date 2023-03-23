@@ -65,7 +65,7 @@ a {
     background-color:#494F5B;
 }
 
-.maincontent{ /* 모든 페이지 최대한 통일하기 */
+.maincontent{ /* 사이드바 제외한 화면 - 모든 페이지 최대한 통일하기 */
     max-width:1100px;
     height:100%;
     font-size: 18px;
@@ -73,7 +73,6 @@ a {
 }
 
 .introduce{ /* 모든페이지 메인 제목 */
-    float:left;
     padding-top: 40px;
     padding-left:20px;
     padding-bottom:5px;

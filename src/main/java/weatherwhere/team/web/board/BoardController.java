@@ -25,8 +25,9 @@ public class BoardController {
     private final CommentService commentService;
 
     @GetMapping("/save")
-    public String saveForm() {
-        return "save";
+    public String saveForm(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model) {
+        model.addAttribute("member", loginMember);
+        return "main/infoboard/write";
     }
 
     @PostMapping("/save")
