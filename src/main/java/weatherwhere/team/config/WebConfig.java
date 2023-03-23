@@ -23,11 +23,11 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(new LogInterceptor()) //인터셉터 등록
                 .order(1) //인터셉터 호출 순서. 낮을수록 먼저 호출
                 .addPathPatterns("/**") //인터셉터 적용할 URL 패턴 지정
-                .excludePathPatterns("/css/**", "/*.ico", "/error"); //인터셉터에서 제외할 패턴 지정
+                .excludePathPatterns("/css/**", "/*.ico", "/error", "/img/**", "/js/**"); //인터셉터에서 제외할 패턴 지정
 
         registry.addInterceptor(new LoginCheckInterceptor())
                 .order(2)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/", "/login", "/members/join", "/logout", "/css/**", "/*.ico", "/error", "/region/insert");
+                .excludePathPatterns("/", "/login", "/members/join", "/logout", "/css/**", "/*.ico", "/error", "/region/insert",  "/img/**", "/js/**");
     }
 }
