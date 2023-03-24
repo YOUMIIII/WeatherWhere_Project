@@ -103,7 +103,7 @@ body{
     width: 45%;
 }
 
-#schedule div{
+#schedule div, #cody div{
     display:inline-block;
 }
 
@@ -141,7 +141,17 @@ body{
     font-size:15px;
 }
 
-
+button{
+    width:80px;
+    height:30px;
+    margin-left:190px;
+    font-size:13px;
+    border-radius:5px;
+    border:none;
+    background-color:#494F5B;
+    color:white;
+    cursor:pointer;
+}
 
 
 

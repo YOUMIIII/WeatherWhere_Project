@@ -3,7 +3,6 @@ package weatherwhere.team.web.member;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,15 +12,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import weatherwhere.team.domain.member.Location;
 import weatherwhere.team.domain.member.Member;
-import weatherwhere.team.repository.RegionJdbcRepository;
-import weatherwhere.team.repository.member.MemberJpaRepository;
-import weatherwhere.team.repository.member.MemberRepository;
 import weatherwhere.team.service.MemberService;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Slf4j
 @Controller

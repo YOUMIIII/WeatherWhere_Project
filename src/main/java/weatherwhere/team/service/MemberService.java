@@ -9,8 +9,8 @@ import weatherwhere.team.domain.member.Member;
 import weatherwhere.team.repository.RegionRepository;
 import weatherwhere.team.repository.member.MemberJpaRepository;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -53,8 +53,9 @@ public class MemberService {
     }
 
     public Member login(String userId,String userPw){
-        Member loginMember=memberJpaRepository.findLoginMember(userId,userPw);
-        return loginMember;
+        Optional<Member> loginMember=memberJpaRepository.findLoginMember(userId,userPw);
+        log.info("DB가 가져온 로그인 사용자 id : {}",loginMember.get().getUserId());
+        return loginMember.get();
     }
 
 }

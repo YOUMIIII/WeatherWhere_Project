@@ -51,8 +51,6 @@
                 <div>
                     <select id="userLocation" th:field="*{userLocation}">
                         <option value="">시/도 선택</option>
-                        <!--<option th:each="userLocationP : ${userLocationsP}" th:value="${userLocationP}" th:text="${userLocationP}" th:errorclass="field-error">서울특별시</option>-->
-<!--                     <option value="gangwondo">강원도</option>-->
                         <option value="서울특별시">서울특별시</option>
                         <option value="경기도">경기도</option>
                     </select>
@@ -60,7 +58,6 @@
                 <div>
                     <select id="userLocation2" th:field="*{userLocation2}">
                         <option value="">시/군/구 선택</option>
-                        <!--<option th:each="userLocationC : ${userLocationsC}" th:value="${userLocationC}" th:text="${userLocationC}" data-chained="${}" th:errorclass="field-error">용인시</option>-->
                         <option value="종로구" data-chained="서울특별시">종로구</option>
                         <option value="중구" data-chained="서울특별시">중구</option>
                         <option value="용산구" data-chained="서울특별시">용산구</option>
@@ -93,10 +90,9 @@
             <input type="button" th:onclick="|location.href='@{/login}'|" name="cancelBtn" value="취소">
         </div>
     </form>
-
-<script type="text/javascript" src="../../static/js/jquery-3.4.1.min.js" th:src="@{/js/jquery-3.4.1.min.js}"></script>
-<script type="text/javascript" src="../../static/js/jquery.chained.js" th:src="@{/js/jquery.chained.js}"></script>
-<script>
+    <script type="text/javascript" src="../../static/js/jquery-3.4.1.min.js" th:src="@{/js/jquery-3.4.1.min.js}"></script>
+    <script type="text/javascript" src="../../static/js/jquery.chained.js" th:src="@{/js/jquery.chained.js}"></script>
+    <script>
     $("#userLocation2").chainedTo("#userLocation");
 </script>
 </body>

@@ -55,20 +55,18 @@
             </div>
         </div>
         <div class="mainLayout" id="cody">
-            <h1>오늘의 추천 코디</h1>
+            <div><h1>오늘의 추천 코디</h1></div><div><button th:onclick="|location.href='@{/mypage/mycloset}'|">옷장보기</button></div>
             <div class="codyBox">
                 <div class="codyImg"><img th:src="@{/img/clothes1.png}" width="60px"></div>
                 <div class="codyName">자켓, 가디건</div>
-                <div><button>옷장보기</button></div>
             </div>
             <div class="codyBox">
                 <div class="codyImg"><img th:src="@{/img/clothes2.png}" width="60px"></div>
                 <div class="codyName">스타킹, 청바지, 면바지</div>
-                <div><button>옷장보기</button></div>
             </div>
         </div>
         <div class="mainLayout" id="schedule" th:fragment="schedule">
-            <div><h1>오늘 외출 스케줄</h1></div> <div><button>스케줄관리</button></div>
+            <div><h1>오늘 외출 스케줄</h1></div> <div><button th:onclick="|location.href='@{/schedule}'|">스케줄관리</button></div>
             <div class="scheduleBox" id="scheduleFirst">
                 <div class="scheduleContents">
                     <div class="time">

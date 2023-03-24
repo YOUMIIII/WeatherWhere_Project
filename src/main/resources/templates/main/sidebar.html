@@ -7,7 +7,7 @@
 <body>
 <div class="main" th:fragment="sidebar">
     <div>
-      <h1 id="logo">웨더웨어</h1>
+      <img id="logo" th:src="@{/img/logomain.png}" width="150px;"></img>
     </div>
       <div id="profile">
         <img src="../../static/img/profile2.png" th:src="@{/img/profile2.png}" width="100px">
@@ -19,7 +19,7 @@
             <li class="active"><a th:href="@{/}"><div class="menuIcon"><img th:src="@{/img/menu1.png}" width="100%"><div class="menuIconHover"><img th:src="@{/img/menu1_hover.png}" width="100%"></div></div></a></li>
             <li><a th:href="@{/schedule}"><div class="menuIcon"><img th:src="@{/img/menu2.png}" width="100%"><div class="menuIconHover"><img th:src="@{/img/menu2_hover.png}" width="100%"></div></div></a></li>
             <li><a th:href="@{/board/paging}"><div class="menuIcon"><img th:src="@{/img/menu3.png}" width="100%"><div class="menuIconHover"><img th:src="@{/img/menu3_hover.png}" width="100%"></div></div></a></li>
-            <li><a href="#"><div class="menuIcon"><img th:src="@{/img/menu4.png}" width="100%"><div class="menuIconHover"><img th:src="@{/img/menu4_hover.png}" width="100%"></div></div></a></li>
+            <li><a th:href="@{/mypage}"><div class="menuIcon"><img th:src="@{/img/menu4.png}" width="100%"><div class="menuIconHover"><img th:src="@{/img/menu4_hover.png}" width="100%"></div></div></a></li>
           </ul>
         </nav>
       </div>

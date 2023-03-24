@@ -46,7 +46,7 @@
         </div>
         <div class="changeForm">
             <div id="changeBtn">
-                <button>취소</button>
+                <button th:onclick="|location.href='@{/mypage}'|">취소</button>
                 <button type="reset">다시작성</button>
                 <button type="submit">수정</button>
             </div>
@@ -54,5 +54,7 @@
         </form>
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+<script type="text/javascript" th:src="@{/js/menuactive.js}"></script>
 </body>
 </html>

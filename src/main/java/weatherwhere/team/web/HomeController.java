@@ -7,9 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import weatherwhere.team.domain.Region;
 import weatherwhere.team.domain.member.Member;
-import weatherwhere.team.repository.member.MemberJpaRepository;
 import weatherwhere.team.repository.member.MemberRepository;
-import weatherwhere.team.service.MemberService;
 import weatherwhere.team.service.RegionService;
 
 
@@ -17,7 +15,7 @@ import weatherwhere.team.service.RegionService;
 @RequiredArgsConstructor
 public class HomeController {
 
-    private final MemberService memberService;
+    private final MemberRepository memberRepository;
     private final RegionService regionService;
 
 

@@ -38,12 +38,12 @@ public class MemberJpaRepository {
                 .getResultList();
     }
 
-    public Member findLoginMember(String userId, String userPw){
+    public Optional<Member> findLoginMember(String userId, String userPw){
         List<Member> resultList = em.createQuery("select m from Member m where m.userId=:userId and m.userPw=:userPw", Member.class)
                 .setParameter("userId", userId)
                 .setParameter("userPw", userPw)
                 .getResultList();
-        return resultList.isEmpty()? null:resultList.get(0);
+        return resultList.stream().findAny();
     }
 
 }

@@ -16,16 +16,18 @@
   </div>
   <div id="mypagebtn">
   <div>
-    <button onclick="href='/mypage/updatemyinfo'">🔖 정보수정</button>
+    <button th:onclick="|location.href='@{/mypage/update-infomation}'|">🔖 정보수정</button>
   </div>
   <div>
-    <button>👕 내옷장</button>
+    <button th:onclick="|location.href='@{/mypage/mycloset}'|">👕 내옷장</button>
   </div>
   <div>
-    <button>👍 즐겨찾기 게시글</button>
+    <button th:onclick="|location.href='@{/mypage/favorite}'|">👍 즐겨찾기 게시글</button>
   </div>
   </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+<script type="text/javascript" th:src="@{/js/menuactive.js}"></script>
 
 </body>
 </html>
