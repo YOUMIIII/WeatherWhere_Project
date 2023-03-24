@@ -53,9 +53,8 @@ public class MemberService {
     }
 
     public Member login(String userId,String userPw){
-        Optional<Member> loginMember=memberJpaRepository.findLoginMember(userId,userPw);
-        log.info("DB가 가져온 로그인 사용자 id : {}",loginMember.get().getUserId());
-        return loginMember.get();
+        Member loginMember=memberJpaRepository.findLoginMember(userId,userPw);
+        return loginMember;
     }
 
 }
