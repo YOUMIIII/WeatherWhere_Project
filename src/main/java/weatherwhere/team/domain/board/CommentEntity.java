@@ -9,24 +9,26 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@Table(name = "comment_table")
-public class CommentEntity extends BaseEntity {
+@Table(name = "commentTable")
+public class CommentEntity extends TimeEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //auto increment
     private Long id;
 
     @Column(length = 20, nullable = false)
     private String commentWriter;
+    //userId를 연동하는걸 해야할거 같은데 우선은 이렇게 따로 작동하도록
 
     @Column
     private String commentContents;
 
     /* Board:Comment = 1:N */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "board_id")
+    @JoinColumn(name = "boardId")
     private BoardEntity boardEntity;
 
 
+    //DTO를 엔티티로 타입 변경
     public static CommentEntity toSaveEntity(CommentDTO commentDTO, BoardEntity boardEntity) {
         CommentEntity commentEntity = new CommentEntity();
         commentEntity.setCommentWriter(commentDTO.getCommentWriter());

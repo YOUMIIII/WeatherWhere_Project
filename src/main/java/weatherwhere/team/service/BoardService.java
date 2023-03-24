@@ -38,15 +38,16 @@ public class BoardService {
         } else {
             // 첨부 파일 있음.
             /*
-                1. DTO에 담긴 파일을 꺼냄
-                2. 파일의 이름 가져옴
-                3. 서버 저장용 이름을 만듦
-                // 내사진.jpg => 839798375892_내사진.jpg
-                4. 저장 경로 설정
-                5. 해당 경로에 파일 저장
-                6. board_table에 해당 데이터 save 처리
-                7. board_file_table에 해당 데이터 save 처리
-             */
+             * 1. DTO에 담긴 파일을 꺼낸다.
+             * 2. 파일 이름을 가져온다.
+             * 3. 서버 저장용 이름을 만든다.
+             *    ex)사진.jpg -> 123456_사진.jpg
+             * 4. 저장 경로 설정
+             * 5. 해당 결로에 파일 저장
+             * 6. boardTable에 해당 데이터 save 처리
+             * 7. boardFile에 해당 데이터 save 처리
+             * */
+
             MultipartFile boardFile = boardDTO.getBoardFile(); // 1.
             String originalFilename = boardFile.getOriginalFilename(); // 2.
             String storedFileName = System.currentTimeMillis() + "_" + originalFilename; // 3.
@@ -117,8 +118,8 @@ public class BoardService {
         System.out.println("boardEntities.isFirst() = " + boardEntities.isFirst()); // 첫 페이지 여부
         System.out.println("boardEntities.isLast() = " + boardEntities.isLast()); // 마지막 페이지 여부
 
-        // 목록: id, writer, title, hits, createdTime
-        Page<BoardDTO> boardDTOS = boardEntities.map(board -> new BoardDTO(board.getId(), board.getBoardWriter(), board.getBoardTitle(), board.getBoardHits(), board.getCreatedTime()));
+        // 목록: id, postType, userid, title, hits, postdateTime
+        Page<BoardDTO> boardDTOS = boardEntities.map(board -> new BoardDTO(board.getId(), board.getPostType(), board.getUserId(), board.getTitle(), board.getHits(), board.getPostdateTime()));
         return boardDTOS;
     }
 }

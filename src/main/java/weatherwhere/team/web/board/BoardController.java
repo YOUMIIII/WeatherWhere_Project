@@ -34,7 +34,7 @@ public class BoardController {
     public String save(@ModelAttribute BoardDTO boardDTO) throws IOException {
         System.out.println("boardDTO = " + boardDTO);
         boardService.save(boardDTO);
-        return "index";
+        return "/paging";
     }
 
     @GetMapping("/board")
@@ -42,7 +42,7 @@ public class BoardController {
         // DB에서 전체 게시글 데이터를 가져와서 list.html에 보여준다.
         List<BoardDTO> boardDTOList = boardService.findAll();
         model.addAttribute("boardList", boardDTOList);
-        return "list";
+        return "paging";
     }
 
     @GetMapping("/{id}")

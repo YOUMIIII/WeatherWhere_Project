@@ -17,10 +17,10 @@
     </tr>
     <tr th:each="board: ${boardList}">
         <td th:text="${board.id}"></td>
-        <td><a th:href="@{|/board/${board.id}|(page=${boardList.number + 1})}" th:text="${board.boardTitle}"></a></td>
-        <td th:text="${board.boardWriter}"></td>
-        <td th:text="*{#temporals.format(board.boardCreatedTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
-        <td th:text="${board.boardHits}"></td>
+        <td><a th:href="@{|/board/${board.id}|(page=${boardList.number + 1})}" th:text="${board.title}"></a></td>
+        <td th:text="${board.userId}"></td>
+        <td th:text="*{#temporals.format(board.postdateTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+        <td th:text="${board.hits}"></td>
     </tr>
 </table>
 <!-- 첫번째 페이지로 이동 -->

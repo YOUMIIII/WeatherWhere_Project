@@ -14,24 +14,28 @@
         <td th:text="${board.id}"></td>
     </tr>
     <tr>
+        <th>postType</th>
+        <td th:text="${board.postType}"></td>
+    </tr>
+    <tr>
         <th>title</th>
-        <td th:text="${board.boardTitle}"></td>
+        <td th:text="${board.title}"></td>
     </tr>
     <tr>
         <th>writer</th>
-        <td th:text="${board.boardWriter}"></td>
+        <td th:text="${board.userId}"></td>
     </tr>
     <tr>
         <th>date</th>
-        <td th:text="${board.boardCreatedTime}"></td>
+        <td th:text="${board.postdateTime}"></td>
     </tr>
     <tr>
         <th>hits</th>
-        <td th:text="${board.boardHits}"></td>
+        <td th:text="${board.hits}"></td>
     </tr>
     <tr>
         <th>contents</th>
-        <td th:text="${board.boardContents}"></td>
+        <td th:text="${board.contents}"></td>
     </tr>
     <tr th:if="${board.fileAttached == 1}">
         <th>image</th>
@@ -62,7 +66,7 @@
             <td th:text="${comment.id}"></td>
             <td th:text="${comment.commentWriter}"></td>
             <td th:text="${comment.commentContents}"></td>
-            <td th:text="${comment.commentCreatedTime}"></td>
+            <td th:text="${comment.commentPostdate}"></td>
         </tr>
     </table>
 </div>
@@ -96,7 +100,7 @@
                    output += "<td>" + res[i].id + "</td>";
                    output += "<td>" + res[i].commentWriter + "</td>";
                    output += "<td>" + res[i].commentContents + "</td>";
-                   output += "<td>" + res[i].commentCreatedTime + "</td>";
+                   output += "<td>" + res[i].commentPostdate + "</td>";
                    output += "</tr>";
                }
                output += "</table>";

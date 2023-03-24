@@ -15,14 +15,14 @@ public class CommentDTO {
     private String commentWriter;
     private String commentContents;
     private Long boardId;
-    private LocalDateTime commentCreatedTime;
+    private LocalDateTime commentPostdate;
 
     public static CommentDTO toCommentDTO(CommentEntity commentEntity, Long boardId) {
         CommentDTO commentDTO = new CommentDTO();
         commentDTO.setId(commentEntity.getId());
         commentDTO.setCommentWriter(commentEntity.getCommentWriter());
         commentDTO.setCommentContents(commentEntity.getCommentContents());
-        commentDTO.setCommentCreatedTime(commentEntity.getCreatedTime());
+        commentDTO.setCommentPostdate(commentEntity.getPostdateTime());
         commentDTO.setBoardId(boardId);
         return commentDTO;
     }

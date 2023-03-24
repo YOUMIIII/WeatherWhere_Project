@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Table(name = "board_file_table")
-public class BoardFileEntity extends BaseEntity {
+public class BoardFileEntity extends TimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,8 +20,8 @@ public class BoardFileEntity extends BaseEntity {
     @Column
     private String storedFileName;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "board_id")
+    @ManyToOne(fetch = FetchType.LAZY)// LAZY 지연로딩, EAGER 즉시로딩,  FetchType 기본은 EAGER
+    @JoinColumn(name = "boardId") // 외래키???
     private BoardEntity boardEntity;
 
     public static BoardFileEntity toBoardFileEntity(BoardEntity boardEntity, String originalFileName, String storedFileName) {
