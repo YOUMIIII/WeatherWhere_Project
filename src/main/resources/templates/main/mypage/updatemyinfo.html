@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>정보수정</title>
+    <link rel="stylesheet" type="text/css" href="../../../static/css/mypage.css" th:href="@{/css/mypage.css}">
+</head>
+<body>
+<div>
+    <div class="leftBar" th:insert="~{main/sidebar :: sidebar}">
+    </div>
+</div>
+<div class="maincontent">
+    <div class="introduce">
+        <div id="topT">마이페이지</div>
+        <div>정보수정</div>
+        <div id="subT">나의 정보를 수정합니다.<br>
+            개인정보 보호를 위해 비밀번호는 주기적으로 변경을 권장드려요!
+        </div>
+    </div>
+    <div id="form">
+        <form>
+        <div class="changeForm">
+            <div class="label"><label for="changePw">비밀번호</label></div>
+            <div class="input"><input type="text" id="changePw"></div>
+        </div>
+        <div class="changeForm">
+            <div class="label"><label for="changeMail">이메일</label></div>
+            <div class="input"><input type="text" id="changeMail"></div>
+        </div>
+        <div class="changeForm">
+            <div class="label"><label>설정지역</label></div>
+            <select>
+                <option value="">시/도 선택</option>
+                <option>서울특별시</option>
+            </select>
+            <select id="userLocation2">
+                <option value="">시/군/구 선택</option>
+                <option>세종특별자치시</option>
+            </select>
+        </div>
+        <div class="changeForm">
+            <div class="label"><label for="changePhoto">프로필사진</label></div>
+            <div class="input"><input type="file" id="changePhoto"></div>
+        </div>
+        <div class="changeForm">
+            <div id="changeBtn">
+                <button>취소</button>
+                <button type="reset">다시작성</button>
+                <button type="submit">수정</button>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,142 @@
+@import url('common.css');
+@import url('sidebar.css');
+
+#mypagebtn{
+    text-align:center;
+    margin-top:150px;
+}
+
+button{
+    margin-bottom:50px;
+    width:300px;
+    height:70px;
+    border:none;
+    border-radius:10px;
+    font-size:20px;
+    background-color:#494F5B;
+    color:white;
+    cursor:pointer;
+}
+
+#form{
+    margin-left:20%;
+    margin-top:50px;
+    padding-top:30px;
+    padding-bottom:80px;
+    width:50%;
+}
+
+.changeForm div{
+    display:inline-block;
+
+}
+
+.label{
+    margin-right:30px;
+    margin-top:30px;
+    width:200px;
+    text-align:right;
+}
+
+input{
+    width:200px;
+    height:25px;
+}
+
+#changeBtn{
+    margin-left:150px;
+    margin-top:70px;
+}
+
+select{
+    width:100px;
+    height:25px;
+}
+
+#changeBtn button{
+    width:80px;
+    height:35px;
+    font-size:15px;
+    border-radius:5px;
+    margin-right:10px;
+}
+
+/* 즐겨찾기게시글 */
+
+#mainLayout{
+    margin-top:30px;
+}
+
+#optionselect{
+    margin-left:20px;
+    margin-right:230px;
+}
+
+#option div{
+    display:inline-block;
+}
+
+select{
+    width:120px;
+    height:30px;
+}
+
+#searchbox{
+    width:280px;
+    height:25px;
+}
+
+#board{
+    width:90%;
+    margin-left:15px;
+}
+
+table{
+    horizontal-align:middle;
+    width:100%;
+    font-size:15px;
+}
+
+th, td{
+    text-align:center;
+    vertical-align:middle;
+    width:50px;
+    height:45px;
+    border-bottom:0.3px solid #2D3037;
+}
+
+th{
+    background-color:#A3ABBB;
+}
+
+.boardtitle{
+    width:200px;
+}
+
+#boardtitle{
+    text-align:left;
+}
+
+#paging{
+    margin-top:20px;
+    text-align:center;
+}
+
+#paging a{
+    font-size:14px;
+    margin:10px;
+}
+
+
+
+a{
+    cursor:pointer;
+}
+
+.favBtn{
+    width:80px;
+    height:30px;
+    font-size:15px;
+    border-radius:5px;
+    margin-bottom:10px;
+}

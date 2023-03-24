@@ -116,6 +116,47 @@ input[type="checkbox"]{
     color:#999;
 }
 
+/* 회원가입완료 css */
+
+#background{
+    background-color:#494F5B;
+
+}
+
+#successbackground{
+    margin-top:100px;
+    padding-top:100%;
+    width:600px;
+    background-size:contain;
+    background-repeat:no-repeat;
+    position:relative;
+    vertical-align:middle;
+    text-align:center;
+}
+
+#set{
+    position:absolute;
+    top:43%;
+    left:50%; /* 왜인지 모르겠지만 div는 이걸 넣어야 가운데로 옴 */
+    transform: translate( -50%, -50%);
+}
+
+#sucesstext{
+    line-height:45px;
+    font-size:25px;
+    width:400px;
+    margin-bottom:30px;
+}
+
+button{
+    width:100px;
+    height:40px;
+    background-color:#2D3037;
+    border:none;
+    border-radius:5px;
+    color:white;
+    cursor:pointer;
+}
 
 
 

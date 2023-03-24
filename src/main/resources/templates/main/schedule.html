@@ -3,8 +3,8 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" type="text/css" href="../../static/css/home.css" th:href="@{/css/home.css}">
+    <title>스케줄관리</title>
+    <link rel="stylesheet" type="text/css" href="../../static/css/schedule.css" th:href="@{/css/schedule.css}">
 
 </head>
 <body>
@@ -12,17 +12,18 @@
         <div class="leftBar" th:insert="~{main/sidebar :: sidebar}">
         </div>
     </div>
+    <div class="maincontent">
     <div class="introduce">
         <h1>스케줄 관리</h1>
-        <h2 id="subT"><span>jojo39</span>님의 외출 스케줄 입니다!</h2>
+        <h2 id="subT"><span th:text="${member.userId}">jojo39</span>님의 외출 스케줄 입니다!</h2>
     </div>
-    <div class="mainLayout" id="todayschedule">
-        <h1>오늘의 외출 스케줄</h1>
+    <div id="todayschedule" th:insert="~{main/home :: schedule}">
+        <!--<h1>오늘의 외출 스케줄</h1>
         <ul>
             <li>08:00 출근</li>
             <li>18:00 퇴근</li>
             <li>19:00 만두산책</li>
-        </ul>
+        </ul>-->
     </div>
     <div class="mainLayout" id="routine">
         <h1>나만의 외출 루틴 체크리스트</h1>
@@ -75,6 +76,7 @@
                 <td><ul></ul></td>
             </tr>
         </table>
+    </div>
     </div>
     <!-- 사이드바html에 페이지별 버튼 활성화 추가하고 싶었는데 타임리프 fragment는 메인화면으로 js를 못 가져와서 모든 페이지 하단에 추가함 -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>마이페이지</title>
+    <link rel="stylesheet" type="text/css" href="../../static/css/mypage.css" th:href="@{/css/mypage.css}">
+</head>
+<body>
+<div>
+  <div class="leftBar" th:insert="~{main/sidebar :: sidebar}">
+  </div>
+</div>
+<div class="maincontent">
+  <div class="introduce">
+    <h1>마이페이지</h1>
+  </div>
+  <div id="mypagebtn">
+  <div>
+    <button onclick="href='/mypage/updatemyinfo'">🔖 정보수정</button>
+  </div>
+  <div>
+    <button>👕 내옷장</button>
+  </div>
+  <div>
+    <button>👍 즐겨찾기 게시글</button>
+  </div>
+  </div>
+</div>
+
+</body>
+</html>
