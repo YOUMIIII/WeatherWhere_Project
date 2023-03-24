@@ -136,3 +136,5 @@ function isAllCheck(boxNames, allChkName){
     //일치할 경우 천제 체크 박스는 체크, 일치하지 않을 경우 해제
     document.getElementById(allChkName).checked = chkMode;
 }
+
+

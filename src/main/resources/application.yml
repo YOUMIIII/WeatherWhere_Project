@@ -5,13 +5,13 @@ spring:
   profiles:
 #    active: none
 #    active: dev-dy
-    active: dev-youmi
-#    active: dev-yw
+#    active: dev-youmi
+    active: dev-yw
   datasource:
-    username: teampj
+#    username: teampj
 #    username: 예워니꺼
 #    username: c##dayi
-    password: 1234
+#    password: 1234
     #initialization-mode: always
     hikari:
       data-source-properties:
@@ -81,8 +81,10 @@ spring:
     activate:
       on-profile: dev-yw
   datasource:
-    url: jdbc:h2:tcp://localhost/~/weathertest
+    url: jdbc:oracle:thin:@//localhost:1521/xe
+    username: c##scott
+    password: tiger
 logging.level:
   org.springframework.jdbc.core: trace
 resources:
-  location: C:/app/JavaProject/22delta23alpha/HtmlPractice/storage
+  location: C:/app/JavaProject/22delta23alpha/TeamProject/storage

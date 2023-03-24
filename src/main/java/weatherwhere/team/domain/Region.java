@@ -39,14 +39,14 @@ public class Region {
     @Column(name = "region_id")
     private Long id; // 지역 순번
 
-    @Column(name = "region_upper")
+    @Column(name = "parent_region")
     private String parentRegion; // 시, 도
 
-    @Column(name = "region_lower")
+    @Column(name = "child_region")
     private String childRegion; // 시, 군, 구
 
-    @Column(name = "region_lower2")
-    private String childRegion2; // 동
+//    @Column(name = "region_lower2")
+//    private String childRegion2; // 동
 
     private int nx; // x좌표
 
@@ -72,13 +72,15 @@ public class Region {
             while ((line = br.readLine()) != null) {
 //                log.info("line : {}", line);
                 String[] splits = line.split(",");
-                Region region=new Region();
-                region.setParentRegion(splits[1]);//시,도
-                region.setChildRegion(splits[2]);//시,군,구
-                region.setChildRegion2(splits[3]);//동
-                region.setNx(Integer.parseInt(splits[4]));//Nx
-                region.setNy(Integer.parseInt(splits[5]));//Ny
-                regions.add(region);
+                if(splits[3].isEmpty()){
+                    Region region=new Region();
+                    region.setParentRegion(splits[1]);//시,도
+                    region.setChildRegion(splits[2]);//시,군,구
+//                region.setChildRegion2(splits[3]);//동
+                    region.setNx(Integer.parseInt(splits[4]));//Nx
+                    region.setNy(Integer.parseInt(splits[5]));//Ny
+                    regions.add(region);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();

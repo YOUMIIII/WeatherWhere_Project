@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import weatherwhere.team.domain.member.Member;
+import weatherwhere.team.repository.member.MemberJpaRepository;
 import weatherwhere.team.repository.member.MemberRepository;
+import weatherwhere.team.service.MemberService;
 import weatherwhere.team.web.SessionConst;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,8 +23,7 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class LoginController {
 
-//    private final LoginService loginService;
-    private final MemberRepository memberRepository;
+    private final MemberService memberService;
 
     @GetMapping("/login") //로그인 폼을 보여주는 매핑
     public String loginForm(@ModelAttribute("loginForm") weatherwhere.team.web.login.LoginForm form){
@@ -35,7 +36,8 @@ public class LoginController {
             return "login/login";
         }
 
-        Member loginMember = memberRepository.login(form.getLoginId(), form.getLoginPw());
+        //userId , userPw 로
+        Member loginMember = memberService.login(form.getLoginId(), form.getLoginPw());
 
         if(loginMember == null){
             bindingResult.reject("loginFail", "입력하신 아이디나 비밀번호를 확인해주세요.");

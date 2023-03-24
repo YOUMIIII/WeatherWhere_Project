@@ -49,16 +49,27 @@
             <div class="info">
                 <div class="label">설정지역</div>
                 <div>
-                    <select th:field="*{userLocation}">
+                    <select id="userLocation" th:field="*{userLocation}">
                         <option value="">시/도 선택</option>
-                        <option th:each="userLocation : ${userLocations}" th:value="${userLocation.code}" th:text="${userLocation.displayName}" th:errorclass="field-error">서울특별시</option>
-                    <!--                    <option value="gangwondo">강원도</option>-->
+                        <!--<option th:each="userLocationP : ${userLocationsP}" th:value="${userLocationP}" th:text="${userLocationP}" th:errorclass="field-error">서울특별시</option>-->
+<!--                     <option value="gangwondo">강원도</option>-->
+                        <option value="서울특별시">서울특별시</option>
+                        <option value="경기도">경기도</option>
                     </select>
                 </div>
                 <div>
                     <select id="userLocation2" th:field="*{userLocation2}">
                         <option value="">시/군/구 선택</option>
-                        <option th:each="userLocation2 : ${userLocation2}" th:value="${userLocation2.code}" th:text="${userLocation2.displayName}" th:errorclass="field-error">용인시</option>
+                        <!--<option th:each="userLocationC : ${userLocationsC}" th:value="${userLocationC}" th:text="${userLocationC}" data-chained="${}" th:errorclass="field-error">용인시</option>-->
+                        <option value="종로구" data-chained="서울특별시">종로구</option>
+                        <option value="중구" data-chained="서울특별시">중구</option>
+                        <option value="용산구" data-chained="서울특별시">용산구</option>
+                        <option value="성남시수정구" data-chained="경기도">성남시수정구</option>
+                        <option value="성남시중원구" data-chained="경기도">성남시중원구</option>
+                        <option value="성남시분당구" data-chained="경기도">성남시분당구</option>
+                        <option value="용인시처인구" data-chained="경기도">용인시처인구</option>
+                        <option value="용인시기흥구" data-chained="경기도">용인시기흥구</option>
+                        <option value="용인시수지구" data-chained="경기도">용인시수지구</option>
                     </select>
                 </div>
                 <p class="field-error" th:errors="*{userLocation}"></p>
@@ -82,5 +93,11 @@
             <input type="button" th:onclick="|location.href='@{/login}'|" name="cancelBtn" value="취소">
         </div>
     </form>
+
+<script type="text/javascript" src="../../static/js/jquery-3.4.1.min.js" th:src="@{/js/jquery-3.4.1.min.js}"></script>
+<script type="text/javascript" src="../../static/js/jquery.chained.js" th:src="@{/js/jquery.chained.js}"></script>
+<script>
+    $("#userLocation2").chainedTo("#userLocation");
+</script>
 </body>
 </html>

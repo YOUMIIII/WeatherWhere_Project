@@ -1,16 +1,21 @@
 package weatherwhere.team.repository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import weatherwhere.team.domain.Region;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
+@Slf4j
 public class RegionRepository {
 
+    @PersistenceContext
     private final EntityManager em;
 
     public void save(Region region){
@@ -26,5 +31,32 @@ public class RegionRepository {
                 .getResultList();
     }
 
+    public List<String> findDistinctParent(){
+        return em.createQuery("select distinct r.parentRegion from Region r",String.class)
+                .getResultList();
+    }
+
+    public List<Region> findByParent(String parentRegion){
+        return em.createQuery("select r from Region r where r.parentRegion = :parent_region",Region.class)
+                .setParameter("parent_region",parentRegion)
+                .getResultList();
+    }
+
+    /**
+     * parent region(시,도) child region(시,구,동)을 입력하면 지역 ID 를 가져옵니다.
+     * 회원가입 폼, 회원 수정 폼, 스케줄 생성 폼 등에서 사용
+     * 입력 폼은 현재 하드코딩된 상태 
+     * @param parentRegion
+     * @param childRegion
+     * @return
+     */
+    public Optional<Region> findByParentChild(String parentRegion, String childRegion){
+        List<Region> resultList = em.createQuery("select r from Region r where r.parentRegion = :parent_region and r.childRegion = :child_region", Region.class)
+                .setParameter("parent_region", parentRegion)
+                .setParameter("child_region", childRegion)
+                .getResultList();
+        log.info("resultList 사이즈 : {}",resultList.size());
+        return resultList.stream().findAny();
+    }
 
 }

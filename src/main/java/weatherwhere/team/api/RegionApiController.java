@@ -19,9 +19,5 @@ public class RegionApiController {
         return "ok";
     }
 
-    @GetMapping(value="/region/{regionId}")
-    public String regionWeather(){
 
-        return "weather inserted";
-    }
 }
