@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>내옷 추가</title>
+    <link rel="stylesheet" type="text/css" href="../../../static/css/mypage.css" th:href="@{/css/mypage.css}">
+</head>
+<body>
+  <div>
+    <div class="leftBar" th:insert="~{main/sidebar :: sidebar}">
+    </div>
+  </div>
+  <div class="maincontent">
+    <div class="introduce">
+      <div id="subT">마이페이지 > 내 옷장</div>
+      <div>옷 추가</div>
+    </div>
+    <di>
+      <form>
+        <div>
+          <select id="select1" onchange="itemChange(this)">
+            <option value="">상/하의 선택</option>
+            <option value="top">상의</option>
+            <option value="bottom">하의</option>
+          </select>
+        </div>
+        <div>
+          <select id="select2" onchange="itemChange2(this)">
+            <option>분류선택</option>
+          </select>
+          <select id="select3">
+            <option>-</option>
+          </select>
+        </div>
+        <div>
+          <input type="text" placeholder="옷 이름">
+        </div>
+        <div>
+          <input type="text" placeholder="구매한 곳">
+        </div>
+
+        <div id="colorbox">
+          <datalist id="colorlist">
+            <option>#000000</option>
+            <option>#F1F1F1</option>
+            <option>#FF5A5A</option>
+            <option>#FF9551</option>
+            <option>#FFDA68</option>
+            <option>#D7E9B9</option>
+            <option>#5685FF</option>
+            <option>#414979</option>
+            <option>#AA77FF</option>
+            <option>#F7C8E0</option>
+            <option>#D9D9D9</option>
+          </datalist>
+          <input id="colorselect" type="color" list="colorlist">
+        </div>
+        <div>
+          <input type="file">
+        </div>
+      </form>
+    </di>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="../../../static/js/selectbox.js"></script>
+</body>
+</html>

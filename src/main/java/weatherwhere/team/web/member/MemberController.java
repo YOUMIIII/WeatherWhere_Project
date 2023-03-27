@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import weatherwhere.team.domain.member.Member;
 import weatherwhere.team.service.MemberService;
 
@@ -31,7 +30,7 @@ public class MemberController {
     }
 
     @PostMapping("/join")
-    public String save(Model model,@Validated @ModelAttribute("memberJoinForm") weatherwhere.team.web.member.MemberJoinForm form, BindingResult bindingResult, RedirectAttributes redirectAttributes){
+    public String save(Model model,@Validated @ModelAttribute("memberJoinForm") weatherwhere.team.web.member.MemberJoinForm form, BindingResult bindingResult){
 
         if(!(form.getUserPw().equals(form.getUserPwCheck()))){
             bindingResult.reject("pwError","작성하신 비밀번호가 일치하지 않습니다.");
@@ -51,10 +50,13 @@ public class MemberController {
         );
 
         //가입한 멤버의 id 리턴
-        redirectAttributes.addAttribute("itemId", memberService.join(member));
-        redirectAttributes.addAttribute("status", true);
+//        model.addAttribute("joinId", memberService.join(member));
+        model.addAttribute("joinId", form.getUserId());
+        model.addAttribute("status", true);
 
-        return "redirect:/login";
+        //회원가입완료페이지 추가됨.
+        return "members/signupsuccess";
+//        return "redirect:/login";
     }
 
 

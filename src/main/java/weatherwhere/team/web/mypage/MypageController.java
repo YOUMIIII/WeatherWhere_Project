@@ -53,6 +53,14 @@ public class MypageController {
         return "main/mypage/mycloset";
     }
 
+    @GetMapping("/diary")
+    public String diary(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){
+
+        //세션이 유지되면 스케줄으로 이동
+        model.addAttribute("member", loginMember);
+        return "main/mypage/diary";
+    }
+
     @GetMapping("/favorite")
     public String myFavorite(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, @PageableDefault(page = 1) Pageable pageable, Model model){
 //        pageable.getPageNumber();

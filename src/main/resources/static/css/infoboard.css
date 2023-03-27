@@ -164,3 +164,64 @@ input[type="submit"], button{
 a{
     cursor:pointer;
 }
+
+/*  */
+
+.boarddetail{
+    width:90%;
+    border-top:0.3px solid #2D3037;
+    border-right:0.3px solid #2D3037;
+    border-left:0.3px solid #2D3037;
+    border-bottom:0.3px solid #2D3037;
+
+}
+
+.boarddetail tr td{
+    width:10%;
+    border-right:0.3px solid #2D3037;
+}
+
+.boarddetail tr th{
+    background-color:white;
+    border-right:0.3px solid #2D3037;
+
+}
+
+.boarddetail #boardcontent{
+    height:500px;
+    text-align:left;
+}
+
+.boarddetail #boardcontent td{
+    text-align:left;
+    vertical-align:top;
+    padding:20px;
+}
+
+#addfavorite{
+    width:100px;
+    margin-right:600px;
+}
+
+#boarddetailmain, #comment-write{
+    margin-top:20px;
+    margin-left:20px;
+}
+
+#comment-write input{
+    height:30px;
+}
+
+#commentContents{
+    width:68%;
+}
+
+#comment-list{
+    width:90%;
+    margin-bottom:40px;
+}
+
+#comment-list th{
+    background-color:white;
+
+}

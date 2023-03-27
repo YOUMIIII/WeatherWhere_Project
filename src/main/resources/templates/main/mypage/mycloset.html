@@ -1,10 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <title>내 옷장</title>
     <link rel="stylesheet" type="text/css" href="../../../static/css/mypage.css" th:href="@{/css/mypage.css}">
+
+    <style>
+        .clothcolor{
+            background-color:#5685FF;
+        }
+    </style>
 </head>
 <body>
 <div>
@@ -13,12 +19,93 @@
 </div>
 <div class="maincontent">
   <div class="introduce">
-      <div id="subT">마이페이지</div>
-      <div>내 옷장</div>
+    <div id="subT">마이페이지</div>
+    <div>내 옷장</div>
+  </div>
+  <div class="mainLayout">
+    <div class="tab">
+        <ul>
+            <li data-tab="menu1"><a href="#" class="on" >전체</a></li>
+            <li data-tab="menu2"><a href="#">즐겨찾는옷</a></li>
+            <li data-tab="menu3"><a href="#">상의</a>
+                <ul class="subtab">
+                    <li><a>민소매</a></li>
+                    <li><a>반팔</a></li>
+                    <li><a>긴팔</a></li>
+                    <li><a>외투</a></li>
+                </ul>
+            </li>
+            <li data-tab="menu4"><a href="#">하의</a>
+                <ul class="subtab">
+                    <li><a>반바지</a></li>
+                    <li><a>면바지</a></li>
+                    <li><a>청바지</a></li>
+                    <li><a>치마</a></li>
+                </ul>
+            </li>
+            <li data-tab="menu5"><a href="#">기타</a>
+            </li>
+        </ul>
+    </div>
+    <div class="closetbox">
+        <div id="button"><button id="addcloth">내옷 추가</button></div>
+        <div id="menu1" class="tabcont on">
+            <div class="closetcontent">
+                <div class="cloth">
+                    <div class="clothimg"><img src="../../../static/img/mypage/jean.png" alt="옷사진" width="140px"></div>
+                    <div class="clothcolor">
+                        <div class="clothcontent">
+                            <div class="content">
+                                <div class="clothbuy"><span>자라</span> 구매</div>
+                                <div class="clothname"><span>진청바지</span></div>
+                            </div>
+                            <div class="content"><img src="../../../static/img/mypage/heart.png"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cloth">
+                    <div class="clothimg"><img src="../../../static/img/mypage/jean.png" alt="옷사진" width="140px"></div>
+                    <div class="clothcolor">
+                        <div class="clothcontent">
+                            <div class="content">
+                                <div class="clothbuy"><span>자라</span> 구매</div>
+                                <div class="clothname"><span>진청바지</span></div>
+                            </div>
+                            <div class="content"><img src="../../../static/img/mypage/heart.png"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="menu2" class="tabcont">
+            <h1>menu2</h1>
+        </div>
+        <div id="menu3" class="tabcont">
+            <h1>menu3</h1>
+        </div>
+        <div id="menu4" class="tabcont">
+            <h1>menu4</h1>
+        </div>
+        <div id="menu5" class="tabcont">
+            <h1>menu5</h1>
+        </div>
+
+    </div>
   </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
 <script type="text/javascript" th:src="@{/js/menuactive.js}"></script>
-
+<script>
+    //mycloset.html 에 옷분류 메뉴 js파일로 빼려고했는데 안먹혀서 차후 이동예정.
+    $(function() {
+    			$('.tab ul li').click(function() {
+    				var activeTab = $(this).attr('data-tab');
+    				$('.tab ul li').removeClass('on');
+    				$('.tabcont').removeClass('on');
+    				$(this).addClass('on');
+    				$('#' + activeTab).addClass('on');
+    			})
+    		});
+</script>
 </body>
 </html>

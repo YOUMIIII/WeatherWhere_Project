@@ -140,3 +140,122 @@ a{
     border-radius:5px;
     margin-bottom:10px;
 }
+
+/* mycloset */
+
+.tab{
+    margin-left:-25px;
+    margin-top:30px;
+    text-align:center;
+}
+
+.tab ul li{
+    float:left;
+    position:relative;
+    width:140px;
+    font-size:25px;
+}
+
+.tab a{ /* 기본 의류 분류 탭 */
+    color:#7B818D;
+}
+
+.tab ul li ul{ /* 서브 의류 분류 안보이게 */
+    display:none;
+    position:absolute;
+    width:130px;
+}
+
+.tab li:hover a{ /* 기본 의류 분류가 hover되었을때 색깔 */
+    color:#2D3037;
+}
+
+.tab li:hover ul li a{ /* 기본 의류 분류가 hover되었을때 서브 의류 분류 색깔 */
+    color:#7B818D;
+    font-size:20px;
+}
+
+.tab li:hover ul{ /* 기본 의류 분류가 hover되었을때 서브 의류 분류 보임 효과 */
+    display:block;
+}
+
+.tab ul li ul li:hover a{ /* 서브 의류 분류가 hover되었을때 색깔 */
+    color:#2D3037;
+}
+
+.tabcont{
+	display: none;
+	position:absolute;
+	margin-top: -40px;
+	margin-left: 20px;
+	background-color:#EBEBEB;
+	border-radius:5px;
+	width:70%;
+	padding:20px;
+}
+
+.tabcont.on {
+	display: block;
+}
+
+.clothimg{
+    padding:20px 60px;
+    background-color:white;
+    border-bottom:1px solid #BFBFBF;
+}
+
+.clothcontent{
+    background-color:white;
+    margin-left:10px;
+}
+
+.clothcontent .content{
+    display:inline-block;
+    vertical-align:middle;
+    padding:15px;
+}
+
+.content img{
+    padding-left:600%;
+}
+
+.clothbuy{
+    font-size:10px;
+}
+
+.clothname{
+    font-size:20px;
+    margin-top:5px;
+}
+
+.cloth{
+    display:inline-block;
+    margin-left:10px;
+    margin-right:10px;
+    margin-top:10px;
+    border:1px solid #BFBFBF;
+}
+
+#addcloth{
+    width:90px;
+    height:35px;
+    font-size:15px;
+    border-radius:5px;
+    margin-left:90%;
+    display:absolute;
+    margin-top:-10px;
+}
+
+#colorbox div{
+    display:inline-block;
+}
+
+.colorbox1{
+    width:70px;
+    height:30px;
+    background-color:#FF5A5A;
+}
+
+#colorselect{
+    width:100px;
+}

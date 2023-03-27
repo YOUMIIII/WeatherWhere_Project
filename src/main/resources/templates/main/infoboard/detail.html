@@ -1,75 +1,84 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>detail</title>
-    <!-- jquery cdn -->
+    <title>정보게시판</title>
+    <link rel="stylesheet" type="text/css" href="../../../static/css/infoboard.css" th:href="@{/css/infoboard.css}">
     <script src="https://code.jquery.com/jquery-3.6.3.min.js"
             integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
 </head>
 <body>
-<table>
-    <tr>
-        <th>id</th>
-        <td th:text="${board.id}"></td>
-    </tr>
-    <tr>
-        <th>postType</th>
-        <td th:text="${board.postType}"></td>
-    </tr>
-    <tr>
-        <th>title</th>
-        <td th:text="${board.title}"></td>
-    </tr>
-    <tr>
-        <th>writer</th>
-        <td th:text="${board.userId}"></td>
-    </tr>
-    <tr>
-        <th>date</th>
-        <td th:text="${board.postdateTime}"></td>
-    </tr>
-    <tr>
-        <th>hits</th>
-        <td th:text="${board.hits}"></td>
-    </tr>
-    <tr>
-        <th>contents</th>
-        <td th:text="${board.contents}"></td>
-    </tr>
-    <tr th:if="${board.fileAttached == 1}">
-        <th>image</th>
-        <td><img th:src="@{|/upload/${board.storedFileName}|}" alt=""></td>
-    </tr>
-</table>
-<button onclick="listReq()">목록</button>
-<button onclick="updateReq()">수정</button>
-<button onclick="deleteReq()">삭제</button>
+<div>
+    <div class="leftBar" th:insert="~{main/sidebar :: sidebar}">
+    </div>
+</div>
+<div class="maincontent">
+    <div class="introduce">
+        <div id="topT">지역별 정보</div>
+        <div>글 상세 보기</div>
+    </div>
+    <div id="boarddetailmain">
+        <div id="boarddetailbtn">
+            <button id="addfavorite" onclick="">즐겨찾기 추가</button>
+            <button onclick="listReq()">목록</button>
+            <button onclick="updateReq()">수정</button>
+            <button onclick="deleteReq()">삭제</button>
+        </div>
+        <table class="boarddetail">
+            <tr>
+                <th>글번호</th>
+                <td th:text="${board.id}">2</td>
+                <th>유형</th>
+                <td th:text="${board.postType}">질문해요</td>
+                <th>조회수</th>
+                <td th:text="${board.hits}"></td>
+                <th>작성자</th>
+                <td th:text="${board.userId}"></td>
+                <th>작성일</th>
+                <td th:text="${board.postdateTime}"></td>
+            </tr>
+            <tr>
+                <th colspan="2">제목</th>
+                <td colspan="8" th:text="${board.title}"></td>
+            </tr>
+            <tr id="boardcontent">
+                <td colspan="10" th:text="${board.contents}">안녕하세요, 질문합니다.</td>
+            </tr>
+            <tr th:if="${board.fileAttached == 1}">
+                <th>image</th>
+                <td colspan="9"><img th:src="@{|/upload/${board.storedFileName}|}" alt=""></td>
+            </tr>
+        </table>
+    </div>
 
-<!-- 댓글 작성 부분 -->
-<div id="comment-write">
-    <input type="text" id="commentWriter" placeholder="작성자">
-    <input type="text" id="commentContents" placeholder="내용">
-    <button id="comment-write-btn" onclick="commentWrite()">댓글작성</button>
+
+    <!-- 댓글 작성 부분 -->
+    <div id="comment-write">
+        <input type="text" id="commentWriter" placeholder="작성자">
+        <input type="text" id="commentContents" placeholder="내용">
+        <button id="comment-write-btn" onclick="commentWrite()">댓글작성</button>
+    </div>
+
+    <!-- 댓글 출력 부분 -->
+    <div id="comment-list">
+        <table>
+            <tr>
+                <th>댓글번호</th>
+                <th>작성자</th>
+                <th>내용</th>
+                <th>작성시간</th>
+            </tr>
+            <tr th:each="comment: ${commentList}">
+                <td th:text="${comment.id}"></td>
+                <td th:text="${comment.commentWriter}"></td>
+                <td th:text="${comment.commentContents}"></td>
+                <td th:text="${comment.commentPostdate}"></td>
+            </tr>
+        </table>
+    </div>
 </div>
 
-<!-- 댓글 출력 부분 -->
-<div id="comment-list">
-    <table>
-        <tr>
-            <th>댓글번호</th>
-            <th>작성자</th>
-            <th>내용</th>
-            <th>작성시간</th>
-        </tr>
-        <tr th:each="comment: ${commentList}">
-            <td th:text="${comment.id}"></td>
-            <td th:text="${comment.commentWriter}"></td>
-            <td th:text="${comment.commentContents}"></td>
-            <td th:text="${comment.commentPostdate}"></td>
-        </tr>
-    </table>
-</div>
 
 </body>
 <script th:inline="javascript">
