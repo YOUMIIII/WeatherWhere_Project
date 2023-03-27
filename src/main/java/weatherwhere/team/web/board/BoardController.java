@@ -27,14 +27,17 @@ public class BoardController {
     @GetMapping("/save")
     public String saveForm(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model) {
         model.addAttribute("member", loginMember);
+//        System.out.println("loginMember.getUserId() = " + loginMember.getUserId()); // UserId 확인용
         return "main/infoboard/write";
     }
 
     @PostMapping("/save")
-    public String save(@ModelAttribute BoardDTO boardDTO) throws IOException {
+    public String save(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,@ModelAttribute BoardDTO boardDTO) throws IOException {
+//        System.out.println("loginMember.getUserId() = " + loginMember.getUserId()); //UserId 확인용
+        boardDTO.setUserId(loginMember.getUserId());
         System.out.println("boardDTO = " + boardDTO);
         boardService.save(boardDTO);
-        return "/paging";
+        return "paging";
     }
 
     @GetMapping("/board")

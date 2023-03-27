@@ -27,22 +27,22 @@ public class BoardDTO {
     private String storedFileName; // 서버 저장용 파일 이름
     private int fileAttached; // 파일 첨부 여부(첨부 1, 미첨부 0)
 
-    public BoardDTO(Long id, String userId, String title, String contents, String postType, int hits, LocalDateTime postdateTime) {
+    public BoardDTO(Long id, String postType, String title, String userId, int hits, LocalDateTime postdateTime, String contents) {
         this.id = id;
-        this.userId = userId;
-        this.title = title;
-        this.contents = contents;
         this.postType = postType;
+        this.title = title;
+        this.userId = userId;
         this.hits = hits;
         this.postdateTime = postdateTime;
+        this.contents = contents;
     }
 
     //게시판 리스트 보여질 내용
-    public BoardDTO(Long id, String userId, String title, String postType, int hits, LocalDateTime postdateTime) {
+    public BoardDTO(Long id, String postType, String title, String userId, int hits, LocalDateTime postdateTime) {
         this.id = id;
-        this.userId = userId;
-        this.title = title;
         this.postType = postType;
+        this.title = title;
+        this.userId = userId;
         this.hits = hits;
         this.postdateTime = postdateTime;
     }
@@ -54,9 +54,9 @@ public class BoardDTO {
         boardDTO.setId(boardEntity.getId()); // 게시글 수
         boardDTO.setPostType(boardEntity.getPostType()); // 글 유형
         boardDTO.setTitle(boardEntity.getTitle()); // 제목
-        boardDTO.setContents(boardEntity.getContents());  // 내용
         boardDTO.setUserId(boardEntity.getUserId()); // 작성자
         boardDTO.setHits(boardEntity.getHits()); // 조회수
+        boardDTO.setContents(boardEntity.getContents());  // 내용
         boardDTO.setPostdateTime(boardEntity.getPostdateTime()); // 작성일
         boardDTO.setUpdateTime(boardEntity.getUpdateTime()); // 수정일
 

@@ -1,3 +1,4 @@
+<!--
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -23,28 +24,28 @@
         <td th:text="${board.hits}"></td>
     </tr>
 </table>
-<!-- 첫번째 페이지로 이동 -->
-<!-- /board/paging?page=1 -->
+&lt;!&ndash; 첫번째 페이지로 이동 &ndash;&gt;
+&lt;!&ndash; /board/paging?page=1 &ndash;&gt;
 <a th:href="@{/board/paging(page=1)}">First</a>
-<!-- 이전 링크 활성화 비활성화 -->
-<!-- boardList.getNumber() 사용자:2페이지 getNumber()=1 -->
+&lt;!&ndash; 이전 링크 활성화 비활성화 &ndash;&gt;
+&lt;!&ndash; boardList.getNumber() 사용자:2페이지 getNumber()=1 &ndash;&gt;
 <a th:href="${boardList.first} ? '#' : @{/board/paging(page=${boardList.number})}">prev</a>
 
-<!-- 페이지 번호 링크(현재 페이지는 숫자만)
-        for(int page=startPage; page<=endPage; page++)-->
+&lt;!&ndash; 페이지 번호 링크(현재 페이지는 숫자만)
+        for(int page=startPage; page<=endPage; page++)&ndash;&gt;
 <span th:each="page: ${#numbers.sequence(startPage, endPage)}">
-<!-- 현재페이지는 링크 없이 숫자만 -->
+&lt;!&ndash; 현재페이지는 링크 없이 숫자만 &ndash;&gt;
     <span th:if="${page == boardList.number + 1}" th:text="${page}"></span>
-    <!-- 현재페이지 번호가 아닌 다른 페이지번호에는 링크를 보여줌 -->
+    &lt;!&ndash; 현재페이지 번호가 아닌 다른 페이지번호에는 링크를 보여줌 &ndash;&gt;
     <span th:unless="${page == boardList.number + 1}">
         <a th:href="@{/board/paging(page=${page})}" th:text="${page}"></a>
     </span>
 </span>
 
-<!-- 다음 링크 활성화 비활성화
-    사용자: 2페이지, getNumber: 1, 3페이지-->
+&lt;!&ndash; 다음 링크 활성화 비활성화
+    사용자: 2페이지, getNumber: 1, 3페이지&ndash;&gt;
 <a th:href="${boardList.last} ? '#' : @{/board/paging(page=${boardList.number + 2})}">next</a>
-<!-- 마지막 페이지로 이동 -->
+&lt;!&ndash; 마지막 페이지로 이동 &ndash;&gt;
 <a th:href="@{/board/paging(page=${boardList.totalPages})}">Last</a>
 
 </body>
@@ -54,4 +55,4 @@
     }
 
 </script>
-</html>
+</html>-->

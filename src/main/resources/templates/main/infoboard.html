@@ -65,21 +65,34 @@
                       <th>조회수</th>
                   </tr>
                   <tr th:each="board: ${boardList}">
+                      <td th:text="${board.id}"></td>
+                      <td th:text="${board.postType}"></td>
+                      <td><a th:href="@{|/board/${board.id}|(page=${boardList.number + 1})}" th:text="${board.title}"></a></td>
+<!--                   안됨   <td><a th:href="${board.title}" th:text="${board.title}"/></td>-->
+<!--                   안됨   <td><a th:text="${board.title}"></a></td>-->
+                      <td th:text="${board.userId}"></td>
+                      <td th:text="*{#temporals.format(board.postdateTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                      <td th:text="${board.hits}"></td>
+                  </tr>
+
+                 <!-- 예시)
+                  <tr th:each="board: ${boardList}">
                       <td th:text="${board.id}">106</td>
                       <td>질문</td>
-                      <td class="boardtitle" id="title"><a th:href="@{|/board/${board.id}|(page=${boardList.number + 1})}" th:text="${board.boardTitle}">2001아울렛에 아기랑 갈만한 음식점 있나요?</a></td>
+                      <td class="title" id="title"><a th:href="@{|/board/${board.id}|(page=${boardList.number + 1})}" th:text="${board.boardTitle}">2001아울렛에 아기랑 갈만한 음식점 있나요?</a></td>
                       <td th:text="${board.userId}">youmiiii</td>
                       <td th:text="*{#temporals.format(board.postdateTime, 'yy/MM/dd')}">23/04/13</td>
                       <td th:text="${board.hits}">3</td>
-                      <!--<td th:text="${board.id}">106</td>
+                      &lt;!&ndash;<td th:text="${board.id}">106</td>
                       <td><a th:href="@{|/board/${board.id}|(page=${boardList.number + 1})}" th:text="${board.boardTitle}"></a></td>
                       <td th:text="${board.boardWriter}"></td>
                       <td th:text="*{#temporals.format(board.boardCreatedTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                      <td th:text="${board.boardHits}"></td>-->
-                  </tr>
+                      <td th:text="${board.boardHits}"></td>&ndash;&gt;
+                  </tr>-->
               </table>
               <div id="writeboard">
-                  <button th:onclick="|location.href='@{/board/save}'|">새글작성</button>
+<!--                  <button th:onclick="|location.href='@{/board/write}'|">새글작성</button>-->
+                  <button th:onclick="|saveReq()|">새글작성</button>
               </div>
               <div id="paging">
                   <!-- 첫번째 페이지로 이동 -->
@@ -114,4 +127,11 @@
   <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
   <script type="text/javascript" th:src="@{/js/menuactive.js}"></script>
 </body>
+
+<script>
+    const saveReq = () => {
+        location.href = "/board/save";
+    }
+
+</script>
 </html>

@@ -26,6 +26,7 @@ public class BoardEntity extends TimeEntity {
     @Column(length = 20) // 크기 20, not null
     private String userId;
 
+//    @Id //pk 컬럼 지정, 필수
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY) //auto increment
     private Long id;
@@ -60,15 +61,22 @@ public class BoardEntity extends TimeEntity {
     //DTO를 엔티티로 타입변경
     public static BoardEntity toSaveEntity(BoardDTO boardDTO) { //처음 저장할 때 첨부파일 X
         BoardEntity boardEntity = new BoardEntity();
-        //게시글 수, 글 유형, 글 제목, 글 내용, 유저, 조회수, 첨부파일 X
+
+        //게시글 수, 글 유형, 글 제목, 유저, 조회수, 글 내용, 첨부파일 X
         // 작성일, 수정일은 extends 하고 있으므로 안적은건가?
         boardEntity.setId(boardDTO.getId());
         boardEntity.setPostType(boardDTO.getPostType());
-        boardEntity.setUserId(boardDTO.getUserId());
         boardEntity.setTitle(boardDTO.getTitle());
+        boardEntity.setUserId(boardDTO.getUserId());
         boardEntity.setContents(boardDTO.getContents());
         boardEntity.setHits(0); //조회수 시작은 0
         boardEntity.setFileAttached(0); // 파일 없음.
+
+        System.out.println("BoardEntity.toSaveEntoity 실행됨.");
+        System.out.println("boardEntity.setId = " + boardEntity.getId());
+        System.out.println("boardEntity.getUserId() = " + boardEntity.getUserId());
+        System.out.println("boardEntity.getTitle() = " + boardEntity.getTitle());
+
         return boardEntity;
     }
 
@@ -76,8 +84,8 @@ public class BoardEntity extends TimeEntity {
         BoardEntity boardEntity = new BoardEntity();
         boardEntity.setId(boardDTO.getId());
         boardEntity.setPostType(boardDTO.getPostType());
-        boardEntity.setUserId(boardDTO.getUserId());
         boardEntity.setTitle(boardDTO.getTitle());
+        boardEntity.setUserId(boardDTO.getUserId());
         boardEntity.setContents(boardDTO.getContents());
         boardEntity.setHits(boardDTO.getHits()); // 시작이 아니므로 조회수 가져와야함.
         return boardEntity;
@@ -88,11 +96,11 @@ public class BoardEntity extends TimeEntity {
         //게시글 수, 글 유형, 글 제목, 글 내용, 유저, 조회수, 첨부파일 O
         boardEntity.setId(boardDTO.getId());
         boardEntity.setPostType(boardDTO.getPostType());
-        boardEntity.setUserId(boardDTO.getUserId());
         boardEntity.setTitle(boardDTO.getTitle());
+        boardEntity.setUserId(boardDTO.getUserId());
         boardEntity.setContents(boardDTO.getContents());
         boardEntity.setHits(0); //조회수 시작은 0
-        boardEntity.setFileAttached(1); // 파일 없음.
+        boardEntity.setFileAttached(1); // 파일 있음.
         return boardEntity;
     }
 }

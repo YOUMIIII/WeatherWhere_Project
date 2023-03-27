@@ -31,9 +31,13 @@ public class BoardService {
 
     public void save(BoardDTO boardDTO) throws IOException {
         // 파일 첨부 여부에 따라 로직 분리
-        if (boardDTO.getBoardFile().isEmpty()) {
+//        if (boardDTO.getBoardFile().isEmpty()) {
+        if (boardDTO.getBoardFile()==null) {
+            System.out.println("BoardService.save 실행됨.");
+
             // 첨부 파일 없음.
             BoardEntity boardEntity = BoardEntity.toSaveEntity(boardDTO);
+            System.out.println("boardEntity = " + boardEntity);
             boardRepository.save(boardEntity);
         } else {
             // 첨부 파일 있음.
@@ -51,8 +55,8 @@ public class BoardService {
             MultipartFile boardFile = boardDTO.getBoardFile(); // 1.
             String originalFilename = boardFile.getOriginalFilename(); // 2.
             String storedFileName = System.currentTimeMillis() + "_" + originalFilename; // 3.
-            String savePath = "C:/springboot_img/" + storedFileName; // 4. C:/springboot_img/9802398403948_내사진.jpg
-//            String savePath = "/Users/사용자이름/springboot_img/" + storedFileName; // C:/springboot_img/9802398403948_내사진.jpg
+//            String savePath = "C:/springboot_img/" + storedFileName; // 4. C:/springboot_img/9802398403948_내사진.jpg
+            String savePath = "/Users/사용자이름/springboot_img/" + storedFileName; // C:/springboot_img/9802398403948_내사진.jpg
             boardFile.transferTo(new File(savePath)); // 5.
             BoardEntity boardEntity = BoardEntity.toSaveFileEntity(boardDTO);
             Long savedId = boardRepository.save(boardEntity).getId();

@@ -17,29 +17,31 @@
       <div>새글 작성</div>
     </div>
       <div id="form">
-        <form action="/board/save" method="post" enctype="multipart/form-data">
+        <form th:action="|@{/board/save}|" method="post" enctype="multipart/form-data">
           <div class="formlist">
             <div class="input">
-              <select id="type">
+              <select id="type" name="postType">
                 <option>질문해요💛</option><option>추천해요💜</option></select>
             </div>
           </div>
           <div class="formlist">
             <div class="input">
-            <input type="text" id="title" placeholder="글 제목">
+            <input type="text" id="title" name="title" placeholder="글 제목">
             </div>
           </div>
           <div class="formlist">
             <p>
-            <textarea id="contents" rows="25" placeholder="이 지역에 대해 궁금한 점이나 자랑하고 싶은 곳을 추천해주세요😄"></textarea>
+            <textarea id="contents" name="contents" rows="25" placeholder="이 지역에 대해 궁금한 점이나 자랑하고 싶은 곳을 추천해주세요😄"></textarea>
             </p>
           </div>
           <div>
             <input type="file">
           </div>
-          <div class="button">
+<!--          <div class="button" id="write">-->
+          <div class="button" id="save">
             <input type="submit" value="게시글작성">
-            <button th:onclick="|location.href='@{/board/paging}'|">목록보기</button>
+            <button type="button" th:onclick="|listReq()|">목록보기</button>
+<!--            <button th:onclick="|location.href='@{/board/paging}'|">목록보기</button>-->
           </div>
         </form>
       </div>
@@ -48,4 +50,12 @@
   <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
   <script type="text/javascript" th:src="@{/js/menuactive.js}"></script>
 </body>
+<script>
+    const listReq = () => {
+        location.href = "/board/paging";
+    }
+
+</script>
+
+
 </html>
