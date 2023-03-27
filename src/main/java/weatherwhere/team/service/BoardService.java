@@ -78,6 +78,13 @@ public class BoardService {
         return boardDTOList;
     }
 
+    //게시글 수 확인
+    public Long count() {
+        Long count = boardRepository.count();
+        System.out.println("count = " + count);
+        return count;
+    }
+
     @Transactional
     public void updateHits(Long id) {
         boardRepository.updateHits(id);

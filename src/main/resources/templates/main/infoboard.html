@@ -64,13 +64,21 @@
                       <th>작성일</th>
                       <th>조회수</th>
                   </tr>
-                  <tr th:each="board: ${boardList}">
+<!--                  <tr th:each="board: ${boardList}">
                       <td th:text="${board.id}"></td>
                       <td th:text="${board.postType}"></td>
                       <td><a th:href="@{|/board/${board.id}|(page=${boardList.number + 1})}" th:text="${board.title}"></a></td>
-<!--                   안됨   <td><a th:href="${board.title}" th:text="${board.title}"/></td>-->
-<!--                   안됨   <td><a th:text="${board.title}"></a></td>-->
                       <td th:text="${board.userId}"></td>
+                      <td th:text="*{#temporals.format(board.postdateTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                      <td th:text="${board.hits}"></td>
+                  </tr>-->
+
+                  <!--UserId와 title의 순서를 바꿈 왜 UserId 자리에 title이 오고 title 자리에 UserId가 오는 걸까???-->
+                  <tr th:each="board: ${boardList}">
+                      <td th:text="${board.id}"></td>
+                      <td th:text="${board.postType}"></td>
+                      <td><a th:href="@{|/board/${board.id}|(page=${boardList.number + 1})}" th:text="${board.userId}"></a></td>
+                      <td th:text="${board.title}"></td>
                       <td th:text="*{#temporals.format(board.postdateTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
                       <td th:text="${board.hits}"></td>
                   </tr>
@@ -91,7 +99,6 @@
                   </tr>-->
               </table>
               <div id="writeboard">
-<!--                  <button th:onclick="|location.href='@{/board/write}'|">새글작성</button>-->
                   <button th:onclick="|saveReq()|">새글작성</button>
               </div>
               <div id="paging">

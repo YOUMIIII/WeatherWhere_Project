@@ -15,19 +15,10 @@ import java.util.List;
 @Setter
 @Table(name = "boardTable")
 public class BoardEntity extends TimeEntity {
-/*    @Id // pk 컬럼 지정. 필수
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
-    private Long id;
-
-    @Column(length = 20, nullable = false) // 크기 20, not null
-    private String boardWriter;*/
-
-    @Id //pk 컬럼 지정, 필수
     @Column(length = 20) // 크기 20, not null
     private String userId;
 
-//    @Id //pk 컬럼 지정, 필수
-    @Column
+    @Id //pk 컬럼 지정, 필수
     @GeneratedValue(strategy = GenerationType.IDENTITY) //auto increment
     private Long id;
 

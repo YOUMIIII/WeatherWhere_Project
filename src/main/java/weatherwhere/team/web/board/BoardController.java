@@ -7,6 +7,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import weatherwhere.team.domain.board.BoardEntity;
 import weatherwhere.team.domain.member.Member;
 import weatherwhere.team.repository.board.BoardDTO;
 import weatherwhere.team.repository.board.CommentDTO;
@@ -32,12 +33,21 @@ public class BoardController {
     }
 
     @PostMapping("/save")
-    public String save(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,@ModelAttribute BoardDTO boardDTO) throws IOException {
+    public String save(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model, @ModelAttribute BoardDTO boardDTO) throws IOException {
+        model.addAttribute("member", loginMember);
 //        System.out.println("loginMember.getUserId() = " + loginMember.getUserId()); //UserId 확인용
         boardDTO.setUserId(loginMember.getUserId());
         System.out.println("boardDTO = " + boardDTO);
+        model.addAttribute("board", boardDTO);
+
+        boardDTO.setId(boardService.count());
         boardService.save(boardDTO);
-        return "paging";
+        System.out.println("<-- ------------------------------------------------ -->");
+        System.out.println("count() = " + boardService.count());
+        System.out.println("2 boardDTO = " + boardDTO);
+        System.out.println("<-- ------------------------------------------------ -->");
+
+        return "main/infoboard/detail";
     }
 
     @GetMapping("/board")
@@ -83,7 +93,8 @@ public class BoardController {
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
         boardService.delete(id);
-        return "redirect:/board/";
+        System.out.println("id = " + id);
+        return "redirect:/board/paging";
     }
 
     // /board/paging?page=1
@@ -91,8 +102,9 @@ public class BoardController {
     public String paging(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, @PageableDefault(page = 1) Pageable pageable, Model model) {
 //        pageable.getPageNumber();
         Page<BoardDTO> boardList = boardService.paging(pageable);
-        int blockLimit = 3;
-        int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1; // 1 4 7 10 ~~
+        int blockLimit = 5; // 글 목록 아래의 페이지 넘기는 숫자 개수 ex) 1 2 3 원래 설정은 3개 설정
+        int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
+        //* blockLimit + 1;은 시작 숫자를 말하는듯???  // 1 4 7 10 ~~
         int endPage = ((startPage + blockLimit - 1) < boardList.getTotalPages()) ? startPage + blockLimit - 1 : boardList.getTotalPages();
 
         // page 갯수 20개
