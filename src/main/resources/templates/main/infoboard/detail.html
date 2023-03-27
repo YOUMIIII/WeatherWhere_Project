@@ -22,9 +22,10 @@
         <div id="boarddetailbtn">
             <button id="addfavorite" th:onclick="">즐겨찾기 추가</button>
             <button th:onclick="|location.href='@{/board/paging}'|">목록</button>
-<!--            <button th:onclick="|listReq()|">목록</button>--> <!--안됨-->
-            <button th:onclick="|location.href='@{/board/update/(${board.id})}'|">수정</button>
-<!--            <button th:onclick="|location.href='@{/board/delete/(${board.id})}'|">삭제</button>-->
+            <!--            <button th:onclick="|listReq()|">목록</button>--> <!--안됨-->
+            <!--            <button th:onclick="|location.href='@{/board/update/(${board.id})}'|">수정</button>-->
+            <button th:onclick="|updateReq()|">수정</button>
+            <!--            <button th:onclick="|location.href='@{/board/delete/(${board.id})}'|">삭제</button>-->
             <button th:onclick="|deleteReq()|">삭제</button>
 
         </div>
@@ -92,7 +93,17 @@
         const id = [[${board.id}]];
         location.href = "/board/delete/" + id;
     }
+
 </script>
+<script>
+        const updateReq = () => {
+        console.log("수정 요청");
+        const id = [[${board.id}]];
+        location.href = "/board/update/" + id;
+    }
+
+</script>
+
 <!--<script>
 
     const listReq = () => {

@@ -76,17 +76,18 @@ public class BoardController {
     }
 
     @GetMapping("/update/{id}")
-    public String updateForm(@PathVariable Long id, Model model) {
+    public String updateForm(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, @PathVariable Long id, Model model) {
         BoardDTO boardDTO = boardService.findById(id);
+        boardDTO.setUserId(loginMember.getUserId());
         model.addAttribute("boardUpdate", boardDTO);
-        return "update";
+        return "main/infoboard/update";
     }
 
     @PostMapping("/update")
     public String update(@ModelAttribute BoardDTO boardDTO, Model model) {
         BoardDTO board = boardService.update(boardDTO);
         model.addAttribute("board", board);
-        return "detail";
+        return "main/infoboard/detail";
 //        return "redirect:/board/" + boardDTO.getId();
     }
 
