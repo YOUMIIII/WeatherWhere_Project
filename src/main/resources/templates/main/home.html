@@ -31,10 +31,18 @@
         <div class="mainLayout" id="weatherBox">
             <div id="temperature">
                 <div class="temperatureInfo" id="temperatureInfoText">
-                    <p id="temLocation">성남시 분당구</p><p id="temNumber">15</p><p id="temMaxMin">최고 15 / 최저 0</p>
+                    <p id="temLocation">성남시 분당구</p><p th:text="${region.weathers[0].temp}" id="temNumber">15</p><p id="temMaxMin">최고 [[${region.maxTemp}]] / 최저 [[${region.minTemp}]]</p>
                 </div>
                 <div class="temperatureInfo">
-                    <img src="../../static/img/home/weather_sun.png" th:src="@{/img/home/weather_sun.png}" width="140px">
+                    <th:block th:switch="${region.weathers[0].sky}">
+                        <img th:case="맑음" src="../../static/img/home/weather_sun.png" th:src="@{/img/home/weather_sun.png}" width="140px">
+                        <img th:case="구름 많음" src="../../static/img/home/weather_suncloud.png" th:src="@{/img/home/weather_suncloud.png}" width="140px">
+                        <img th:case="흐림" src="../../static/img/home/weather_cloud.png" th:src="@{/img/home/weather_cloud.png}" width="140px">
+                        <img th:case="비" src="../../static/img/home/weather_rain.png" th:src="@{/img/home/weather_rain.png}" width="140px">
+                        <img th:case="비/눈" src="../../static/img/home/weather_cloud.png" th:src="@{/img/home/weather_cloud.png}" width="140px">
+                        <img th:case="눈" src="../../static/img/home/weather_cloud.png" th:src="@{/img/home/weather_cloud.png}" width="140px">
+                        <img th:case="소나기" src="../../static/img/home/weather_rain.png" th:src="@{/img/home/weather_rain.png}" width="140px">
+                    </th:block>
                 </div>
             </div>
             <div id="temperatureTable">
@@ -45,11 +53,11 @@
                     <th>상태</th>
                     <th>강수확률</th>
                 </tr>
-                <tr th:each="weather : *{weathers}">
-                    <td th:text="${weather.time}"></td>
-                    <td th:text="${weather.temp}"></td>
-                    <td th:text="${weather.sky}"></td>
-                    <td th:text="${weather.pop}"></td>
+                <tr th:each="weather,i : *{weathers}">
+                    <td th:if="${i.first}==false" th:text="|${weather.time}시|"></td>
+                    <td th:if="${i.first}==false" th:text="|${weather.temp}°C|"></td>
+                    <td th:if="${i.first}==false" th:text="${weather.sky}"></td>
+                    <td th:if="${i.first}==false" th:text="|${weather.pop}%|"></td>
                 </tr>
             </table>
             </div>

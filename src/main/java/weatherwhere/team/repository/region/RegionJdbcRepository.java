@@ -1,4 +1,4 @@
-package weatherwhere.team.repository;
+package weatherwhere.team.repository.region;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

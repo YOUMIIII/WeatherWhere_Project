@@ -4,13 +4,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import weatherwhere.team.domain.Region;
 import weatherwhere.team.domain.member.Member;
-import weatherwhere.team.repository.RegionRepository;
+import weatherwhere.team.repository.region.RegionRepository;
 import weatherwhere.team.repository.member.MemberJpaRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -21,10 +19,12 @@ public class MemberService {
     private final MemberJpaRepository memberJpaRepository;
     private final RegionRepository regionRepository;
 
-    public Long join(Member member){
+
+    public String join(Member member){
         validatedDuplicatedMember(member);
         memberJpaRepository.save(member);
-        return member.getId();
+        member.getId();
+        return member.getUserId();
     }
 
     public Member findOne(Long memberId){
@@ -46,11 +46,6 @@ public class MemberService {
         member.setUserId(userId);
     }
 
-    public Long getRegionId(String parentRegion,String childRegion){
-        Optional<Region> byParentChild = regionRepository.findByParentChild(parentRegion, childRegion);
-        log.info("사용자에 다음 지역id 부여 : {}", byParentChild.get().getId());
-        return byParentChild.get().getId();
-    }
 
     public Member login(String userId,String userPw){
         Member loginMember=memberJpaRepository.findLoginMember(userId,userPw);

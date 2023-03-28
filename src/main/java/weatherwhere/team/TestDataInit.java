@@ -24,7 +24,8 @@ public class TestDataInit {
         member.setUserId("test");
         member.setUserPw("test!");
         member.setUserMail("test@naver.com");
-        member.setUserLocationNum(103L);
+        member.setParentRegion("경기도");
+        member.setChildRegion("용인시수지구");
         member.setUserPhoto("photo");
 
         memberJpaRepository.save(member);

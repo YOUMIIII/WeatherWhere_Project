@@ -44,7 +44,6 @@ public class LoginController {
             return "login/login";
         }
 
-        //로그인 성공 처리 TODO
         //세션이 있으면 세션반환, 없으면 신규 세션을 생성
         HttpSession session =  request.getSession(); //()안에 false-기존세션반환, 없으면 null반환 / true(default)-기존세선반환, 없으면 새로운 세션 생성해서 반환
         //세션에 로그인 회원 정보 보관

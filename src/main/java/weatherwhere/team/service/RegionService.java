@@ -8,8 +8,8 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import weatherwhere.team.domain.Region;
-import weatherwhere.team.repository.RegionJdbcRepository;
-import weatherwhere.team.repository.RegionRepository;
+import weatherwhere.team.repository.region.RegionJdbcRepository;
+import weatherwhere.team.repository.region.RegionRepository;
 
 import java.util.List;
 
@@ -35,13 +35,16 @@ public class RegionService {
 
     public Region updateRegionWeather(Long regionId){
         Region region = regionRepository.findOne(regionId);
-        region.createRegionWeathers(serviceKey);
+
         return region;
+    }
+
+    public Region findSpecificRegion(String parentRegion,String childRegion,Integer nx,Integer ny){
+        return regionRepository.findByNamesAndCo(parentRegion, childRegion, nx, ny);
     }
 
     @EventListener(ApplicationReadyEvent.class)
     public void sampleData(){
-        log.info("자동으로 지역 배치 인서트를 시도합니다.");
         List<Region> regions = Region.createOnlyRegion(resourceLocation);
         regionJdbcRepository.saveAll(regions);
 

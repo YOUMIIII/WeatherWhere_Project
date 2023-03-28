@@ -1,4 +1,4 @@
-package weatherwhere.team.repository;
+package weatherwhere.team.repository.region;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -50,13 +50,23 @@ public class RegionRepository {
      * @param childRegion
      * @return
      */
-    public Optional<Region> findByParentChild(String parentRegion, String childRegion){
-        List<Region> resultList = em.createQuery("select r from Region r where r.parentRegion = :parent_region and r.childRegion = :child_region", Region.class)
-                .setParameter("parent_region", parentRegion)
-                .setParameter("child_region", childRegion)
+    public Region findByParentChild(String parentRegion, String childRegion){
+        List<Region> resultList = em.createQuery("select r from Region r where r.parentRegion = :parentRegion and r.childRegion = :childRegion", Region.class)
+                .setParameter("parentRegion", parentRegion)
+                .setParameter("childRegion", childRegion)
                 .getResultList();
         log.info("resultList 사이즈 : {}",resultList.size());
-        return resultList.stream().findAny();
+        return resultList.isEmpty()? null: resultList.get(0);
+    }
+
+    public Region findByNamesAndCo(String parentRegion,String childRegion,Integer nx,Integer ny){
+        List<Region> regionList = em.createQuery("select r from Region r where r.parentRegion=:parentRegion and r.childRegion=:childRegion and r.nx=:nx and r.ny=:ny", Region.class)
+                .setParameter("parentRegion", parentRegion)
+                .setParameter("childRegion", childRegion)
+                .setParameter("nx", nx)
+                .setParameter("ny", ny)
+                .getResultList();
+        return regionList.isEmpty()? null: regionList.get(0);
     }
 
 }

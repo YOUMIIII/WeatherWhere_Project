@@ -25,11 +25,12 @@ public class Member {
 //    private String userPwCheck;
     @Column(name = "user_mail")
     private String userMail;
-/*    private String userLocation;
-    private String userLocation2;*/
 
-    @Column(name = "user_location_num")
-    private Long userLocationNum;
+    private String parentRegion;
+    private String childRegion;
+
+//    @Column(name = "user_location_num")
+//    private Long userLocationNum;
 
     @Column(name = "user_photo")
     private String userPhoto;
@@ -38,12 +39,14 @@ public class Member {
      * 멤버 객체를 생성합니다
      * Id - 자동생성 전략
      */
-    public static Member createMember(String userId, String userPw, String userMail, Long userLocationNum, String userPhoto) {
+    public static Member createMember(String userId, String userPw, String userMail, /*Long userLocationNum,*/String parentRegion,String childRegion, String userPhoto) {
         Member member = new Member();
         member.setUserId(userId);
         member.setUserPw(userPw);
         member.setUserMail(userMail);
-        member.setUserLocationNum(userLocationNum);
+//        member.setUserLocationNum(userLocationNum);
+        member.setParentRegion(parentRegion);
+        member.setChildRegion(childRegion);
         member.setUserPhoto(userPhoto);
         return member;
     }

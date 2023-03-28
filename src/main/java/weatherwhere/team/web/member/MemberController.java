@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import weatherwhere.team.domain.member.Member;
 import weatherwhere.team.service.MemberService;
 
@@ -40,23 +41,23 @@ public class MemberController {
             return "/members/signUp";
         }
 
-        //멤버 생성
+        //멤버 객체 생성 (회원가입 X)
         Member member=Member.createMember(
                 form.getUserId(),
                 form.getUserPw(),
                 form.getUserMail(),
-                memberService.getRegionId(form.getUserLocation(),form.getUserLocation2()),
+                form.getUserLocation(),
+                form.getUserLocation2(),
+//                memberService.getRegionId(form.getUserLocation(),form.getUserLocation2()),
                 form.getUserPhoto()
         );
+        //회원을 가입시키고, 그 userId를 반환
+        String userId=memberService.join(member);
 
-        //가입한 멤버의 id 리턴
-//        model.addAttribute("joinId", memberService.join(member));
         model.addAttribute("joinId", form.getUserId());
         model.addAttribute("status", true);
-
-        //회원가입완료페이지 추가됨.
+        log.info("회원 {} 가입 완료",userId);
         return "members/signupsuccess";
-//        return "redirect:/login";
     }
 
 
