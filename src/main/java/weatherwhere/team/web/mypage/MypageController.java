@@ -1,24 +1,33 @@
 package weatherwhere.team.web.mypage;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import weatherwhere.team.domain.closet.Cloth;
 import weatherwhere.team.domain.member.Member;
 import weatherwhere.team.repository.board.BoardDTO;
 import weatherwhere.team.service.BoardService;
+import weatherwhere.team.service.ClothService;
 import weatherwhere.team.web.SessionConst;
 
+import java.util.List;
+
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/mypage")
 public class MypageController {
     private final BoardService boardService;
+    private final ClothService clothService;
 
     @GetMapping("")
     public String mypage(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){
@@ -47,11 +56,108 @@ public class MypageController {
 
     @GetMapping("/mycloset")
     public String mycloset(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){
-
-        //세션이 유지되면 스케줄으로 이동
+        List<Cloth> clothes = clothService.findAll(loginMember.getUserId());
         model.addAttribute("member", loginMember);
+        model.addAttribute("clothes", clothes);
         return "main/mypage/mycloset";
     }
+
+    @GetMapping("/mycloset/addcloth")
+    public String addClothForm(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){
+        model.addAttribute("member", loginMember);
+        model.addAttribute("cloth", new Cloth());
+        return "main/mypage/addcloth";
+    }
+
+    /*@PostMapping("/mycloset/addcloth")
+    public String addCloth(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, RedirectAttributes redirectAttributes, ContentAddForm form) throws IOException {
+        Cloth cloth = new Cloth();
+        cloth.setUserId(form.getUserId());
+        cloth.setClothName(form.getClothName());
+        cloth.setClothKind1(form.getClothKind1());
+        cloth.setClothKind2(form.getClothKind2());
+        cloth.setClothKind3(form.getClothKind3());
+        cloth.setClothBuy(form.getClothBuy());
+        cloth.setClothColor(form.getClothColor());
+
+        UploadImg attachFile = fileStore.storeFile(form.getAttachFile());
+        List<UploadImg> imageFiles = fileStore.storeFiles(form.getImageFiles());
+        cloth.setAttachFile(attachFile);
+        cloth.setImageFiles(imageFiles);
+
+        Cloth savedCloth = clothService.save(cloth);
+
+        redirectAttributes.addAttribute("member", loginMember);
+        redirectAttributes.addAttribute("clothId", savedCloth.getClothId());
+
+        return "redirect:/mypage/mycloset/{clothId}";
+    }*/
+
+
+
+    /*@PostMapping("/mycloset/addcloth")
+    public String addCloth(@ModelAttribute("cloth") Cloth cloth, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, RedirectAttributes redirectAttributes){
+        Cloth savedCloth = clothService.save(cloth);
+        redirectAttributes.addAttribute("clothId", savedCloth.getClothId());
+        return "redirect:/mypage/mycloset/{clothId}";
+    }*/
+
+    @PostMapping("/mycloset/addcloth")
+    public String addCloth(@Validated @ModelAttribute("cloth") ClothAddForm form, BindingResult bindingResult, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, MultipartFile file, RedirectAttributes redirectAttributes, Model model) throws Exception{
+        if(bindingResult.hasErrors()){
+            model.addAttribute("member", loginMember);
+            return "main/mypage/addcloth";
+        }
+
+        Cloth cloth = new Cloth();
+        cloth.setUserId(form.getUserId());
+        cloth.setCName(form.getCName());
+        cloth.setCKind1(form.getCKind1());
+        cloth.setCKind2(form.getCKind2());
+        cloth.setCKind3(form.getCKind3());
+        cloth.setCWhereToBuy(form.getCWhereToBuy());
+        cloth.setCColor(form.getCColor());
+        cloth.setCPhoto(form.getCPhoto());
+
+        Cloth savedCloth = clothService.save(cloth, file);
+        redirectAttributes.addAttribute("cId", savedCloth.getCId());
+        redirectAttributes.addAttribute("status", true);
+        model.addAttribute("member", loginMember);
+        return "redirect:/mypage/mycloset/{cId}";
+    }
+
+    @GetMapping("/mycloset/{cId}")
+    public String cloth(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, @PathVariable Long cId, Model model){
+        Cloth cloth = clothService.findById(cId, loginMember.getUserId());
+        model.addAttribute("cloth", cloth);
+        model.addAttribute("member", loginMember);
+        return "main/mypage/cloth";
+    }
+
+    @GetMapping("/mycloset/{cId}/edit")
+    public String editClothForm(@PathVariable Long cId, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){
+        Cloth cloth = clothService.findById(cId, loginMember.getUserId());
+        model.addAttribute("cloth", cloth);
+        model.addAttribute("member", loginMember);
+        return "main/mypage/updateCloth";
+    }
+
+    @PostMapping("/mycloset/{cId}/edit")
+    public String edit(@PathVariable Long cId, @ModelAttribute ClothUpdateForm updateParam, BindingResult bindingResult, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, MultipartFile file, Model model) throws Exception{
+        clothService.update(cId, updateParam, file);
+        model.addAttribute("member", loginMember);
+        return "redirect:/mypage/mycloset/{cId}";
+    }
+
+    @PostMapping("/mycloset/{cId}")
+    public String delete(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, @PathVariable Long cId, Model model){
+        clothService.delete(cId, loginMember.getUserId());
+        List<Cloth> clothes = clothService.findAll(loginMember.getUserId());
+        model.addAttribute("member", loginMember);
+        model.addAttribute("clothes", clothes);
+        return "main/mypage/mycloset";
+    }
+
 
     @GetMapping("/diary")
     public String diary(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){
@@ -83,4 +189,5 @@ public class MypageController {
             model.addAttribute("member", loginMember);
         return "main/mypage/favorite";
     }
+
 }

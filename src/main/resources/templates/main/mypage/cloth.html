@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>옷 상세</title>
+    <link rel="stylesheet" type="text/css" href="../../../static/css/mypage.css" th:href="@{/css/mypage.css}">
+    <style>
+
+    </style>
+</head>
+<body>
+<div>
+    <div class="leftBar" th:insert="~{main/sidebar :: sidebar}">
+    </div>
+</div>
+<div class="maincontent">
+    <div class="introduce">
+        <div id="subT">마이페이지 > 내 옷장</div>
+        <div>옷 상세</div>
+    </div>
+    <div id="addClothSuccess" th:if="${param.status}" th:text="'옷장 추가 완료😉'"></div>
+    <form method="post" action="mycloset.html" th:action>
+    <div id="detailCloth">
+        <div id="detailClothImg"><div><img src="../../../static/img/files/f0351043-3de9-425f-beef-5600faa4d093_jean.png" th:src="@{{photopath}(photopath=${cloth?.cPhotoPath})}"></div></div>
+        <div id="detailClothText">
+            <div class="formList">
+                <label>카테고리</label>
+                <div>
+                    <input id="top" th:if="${cloth.cKind1 == 'top'}" type="text" value="상의" readonly>
+                    <input id="bottom" th:unless="${cloth.cKind1 == 'top'}" type="text" value="하의" readonly><span class="mt" th:if="${cloth.cKind2 != null}"> > </span>
+                    <input type="text" id="cKind2" value="청바지" th:value="${cloth?.cKind2}" readonly><span class="mt" th:if="${cloth.cKind3 != null}"> > </span>
+                    <input type="text" id="cKind3" th:value="${cloth?.cKind3}" readonly>
+                </div>
+            </div>
+            <div class="formList">
+                <label>이름</label>
+                <div>
+                    <input type="text" id="cName" name="cName" value="진청바지" th:value="${cloth?.cName}" readonly>
+                </div>
+            </div>
+            <div class="formList">
+                <label>브랜드</label>
+                <div>
+                    <input type="text" id="cWhereToBuy" name="cWhereToBuy" value="자라" th:value="${cloth?.cWhereToBuy}" readonly>
+                </div>
+            </div>
+            <div class="formList">
+                <label>메인컬러</label>
+                <div>
+                    <input th:if="${cloth.cColor == '#D7E9B9'}" type="text" value="💚" readonly>
+                    <input th:if="${cloth.cColor == '#000000'}" type="text" value="🖤" readonly>
+                    <input th:if="${cloth.cColor == '#F1F1F1'}" type="text" value="🤍" readonly>
+                    <input th:if="${cloth.cColor == '#FF5A5A'}" type="text" value="❤️" readonly>
+                    <input th:if="${cloth.cColor == '#FF9551'}" type="text" value="🧡" readonly>
+                    <input th:if="${cloth.cColor == '#FFDA68'}" type="text" value="💛" readonly>
+                    <input th:if="${cloth.cColor == '#5685FF'}" type="text" value="💙" readonly>
+                    <input th:if="${cloth.cColor == '#AA77FF'}" type="text" value="💜" readonly>
+                    <input th:if="${cloth.cColor == '#F7C8E0'}" type="text" value="💕" readonly>
+                    <input th:if="${cloth.cColor == '#D9D9D9'}" type="text" value="회색" readonly>
+                    <!--<th:block th:switch="${cloth.cColor}">
+                        <input type="text" th:case="|#D7E9B9|" value="🖤" readonly>
+                        <input type="text" th:case="|#000000|" value="🖤 검정" readonly>
+                        <input type="text" th:case="|#F1F1F1|" value="🖤" readonly>
+                        <input type="text" th:case="|#FF5A5A|" value="❤️" readonly>
+                        <input type="text" th:case="|#FF9551|" value="🧡" readonly>
+                        <input type="text" th:case="|#FFDA68|" value="💛" readonly>
+                        <input type="text" th:case="|#5685FF|" value="💙" readonly>
+                        <input type="text" th:case="|#AA77FF|" value="💜" readonly>
+                        <input type="text" th:case="|#F7C8E0|" value="💕" readonly>
+                        <input type="text" th:case="|#D9D9D9|" value="회색" readonly>
+                    </th:block>
+                    <input type="text" id="cColor" th:value="${cloth.cColor}" readonly>-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="detailClothBtn">
+        <button type="button" th:onclick="|location.href='@{/mypage/mycloset}'|">확인</button>
+        <button type="button" th:onclick="|location.href='@{/mypage/mycloset/{cId}/edit(cId=${cloth.cId})}'|">수정</button>
+        <input id="delete" type="submit" value="삭제">
+    </div>
+    </form>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+<script type="text/javascript" th:src="@{/js/menuactive.js}"></script>
+</body>
+</html>

@@ -1,6 +1,18 @@
 @charset "utf-8"
 @import url('reset.css');
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap');
+@font-face {
+    font-family: 'ONE-Mobile-POP';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'IM_Hyemin-Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2106@1.1/IM_Hyemin-Bold.woff2') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 /* http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
    License: none (public domain)
@@ -79,11 +91,13 @@ a {
     line-height: 55px;
     font-size: 25px; /* h1*/
     width:80%;
+    font-family:'IM_Hyemin-Bold';
 }
 
 .introduce #subT{ /* 제목설명 h2 */
     font-size: 18px;
     line-height: 30px;
+    font-family:'IM_Hyemin-Bold';
 }
 
 #topT{

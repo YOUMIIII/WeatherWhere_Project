@@ -7,9 +7,40 @@
     <link rel="stylesheet" type="text/css" href="../../../static/css/mypage.css" th:href="@{/css/mypage.css}">
 
     <style>
-        .clothcolor{
+        .000000{
+            background-color:#000000;
+        }
+        .F1F1F1{
+            background-color:#F1F1F1;
+        }
+        .FF5A5A{
+            background-color:#FF5A5A;
+        }
+        .FF9551{
+            background-color:#FF9551;
+        }
+        .FFDA68{
+            background-color:#FFDA68;
+        }
+        .D7E9B9{
+            background-color:#D7E9B9;
+        }
+        .5685FF{
             background-color:#5685FF;
         }
+        .414979{
+            background-color:#414979;
+        }
+        .AA77FF{
+            background-color:#AA77FF;
+        }
+        .F7C8E0{
+            background-color:#F7C8E0;
+        }
+        .D9D9D9{
+            background-color:#D9D9D9;
+        }
+
     </style>
 </head>
 <body>
@@ -43,37 +74,25 @@
                     <li><a>치마</a></li>
                 </ul>
             </li>
-            <li data-tab="menu5"><a href="#">기타</a>
-            </li>
         </ul>
     </div>
     <div class="closetbox">
-        <div id="button"><button id="addcloth">내옷 추가</button></div>
+        <div id="button"><button id="addcloth" th:onclick="|location.href='@{/mypage/mycloset/addcloth}'|">내옷 추가</button></div>
         <div id="menu1" class="tabcont on">
             <div class="closetcontent">
-                <div class="cloth">
-                    <div class="clothimg"><img src="../../../static/img/mypage/jean.png" alt="옷사진" width="140px"></div>
-                    <div class="clothcolor">
+                <div class="cloth" th:each="cloth : ${clothes}">
+                    <a th:href="@{/mypage/mycloset/{cId}(cId=${cloth.cId})}">
+                    <div class="clothimg"><div class="clothimgdiv"><img th:src="@{${cloth.cPhotoPath}}" alt="옷사진"></div></div>
+                    <div name="cColor" id="cColor" th:style="|background-color:'${cloth.cColor}';|">
                         <div class="clothcontent">
                             <div class="content">
-                                <div class="clothbuy"><span>자라</span> 구매</div>
-                                <div class="clothname"><span>진청바지</span></div>
+                                <div class="clothbuy"><span th:text="${cloth.cWhereToBuy}">자라</span> 구매</div>
+                                <div class="clothname"><span th:text="${cloth.cName}">초록원피스</span></div>
                             </div>
-                            <div class="content"><img src="../../../static/img/mypage/heart.png"></div>
+                            <div class="content"><img src="../../../img/mypage/heart.png" th:src="@{/img/mypage/heart.png}"></div>
                         </div>
                     </div>
-                </div>
-                <div class="cloth">
-                    <div class="clothimg"><img src="../../../static/img/mypage/jean.png" alt="옷사진" width="140px"></div>
-                    <div class="clothcolor">
-                        <div class="clothcontent">
-                            <div class="content">
-                                <div class="clothbuy"><span>자라</span> 구매</div>
-                                <div class="clothname"><span>진청바지</span></div>
-                            </div>
-                            <div class="content"><img src="../../../static/img/mypage/heart.png"></div>
-                        </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -85,9 +104,6 @@
         </div>
         <div id="menu4" class="tabcont">
             <h1>menu4</h1>
-        </div>
-        <div id="menu5" class="tabcont">
-            <h1>menu5</h1>
         </div>
 
     </div>

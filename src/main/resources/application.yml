@@ -4,14 +4,14 @@
 spring:
   profiles:
 #    active: none
-#    active: dev-dayi
-#    active: dev-youmi
-    active: dev-yw
+#    active: dev-dy
+    active: dev-youmi
+#    active: dev-yw
   datasource:
-#    username: teampj
+    username: teampj
 #    username: 예워니꺼
 #    username: c##dayi
-#    password: 1234
+    password: 1234
     #initialization-mode: always
     hikari:
       data-source-properties:
@@ -24,7 +24,6 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create #시작할 때 drop, 이후 create
-#      ddl-auto: update #시작할 때 drop, 이후 create
     properties:
       hibernate:
         #show_sql: true
@@ -53,6 +52,8 @@ server:
 
 mybatis:
   type-aliases-package=: weatherwhere.team.domain.member
+  configuration:
+    map-underscore-to-camel-case=: true
 
 
 ---
@@ -69,7 +70,7 @@ resources:
 spring:
   config:
     activate:
-      on-profile: dev-dayi
+      on-profile: dev-dy
   datasource:
     url: jdbc:oracle:thin:@//localhost:1521/xe
 resources:
@@ -82,9 +83,9 @@ spring:
     activate:
       on-profile: dev-yw
   datasource:
+    url: jdbc:oracle:thin:@//localhost:1521/xe
     username: c##scott
     password: tiger
-    url: jdbc:oracle:thin:@//localhost:1521/xe
 logging.level:
   org.springframework.jdbc.core: trace
 resources:

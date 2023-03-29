@@ -7,7 +7,7 @@
 }
 
 button{
-    margin-bottom:50px;
+    margin-bottom:30px;
     width:300px;
     height:70px;
     border:none;
@@ -153,7 +153,7 @@ a{
     float:left;
     position:relative;
     width:140px;
-    font-size:25px;
+    font-size:20px;
 }
 
 .tab a{ /* 기본 의류 분류 탭 */
@@ -172,7 +172,7 @@ a{
 
 .tab li:hover ul li a{ /* 기본 의류 분류가 hover되었을때 서브 의류 분류 색깔 */
     color:#7B818D;
-    font-size:20px;
+    font-size:15px;
 }
 
 .tab li:hover ul{ /* 기본 의류 분류가 hover되었을때 서브 의류 분류 보임 효과 */
@@ -190,7 +190,7 @@ a{
 	margin-left: 20px;
 	background-color:#EBEBEB;
 	border-radius:5px;
-	width:70%;
+	width:920px;
 	padding:20px;
 }
 
@@ -199,14 +199,28 @@ a{
 }
 
 .clothimg{
-    padding:20px 60px;
+    display:table;
+    width:200px;
+    height:200px;
+    text-align:center;
     background-color:white;
     border-bottom:1px solid #BFBFBF;
+}
+
+.clothimgdiv{
+    display:table-cell;
+    vertical-align:middle;
+}
+
+.clothimg img{
+    max-width:140px;
+    max-height:280px;
 }
 
 .clothcontent{
     background-color:white;
     margin-left:10px;
+    width:190px;
 }
 
 .clothcontent .content{
@@ -216,7 +230,7 @@ a{
 }
 
 .content img{
-    padding-left:600%;
+    margin-left:35px;
 }
 
 .clothbuy{
@@ -224,7 +238,7 @@ a{
 }
 
 .clothname{
-    font-size:20px;
+    font-size:15px;
     margin-top:5px;
 }
 
@@ -241,21 +255,143 @@ a{
     height:35px;
     font-size:15px;
     border-radius:5px;
-    margin-left:90%;
+    margin-left:880px;
     display:absolute;
     margin-top:-10px;
+    margin-bottom:50px;
 }
 
-#colorbox div{
-    display:inline-block;
+/* addcloth */
+
+.formWrap{
+    margin-left:20px;
+    margin-top:40px;
+    /* border:1px solid #BCC7DD; */
+    /*border-style:solid;
+    border-width:1px 0px 0px 0px;
+    border-color:#2D3037;
+    padding-top:30px;*/
+    width:45%;
+    color:#2D3037;
+    font-weight:700;
 }
 
-.colorbox1{
-    width:70px;
+.formList{
+    margin-bottom:25px;
+}
+
+.formList div{
+    margin-top:15px;
+}
+
+.formList input{
+    width:300px;
     height:30px;
-    background-color:#FF5A5A;
 }
 
-#colorselect{
+#cKind1, #cKind2, #cKind3{
+    width:100px;
+    height:35px;
+}
+
+#cColor{
     width:100px;
 }
+
+#file{
+    margin-top:15px;
+}
+
+.addClothBtn, #detailClothBtn button, #delete{
+    width:90px;
+    height:35px;
+    font-size:15px;
+    border:none;
+    border-radius:5px;
+    display:absolute;
+    margin-bottom:50px;
+    margin-top:50px;
+    margin-right:10px;
+    background-color:#494F5B;
+    color:white;
+    cursor:pointer;
+}
+
+#addClothBtn{
+    margin-left:20px;
+}
+
+/* cloth */
+
+#detailCloth{
+    margin-top:50px;
+}
+
+#detailClothImg{
+    float:left;
+    display:table;
+    width:300px;
+    height:300px;
+    margin-right:100px;
+    margin-bottom:100px;
+    margin-top:50px;
+    border:0.5px solid #5F6879;
+    border-radius:5px;
+
+}
+
+#detailClothImg div{
+    display:table-cell;
+    vertical-align:middle;
+    text-align:center;
+
+}
+
+#detailCloth{
+    margin-left:20px;
+    font-weight:700;
+}
+
+#detailClothText{
+    margin-left:20px;
+}
+
+#detailClothText input{
+    width:60px;
+    height:30px;
+    border-width:0px 0px 0px 0px;
+    border-color: #99A5BD;
+    font-size:18px;
+}
+
+label{
+    padding-left:10px;
+    border:8px solid #99A5BD;
+    border-right-style:none;
+    border-bottom-style:none;
+    border-top-style:none;
+}
+
+#detailClothText #top, #detailClothText #bottom{
+    width:35px;
+
+}
+
+#detailClothText #cKind2, #detailClothText #cKind3{
+    border:none;
+    width:45px;
+}
+
+.mt{
+    color:#5F6879;
+    font-size: 10px;
+}
+
+#addClothSuccess{
+    margin-left:20px;
+}
+
+#detailClothBtn button{
+    margin-top:30px;
+}
+

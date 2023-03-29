@@ -5,6 +5,13 @@
     <meta charset="UTF-8">
     <title>내옷 추가</title>
     <link rel="stylesheet" type="text/css" href="../../../static/css/mypage.css" th:href="@{/css/mypage.css}">
+    <style>
+     .field-error {
+            border-color: #dc3545;
+            color: #dc3545;
+            font-size: 13px;
+     }
+    </style>
 </head>
 <body>
   <div>
@@ -17,52 +24,82 @@
       <div>옷 추가</div>
     </div>
     <di>
-      <form>
-        <div>
-          <select id="select1" onchange="itemChange(this)">
-            <option value="">상/하의 선택</option>
-            <option value="top">상의</option>
-            <option value="bottom">하의</option>
-          </select>
-        </div>
-        <div>
-          <select id="select2" onchange="itemChange2(this)">
-            <option>분류선택</option>
-          </select>
-          <select id="select3">
-            <option>-</option>
-          </select>
-        </div>
-        <div>
-          <input type="text" placeholder="옷 이름">
-        </div>
-        <div>
-          <input type="text" placeholder="구매한 곳">
-        </div>
+      <form action="cloth.html" th:action method="post" th:object="${cloth}" enctype="multipart/form-data">
+        <div class="formWrap">
+          <div>
+            <input type="hidden" id="userId" name="userId" th:value="${member.userId}">
+          </div>
+          <div class="formList">
+            <label for="cKind1">카테고리</label>
+            <div>
+              <select id="cKind1" name="cKind1" onchange="itemChange(this)" th:field="*{cKind1}">
+                <option value="">상/하의 선택</option>
+                <option value="top">상의</option>
+                <option value="bottom">하의</option>
+              </select>
+            </div>
+            <div>
+              <select id="cKind2" name="cKind2" onchange="itemChange2(this)" th:field="*{cKind2}">
+                <option value="">분류선택</option>
+              </select>
+              <select id="cKind3" name="cKind3" th:field="*{cKind3}">
+                <option value="">-</option>
+              </select>
+            </div>
+          </div>
+          <div class="formList">
+            <label for="cName">옷 이름</label>
+            <div>
+              <input type="text" id="cName" th:field="*{cName}" th:errorclass="field-error" class="form-control" placeholder="옷의 특징을 살린 이름으로 지으면 관리하기 좋아요">
+            </div>
+            <div class="field-error" th:errors="*{cName}">
+              오류
+            </div>
+          </div>
+          <div class="formList">
+            <label for="cWhereToBuy">브랜드</label>
+            <div>
+              <input type="text" id="cWhereToBuy" th:field="*{cWhereToBuy}" class="form-control" th:errorclass="field-error" placeholder="구매한 곳을 작성해주세요">
+            </div>
+            <div class="field-error" th:errors="*{cWhereToBuy}">
+              오류
+            </div>
+          </div>
 
-        <div id="colorbox">
-          <datalist id="colorlist">
-            <option>#000000</option>
-            <option>#F1F1F1</option>
-            <option>#FF5A5A</option>
-            <option>#FF9551</option>
-            <option>#FFDA68</option>
-            <option>#D7E9B9</option>
-            <option>#5685FF</option>
-            <option>#414979</option>
-            <option>#AA77FF</option>
-            <option>#F7C8E0</option>
-            <option>#D9D9D9</option>
-          </datalist>
-          <input id="colorselect" type="color" list="colorlist">
+          <div class="formList" id="colorbox">
+            <label for="cColor">메인 컬러</label>
+            <div>
+              <datalist id="colorlist">
+                <option value="black">#000000</option>
+                <option value="white">#F1F1F1</option>
+                <option value="red">#FF5A5A</option>
+                <option value="orange">#FF9551</option>
+                <option value="yellow">#FFDA68</option>
+                <option value="green">#D7E9B9</option>
+                <option value="blue">#5685FF</option>
+                <option value="purple">#AA77FF</option>
+                <option value="purple">#F7C8E0</option>
+                <option value="gray">#D9D9D9</option>
+              </datalist>
+              <input id="cColor" name="cColor" type="color" list="colorlist" th:field="*{cColor}">
+            </div>
+          </div>
+          <div>
+            <label for="file">사진 선택</label>
+            <div>
+              <input type="file" name="file" id="file" accept="image/*">
+            </div>
+          </div>
         </div>
-        <div>
-          <input type="file">
+        <div id="addClothBtn">
+          <input type="submit" class="addClothBtn" value="추가" >
+          <button type="button" class="addClothBtn" th:onclick="|location.href='@{/mypage/mycloset}'|">취소</button>
         </div>
       </form>
     </di>
   </div>
   <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
-  <script type="text/javascript" src="../../../static/js/selectbox.js"></script>
+  <script type="text/javascript" src="../../../static/js/selectbox.js" th:src="@{/js/selectbox.js}"></script>
+  <script type="text/javascript" th:src="@{/js/menuactive.js}"></script>
 </body>
 </html>
