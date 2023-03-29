@@ -36,10 +36,10 @@
                 <div class="temperatureInfo">
                     <th:block th:switch="${region.weathers[0].sky}">
                         <img th:case="맑음" src="../../static/img/home/weather_sun.png" th:src="@{/img/home/weather_sun.png}" width="140px">
-                        <img th:case="구름 많음" src="../../static/img/home/weather_suncloud.png" th:src="@{/img/home/weather_suncloud.png}" width="140px">
+                        <img th:case="|구름 많음|" src="../../static/img/home/weather_suncloud.png" th:src="@{/img/home/weather_suncloud.png}" width="140px">
                         <img th:case="흐림" src="../../static/img/home/weather_cloud.png" th:src="@{/img/home/weather_cloud.png}" width="140px">
                         <img th:case="비" src="../../static/img/home/weather_rain.png" th:src="@{/img/home/weather_rain.png}" width="140px">
-                        <img th:case="비/눈" src="../../static/img/home/weather_cloud.png" th:src="@{/img/home/weather_cloud.png}" width="140px">
+                        <img th:case="|비/눈|" src="../../static/img/home/weather_cloud.png" th:src="@{/img/home/weather_cloud.png}" width="140px">
                         <img th:case="눈" src="../../static/img/home/weather_cloud.png" th:src="@{/img/home/weather_cloud.png}" width="140px">
                         <img th:case="소나기" src="../../static/img/home/weather_rain.png" th:src="@{/img/home/weather_rain.png}" width="140px">
                     </th:block>

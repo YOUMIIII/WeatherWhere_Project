@@ -1,6 +1,7 @@
 package weatherwhere.team.repository.region;
 
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import weatherwhere.team.domain.Region;
 import weatherwhere.team.domain.Weather;
 import weatherwhere.team.repository.weather.WeatherDto;

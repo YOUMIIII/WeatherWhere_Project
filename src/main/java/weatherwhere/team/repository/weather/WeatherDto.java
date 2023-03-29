@@ -2,6 +2,7 @@ package weatherwhere.team.repository.weather;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import weatherwhere.team.domain.Weather;
 
 import java.time.LocalDateTime;
@@ -25,7 +26,6 @@ public class WeatherDto {
         time=Integer.parseInt(weather.getWeatherDateTime().substring(8,10));
         temp=weather.getTemp();
         pop=weather.getPop();
-
         if(weather.getPty()==0){
             switch (weather.getSky()){
                 case 1:
