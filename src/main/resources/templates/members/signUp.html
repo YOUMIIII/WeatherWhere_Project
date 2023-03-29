@@ -51,13 +51,15 @@
                 <div>
                     <select id="userLocation" th:field="*{userLocation}">
                         <option value="">시/도 선택</option>
+<!--                        <option value="">시/도 선택</option>
                         <option value="서울특별시">서울특별시</option>
-                        <option value="경기도">경기도</option>
+                        <option value="경기도">경기도</option>-->
                     </select>
                 </div>
                 <div>
                     <select id="userLocation2" th:field="*{userLocation2}">
                         <option value="">시/군/구 선택</option>
+<!--                        <option value="">시/군/구 선택</option>
                         <option value="종로구" data-chained="서울특별시">종로구</option>
                         <option value="중구" data-chained="서울특별시">중구</option>
                         <option value="용산구" data-chained="서울특별시">용산구</option>
@@ -66,7 +68,7 @@
                         <option value="성남시분당구" data-chained="경기도">성남시분당구</option>
                         <option value="용인시처인구" data-chained="경기도">용인시처인구</option>
                         <option value="용인시기흥구" data-chained="경기도">용인시기흥구</option>
-                        <option value="용인시수지구" data-chained="경기도">용인시수지구</option>
+                        <option value="용인시수지구" data-chained="경기도">용인시수지구</option>-->
                     </select>
                 </div>
                 <p class="field-error" th:errors="*{userLocation}"></p>
@@ -91,9 +93,41 @@
         </div>
     </form>
     <script type="text/javascript" src="../../static/js/jquery-3.4.1.min.js" th:src="@{/js/jquery-3.4.1.min.js}"></script>
-    <script type="text/javascript" src="../../static/js/jquery.chained.js" th:src="@{/js/jquery.chained.js}"></script>
+<!--    <script type="text/javascript" src="../../static/js/jquery.chained.js" th:src="@{/js/jquery.chained.js}"></script>-->
     <script>
-    $("#userLocation2").chainedTo("#userLocation");
-</script>
+<!--    $("#userLocation2").chainedTo("#userLocation");-->
+            $(document).ready(function(){
+            loadArea('loadParent',$(this));
+        });
+        $('#userLocation').on("change",function(){
+            loadArea('loadChild',$(this));
+        });
+        function loadArea(selectedType,selectedValue){
+                $.ajax({
+                    url: "/region/api",
+                    dataType: "JSON",
+                    method: "GET"
+                }).done(function(res){
+                   if(selectedType == 'loadParent'){
+                        $.each(res, function (index,value){
+                            var hasOption=$('#userLocation option[value="'+value.parentRegion+'"]').length;
+                            if(hasOption==0){
+                                $('#userLocation').append('<option value="'+value.parentRegion+'">'+value.parentRegion+'</option>');
+                            }
+                        });
+                   }else if(selectedType == 'loadChild'){
+                        var selectedValueText = $(selectedValue).find('option:selected').text();
+                        $('#userLocation2').empty();
+                        $.each(res, function (index,value){
+
+                            if(selectedValueText==value.parentRegion){
+
+                                $('#userLocation2').append('<option value="'+value.childRegion+'">'+value.childRegion+'</option>');
+                            }
+                        });
+                   }
+                });
+        }
+    </script>
 </body>
 </html>

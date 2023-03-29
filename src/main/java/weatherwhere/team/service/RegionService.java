@@ -50,4 +50,8 @@ public class RegionService {
 
     }
 
+    public List<Region> getRegionList(){
+        return regionRepository.findAll();
+    }
+
 }
