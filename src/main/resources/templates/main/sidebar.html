@@ -11,7 +11,7 @@
     </div>
       <div id="profile">
         <img src="../../static/img/profile2.png" th:src="@{/img/profile2.png}" width="100px">
-        <h1 class="id"><span class="id" th:text="${member.userId}">jojo39</span>님</h1>
+        <h1 class="id"><span class="id" th:text="${member?.userId}">jojo39</span>님</h1>
       </div>
       <div id="nav">
         <nav>

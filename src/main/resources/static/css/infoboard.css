@@ -78,11 +78,11 @@ th{
     background-color:#A3ABBB;
 }
 
-.boardtitle{
+.boardTitle{
     width:200px;
 }
 
-#boardtitle{
+#boardTitle{
     text-align:left;
 }
 
@@ -167,7 +167,7 @@ a{
 
 /*  */
 
-.boarddetail{
+.boardetail{
     width:90%;
     border-top:0.3px solid #2D3037;
     border-right:0.3px solid #2D3037;

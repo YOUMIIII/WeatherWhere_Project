@@ -17,67 +17,42 @@
         <div>수 정</div>
     </div>
     <div id="form">
-        <form th:action="|updateReq()|" method="post" enctype="multipart/form-data" name="updateForm">
+        <form th:action="|@{/board/update/}|" method="post" enctype="multipart/form-data" name="updateForm">
             <div class="formlist">
                 <div class="input">
                     <select id="type" name="postType">
-                        <option>질문해요💛</option><option>추천해요💜</option></select>
+                        <option>질문해요💛</option>
+                        <option>추천해요💜</option>
+                    </select>
                 </div>
             </div>
             <div class="formlist">
                 <div class="input">
-                    <input type="text" id="title" name="title" th:value="${boardUpdate.title}">
+                    <input type="hidden" id="id" name="id" th:value="${boardUpdate?.id}">
+                    <input type="hidden" id="userId" name="userId" th:value="${boardUpdate?.userId}">
+                    <input type="text" id="boardTitle" name="title" th:value="${boardUpdate?.title}">
                 </div>
             </div>
+
             <div class="formlist">
                 <p>
-                    <textarea id="contents" name="contents" rows="25" th:text="${boardUpdate.contents}"></textarea>
+                    <textarea id="boardContents" name="contents" rows="25"
+                              th:text="${boardUpdate?.contents}"></textarea>
                 </p>
             </div>
             <div>
                 <input type="file">
             </div>
-            <!--          <div class="button" id="write">-->
             <div class="button" id="update">
                 <input type="submit" name="update" value="수정">
-                <button type="button" th:onclick="|listReq()|">목록보기</button>
-                <!--            <button th:onclick="|location.href='@{/board/paging}'|">목록보기</button>-->
+                <button type="button" th:onclick="|location.href='@{/board/paging}'|">목록보기</button>
             </div>
         </form>
     </div>
 </div>
 <!-- 사이드바html에 페이지별 버튼 활성화 추가하고 싶었는데 타임리프 fragment는 메인화면으로 js를 못 가져와서 모든 페이지 하단에 추가함 -->
-<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"
+        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
 <script type="text/javascript" th:src="@{/js/menuactive.js}"></script>
 </body>
-<script>
-    const listReq = () => {
-        location.href = "/board/paging";
-    }
-
-    const updateReq = () => {
-        console.log("수정 요청");
-        const id = [[${board.id}]];
-        location.href = "/board/update/" + id;
-    }
-
-</script>
-
-
 </html>
-<!--
-<body>
-
-<form action="/board/update" method="post" name="updateForm">
-    <input type="hidden" name="id" th:value="${boardUpdate.id}">
-    writer: <br>
-    <input type="text" name="userId" th:value="${boardUpdate.userId}" readonly> <br>
-    title: <br>
-    <input type="text" name="title" th:value="${boardUpdate.title}"> <br>
-    contents: <br>
-    <textarea name="contents" cols="30" rows="10" th:text="${boardUpdate.contents}"></textarea> <br>
-    <input type="hidden" name="hits" th:value="${boardUpdate.hits}">
-    <input type="button" value="글수정" onclick="boardUpdate()">
-</form>
-
-</body>-->

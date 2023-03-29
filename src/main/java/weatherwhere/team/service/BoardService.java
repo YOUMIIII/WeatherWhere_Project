@@ -81,7 +81,7 @@ public class BoardService {
     //게시글 수 확인
     public Long count() {
         Long count = boardRepository.count();
-        System.out.println("count = " + count);
+//        System.out.println("count = " + count); // 총 게시글 수 확인
         return count;
     }
 
@@ -114,7 +114,7 @@ public class BoardService {
 
     public Page<BoardDTO> paging(Pageable pageable) {
         int page = pageable.getPageNumber() - 1;
-        int pageLimit = 3; // 한 페이지에 보여줄 글 갯수
+        int pageLimit = 5; // 한 페이지에 보여줄 글 갯수
         // 한페이지당 3개씩 글을 보여주고 정렬 기준은 id 기준으로 내림차순 정렬
         // page 위치에 있는 값은 0부터 시작
         Page<BoardEntity> boardEntities =
