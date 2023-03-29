@@ -5,10 +5,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import weatherwhere.team.domain.Region;
 import weatherwhere.team.domain.Weather;
+import weatherwhere.team.repository.region.RegionNameDto;
 import weatherwhere.team.service.RegionService;
 import weatherwhere.team.service.WeatherService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController//@Controller + @ResponseBody
 @RequestMapping("/region")
@@ -28,6 +30,14 @@ public class RegionApiController {
     public String regionWeatherRequest(@RequestParam("parentRegion") String parentRegion, @RequestParam("childRegion") String childRegion){
         Region region = weatherService.createWeatherList(parentRegion,childRegion);
         return "ok";
+    }
+
+    @GetMapping("/api")
+    public List<RegionNameDto> sendRegionData(){
+        List<RegionNameDto> regionList = regionService.getRegionList().stream()
+                .map(region -> new RegionNameDto(region))
+                .collect(Collectors.toList());
+        return regionList;
     }
 
 
