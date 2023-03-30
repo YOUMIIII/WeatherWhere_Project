@@ -35,13 +35,13 @@
                 </div>
                 <div class="temperatureInfo">
                     <th:block th:switch="${region.weathers[0].sky}">
-                        <img th:case="맑음" src="../../static/img/home/weather_sun.png" th:src="@{/img/home/weather_sun.png}" width="140px">
-                        <img th:case="|구름 많음|" th:src="@{/img/home/weather_suncloud.png}" width="140px">
-                        <img th:case="흐림" th:src="@{/img/home/weather_cloud.png}" width="140px">
-                        <img th:case="비" th:src="@{/img/home/weather_rain.png}" width="140px">
-                        <img th:case="|비/눈|" th:src="@{/img/home/weather_cloud.png}" width="140px">
-                        <img th:case="눈" th:src="@{/img/home/weather_cloud.png}" width="140px">
-                        <img th:case="소나기" th:src="@{/img/home/weather_rain.png}" width="140px">
+                        <img th:case="맑음" src="../../static/img/home/weather_sun.png" th:src="@{https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/clear-day.svg}" width="200px">
+                        <img th:case="|구름 많음|" th:src="@{https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/partly-cloudy-day.svg}" width="140px">
+                        <img th:case="흐림" th:src="@{https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/cloudy.svg}" width="140px">
+                        <img th:case="비" th:src="@{https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/drizzle.svg}" width="140px">
+                        <img th:case="|비/눈|" th:src="@{https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/sleet.svg}" width="140px">
+                        <img th:case="눈" th:src="@{https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/snow.svg}" width="140px">
+                        <img th:case="소나기" th:src="@{https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/drizzle.svg}" width="140px">
                     </th:block>
                 </div>
             </div>
