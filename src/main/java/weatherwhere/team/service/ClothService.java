@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import weatherwhere.team.domain.closet.Cloth;
+import weatherwhere.team.domain.closet.Diary;
 import weatherwhere.team.domain.closet.DiaryContents;
 import weatherwhere.team.domain.closet.DiaryInfo;
 import weatherwhere.team.repository.closet.ClothRepository;
@@ -142,4 +143,9 @@ public class ClothService {
             }
         return clothRepository.saveDC(diaryContents);
     }
+
+    public List<Diary> findAllDiary(String userId){
+        return clothRepository.findAllDiary(userId);
+    }
+
 }

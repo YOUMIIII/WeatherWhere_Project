@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import weatherwhere.team.domain.closet.Cloth;
+import weatherwhere.team.domain.closet.Diary;
 import weatherwhere.team.domain.closet.DiaryContents;
 import weatherwhere.team.domain.closet.DiaryInfo;
 import weatherwhere.team.domain.member.Member;
@@ -120,7 +121,6 @@ public class MypageController {
         cloth.setCWhereToBuy(form.getCWhereToBuy());
         cloth.setCColor(form.getCColor());
         cloth.setCPhoto(form.getCPhoto());
-
         Cloth savedCloth = clothService.save(cloth, file);
         redirectAttributes.addAttribute("cId", savedCloth.getCId());
         redirectAttributes.addAttribute("status", true);
@@ -163,6 +163,8 @@ public class MypageController {
 
     @GetMapping("/diary")
     public String diary(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){
+        List<Diary> diaries = clothService.findAllDiary(loginMember.getUserId());
+        model.addAttribute("diaries", diaries);
         model.addAttribute("member", loginMember);
         return "main/mypage/diary";
     }
@@ -209,12 +211,12 @@ public class MypageController {
         log.info("content = {}", form.getDContent());
 
         DiaryContents savedDC = clothService.saveDC(diaryContents, file);
-        log.info("photo = {}", form.getDPhotoName());
-        log.info("photo = {}", form.getDPhotoPath());
-
-        redirectAttributes.addAttribute("status", true);
+        log.info("photo = {}", savedDC.getDPhotoName());
+        log.info("photo = {}", savedDC.getDPhotoPath());
+        List<Diary> diaries = clothService.findAllDiary(loginMember.getUserId());
+        model.addAttribute("diaries", diaries);
         model.addAttribute("member", loginMember);
-        return "redirect:/mypage/diary";
+        return "main/mypage/diary";
 
     }
 

@@ -47,4 +47,9 @@
         insert into diary_contents
         values (#{dId}, #{userId}, #{dScore}, #{dContent}, #{dPhotoName}, #{dPhotoPath})
     </insert>
+
+    <select id="findAllDiary" resultType="weatherwhere.team.domain.closet.Diary">
+        select * from diary_info, diary_contents
+        where diary_info.d_id = diary_contents.d_id and diary_contents.user_id = #{userId}
+    </select>
 </mapper>

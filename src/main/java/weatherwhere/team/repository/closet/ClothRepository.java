@@ -4,9 +4,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import weatherwhere.team.domain.closet.Cloth;
+import weatherwhere.team.domain.closet.Diary;
 import weatherwhere.team.domain.closet.DiaryContents;
 import weatherwhere.team.domain.closet.DiaryInfo;
 import weatherwhere.team.web.mypage.ClothUpdateForm;
+import weatherwhere.team.web.mypage.DiaryAddForm;
 
 import java.util.List;
 
@@ -48,5 +50,10 @@ public class ClothRepository {
         clothMapper.saveDC(diaryContents);
         return diaryContents;
     }
+
+    public List<Diary> findAllDiary(String userId){
+        return clothMapper.findAllDiary(userId);
+    }
+
 
 }

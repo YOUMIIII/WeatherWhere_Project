@@ -3,6 +3,7 @@ package weatherwhere.team.repository.closet;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import weatherwhere.team.domain.closet.Cloth;
+import weatherwhere.team.domain.closet.Diary;
 import weatherwhere.team.domain.closet.DiaryContents;
 import weatherwhere.team.domain.closet.DiaryInfo;
 import weatherwhere.team.web.mypage.ClothUpdateForm;
@@ -25,5 +26,7 @@ public interface ClothMapper {
     void saveDI(DiaryInfo diaryInfo);
 
     void saveDC(DiaryContents diaryContents);
+
+    List<Diary> findAllDiary(String userId);
 
 }
