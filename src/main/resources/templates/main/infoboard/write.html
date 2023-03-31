@@ -17,7 +17,7 @@
         <div>새글 작성</div>
     </div>
     <div id="form">
-        <form th:action="|@{/board/save}|" method="post" enctype="multipart/form-data">
+        <form th:action="|@{/board/save/}|" method="post" enctype="multipart/form-data">
             <div class="formlist">
                 <div class="input">
                     <select id="type" name="postType">
@@ -31,6 +31,7 @@
                     <input type="text" id="boardTitle" name="title" placeholder="글 제목">
                     <input type="hidden" id="id" name="id" th:value="${board?.id}">
                     <input type="hidden" id="userId" name="userId" th:value="${board?.userId}">
+                    <input type="hidden" id="storedFileName" name="storedFileName" th:value="${board?.storedFileName}">
                 </div>
             </div>
             <div class="formlist">

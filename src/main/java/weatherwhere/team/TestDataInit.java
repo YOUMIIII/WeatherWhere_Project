@@ -30,4 +30,16 @@ public class TestDataInit {
 
         memberJpaRepository.save(member);
     }
+    @Transactional
+    @EventListener(ApplicationReadyEvent.class)
+    public void init2(){
+        Member member = new Member();
+        member.setUserId("aa");
+        member.setUserPw("aa");
+        member.setUserMail("test@naver.com");
+        member.setParentRegion("경기도");
+        member.setChildRegion("용인시수지구");
+        member.setUserPhoto("photo");
+        memberJpaRepository.save(member);
+    }
 }

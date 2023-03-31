@@ -18,6 +18,8 @@ public class BoardDTO {
     private String title;
     private String contents;
     private String postType;
+    //todo(dayi) : DTO에 지역 넣기, 생성자, 메서드 손보기
+    private String region;
     private int hits;
     private LocalDateTime postdateTime;
     private LocalDateTime updateTime;
@@ -27,7 +29,7 @@ public class BoardDTO {
     private String storedFileName; // 서버 저장용 파일 이름
     private int fileAttached; // 파일 첨부 여부(첨부 1, 미첨부 0)
 
-    public BoardDTO(Long id, String postType, String title, String userId, int hits, LocalDateTime postdateTime, String contents) {
+    public BoardDTO(Long id, String postType, String title, String userId, String region, int hits, LocalDateTime postdateTime, String contents) {
         this.id = id;
         this.postType = postType;
         this.title = title;
@@ -35,6 +37,7 @@ public class BoardDTO {
         this.hits = hits;
         this.postdateTime = postdateTime;
         this.contents = contents;
+//        this.region = region;
     }
 
     //게시판 리스트 보여질 내용

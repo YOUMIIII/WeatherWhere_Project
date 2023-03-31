@@ -7,10 +7,8 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import weatherwhere.team.domain.board.BoardEntity;
 import weatherwhere.team.domain.member.Member;
 import weatherwhere.team.repository.board.BoardDTO;
-import weatherwhere.team.repository.board.BoardRepository;
 import weatherwhere.team.repository.board.CommentDTO;
 import weatherwhere.team.service.BoardService;
 import weatherwhere.team.service.CommentService;
@@ -35,33 +33,33 @@ public class BoardController {
     private final CommentService commentService;
 
     @GetMapping("/save") // 새글작성 버튼 클릭 시 동작하는 부분
-    public String saveForm(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model) {
+    public String saveForm(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model,
+                           @ModelAttribute("board") BoardDTO boardDTO) {
         model.addAttribute("member", loginMember); // 사이드바
-        System.out.println("새글작성 버튼 클릭 시 회원ID 확인 : loginMember.getUserId() = " + loginMember.getUserId()); // UserId 확인용
+
+        boardDTO.setUserId(loginMember.getUserId());
+        System.out.println("새 글작성 버튼 클릭 시 회원 ID 확인 : loginMember.getUserId() = " + loginMember.getUserId()); // UserId 확인용
         return "main/infoboard/write";
     }
 
     //글 등록 완료
-    @PostMapping("/save") // 글 작성 후 게시글 작성 버튼 클릭 시 동작하는 부분
+    @PostMapping("/save") // 글 작성 후 DB에 저장하는 버튼 클릭 시 동작하는 부분
     public String save(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model,
-                       @ModelAttribute BoardDTO boardDTO) throws IOException {
+                       @ModelAttribute("board") BoardDTO boardDTO) throws IOException {
         model.addAttribute("member", loginMember); // 사이드바
-        //todo 여기서 넣어주는 userId를 saveForm 메서드로 옮겨줘야함.
-//        System.out.println("loginMember.getUserId() = " + loginMember.getUserId()); //UserId 확인용
-        boardDTO.setUserId(loginMember.getUserId()); //로그인 아이디 boardDTO에 넣기
-        model.addAttribute("board", boardDTO);
+
+        System.out.println("boardDTO 에 저장된 userId : " + boardDTO.getUserId()); //UserId 확인용
+        boardDTO.setStoredFileName(boardDTO.getStoredFileName());
+        System.out.println("boardDTO.getStoredFileName() = " + boardDTO.getStoredFileName());
         System.out.println("DB에 저장될 boardDTO 정보 = " + boardDTO);
 
         boardService.save(boardDTO);
-//        System.out.println("새 글 작성 후 게시글 작성 버튼 클릭 후");
-//        System.out.println("boardDTO = " + boardDTO);
-//        System.out.println("<-- DB에 들어가기 직전----------------------------------------------- -->");
-        return "main/infoboard/detail";
+        return "main/infoboard/save";
     }
 
     @GetMapping("/board")
     public String findAll(Model model) {
-        // DB에서 전체 게시글 데이터를 가져와서 list.html에 보여준다.
+        // DB 에서 전체 게시글 데이터를 가져와서 list.html 에 보여준다.
         List<BoardDTO> boardDTOList = boardService.findAll();
         model.addAttribute("boardList", boardDTOList);
         return "paging";
@@ -75,7 +73,7 @@ public class BoardController {
         model.addAttribute("member", loginMember); // 사이드바 정보 입력부분
         /*
             해당 게시글의 조회수를 하나 올리고
-            게시글 데이터를 가져와서 detail.html에 출력
+            게시글 데이터를 가져와서 detail.html 에 출력
          */
         boardService.updateHits(id);
         BoardDTO boardDTO = boardService.findById(id);
@@ -89,9 +87,10 @@ public class BoardController {
 
     @GetMapping("/update/{id}") // 상세보기페이지에서 수정 버튼 클릭 시 동작하는 부분
     public String updateForm(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
-                             @PathVariable Long id, Model model) {
+                             @PathVariable Long id,
+                             BoardDTO boardDTO, Model model) {
         model.addAttribute("member", loginMember); // 사이드바 정보 입력부분
-        BoardDTO boardDTO = boardService.findById(id); // 수정할 글 불러오기
+        boardDTO = boardService.findById(id); // 수정할 글 불러오기
         System.out.println("불러온 작성글 boardDTO 정보 = " + boardDTO);
 
         model.addAttribute("boardUpdate", boardDTO);
@@ -100,8 +99,10 @@ public class BoardController {
     }
 
     @PostMapping("/update/") // 수정페이지에서 글 수정 후 수정버튼 클릭 시 동작하는 부분
-    public String update(@ModelAttribute BoardDTO boardDTO, Model model) {
+    public String update(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
+                         @ModelAttribute BoardDTO boardDTO, Model model) {
 
+        model.addAttribute("member", loginMember); // 사이드바
 //        model.addAttribute("boardUpdate", boardDTO);//
         System.out.println("수정페이지 들어오는 버튼 클릭 후 model에 들어간 boardUpdate = " + boardDTO);
 //        boardDTO.setBoardFile(null);
@@ -125,8 +126,8 @@ public class BoardController {
 //        boardService. // userId 가져오기
         String userId = boardService.findById(id).getUserId();
 
-//        System.out.println("로그인ID = " + loginMember.getUserId()); //로그인 userId 확인용
-//        System.out.println("글작성ID = " + userId); // 글 작성자
+//        System.out.println("로그인 ID = " + loginMember.getUserId()); //로그인 userId 확인용
+//        System.out.println("글작성 ID = " + userId); // 글 작성자
 //        System.out.println("게시글 번호 : id = " + id); //글 번호
 
         if (loginMember.getUserId().equals(userId)) {
