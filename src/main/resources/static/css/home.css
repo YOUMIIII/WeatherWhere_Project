@@ -17,8 +17,8 @@ body{
 }
 
 .mainLayout h1{ /* 각 박스의 제목 */
-    font-size:20px;
-    margin:25px;
+    font-size:18px;
+    margin:20px;
 }
 
 #temperature{
@@ -78,25 +78,9 @@ body{
 }
 
 .codyBox{
-    background-color:white;
-    border-radius:15px;
     width:90%;
-    margin-left:25px;
-    margin-top:10px;
-    margin-bottom:10px;
-}
-
-.codyBox div{
-    display:inline-block;
-    vertical-align:middle;
-}
-
-.codyImg{
-    padding:10px;
-}
-
-.codyName{
-    width:280px;
+    margin-left:20px;
+    margin-bottom:5px;
 }
 
 #schedule{

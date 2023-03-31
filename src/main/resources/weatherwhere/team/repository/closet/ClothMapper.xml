@@ -37,4 +37,14 @@
         delete from cloth_info
         where c_id = #{cId} and user_id = #{userId}
     </delete>
+
+    <insert id="saveDI">
+        insert into diary_info
+        values (#{dId}, #{dDate}, #{dLocation1}, #{dLocation2}, #{dCody1}, #{dCody2}, #{dCody3})
+    </insert>
+
+    <insert id="saveDC">
+        insert into diary_contents
+        values (#{dId}, #{userId}, #{dScore}, #{dContent}, #{dPhotoName}, #{dPhotoPath})
+    </insert>
 </mapper>

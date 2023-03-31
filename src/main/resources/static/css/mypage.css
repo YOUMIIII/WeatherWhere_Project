@@ -22,7 +22,7 @@ button{
     margin-left:20%;
     margin-top:50px;
     padding-top:30px;
-    padding-bottom:80px;
+    padding-bottom:8 0px;
     width:50%;
 }
 
@@ -393,4 +393,72 @@ label{
 #detailClothBtn button{
     margin-top:30px;
 }
+
+/* adddiary */
+
+#diarywrite, #diarycloset{
+    float:left;
+    border-radius: 10px;
+    background-color: #EBEBEB;
+    padding:15px;
+    margin-top:30px;
+    margin-left:20px;
+}
+
+#diarycloset{
+    width:41%;
+}
+
+#diaryform, #closetcontent{
+    background-color:white;
+    padding:20px;
+    border-radius:10px;
+}
+
+.star {
+  position: relative;
+  font-size: 32px;
+  color: #ddd;
+}
+
+.star input {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  opacity: 0;
+}
+
+.star span {
+  width: 0;
+  position: absolute;
+  left: 0;
+  color: #FFDA68;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+textarea{
+    width:100%;
+}
+
+input[type="checkbox"] {
+    margin:5px 10px;
+    width:15px;
+}
+
+.cloth{
+    background-color:white;
+}
+
+.dphotoex{
+    font-size:15px;
+}
+
+.photoex{
+    font-size:15px;
+    margin:5px 10px;
+}
+
+
 

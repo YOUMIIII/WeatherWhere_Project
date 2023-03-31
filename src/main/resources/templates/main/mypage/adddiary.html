@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>일기작성</title>
+  <link rel="stylesheet" type="text/css" href="../../../static/css/mypage.css" th:href="@{/css/mypage.css}">
+  <script>
+    //코디별점주기
+    const drawStar = (target) => {
+      document.querySelector(`.star span`).style.width = `${target.value * 10}%`;
+    }
+  </script>
+</head>
+<body>
+<div>
+  <div class="leftBar" th:insert="~{main/sidebar :: sidebar}">
+  </div>
+</div>
+<div class="maincontent">
+  <div class="introduce">
+    <div id="subT">마이페이지 > 코디일기</div>
+    <div>일기작성</div>
+  </div>
+  <form method="post" th:object="${diaryForm}" enctype="multipart/form-data">
+    <div id="diarywrite">
+      <div id="diaryform">
+          <div>
+            <input type="hidden" id="userId" name="userId" th:value="${member.userId}">
+          </div>
+          <div class="formList">
+            <label for="dDate">날짜선택</label>
+            <div>
+              <input type="date" id="dDate" th:field="*{dDate}">
+            </div>
+            <div class="field-error" th:errors="*{dDate}">
+              오류
+            </div>
+          </div>
+          <div class="formList">
+            <label for="dLocation">장소선택</label>
+            <div id="dLocation">
+              <select id="userLocation" th:field="*{dLocation1}">
+                <option value="">시/도 선택</option>
+              </select>
+              <select id="userLocation2" th:field="*{dLocation2}">
+                <option value="">시/군/구 선택</option>
+              </select>
+            </div>
+            <div class="field-error" th:errors="*{dLocation1}">
+              오류
+            </div>
+          </div>
+          <div class="formList">
+            <label for="file">코디</label>
+            <div class="dphotoex">오늘의 사진을 남긴다면 다음에 참고하기 좋아요💚</div>
+            <input type="file" id="file" name="file">
+            <div class="field-error" th:errors="*{dCody}">
+              오류
+            </div>
+          </div>
+          <div class="formList">
+            <label for="dScore">코디점수</label>
+            <div>
+              <span class="star">
+                ★★★★★<span>★★★★★</span>
+                <input type="range" id="dScore" th:field="*{dScore}" oninput="drawStar(this)" value="1" step="2" min="0" max="10">
+              </span>
+            </div>
+            <div>
+              <textarea th:field="*{dContent}" rows="10" placeholder="오늘 코디의 느낀점을 적어주세요"></textarea>
+            </div>
+          </div>
+          <div>
+            <input type="submit" value="작성">
+          </div>
+      </div>
+    </div>
+    <div id="diarycloset">
+      <div class="photoex">코디한 옷을 체크해주세요(최대 3개)</div>
+      <div class="closetcontent">
+        <div class="cloth" th:each="cloth : ${clothes}">
+        <input type="checkbox" name="check" th:value="${cloth.cId}"  th:field="*{dCody}">
+            <div class="clothimg"><div class="clothimgdiv"><img th:src="@{${cloth.cPhotoPath}}" alt="옷사진"></div></div>
+            <div class="cColor" name="cColor" th:style="|background-color:'${cloth.cColor}';|">
+              <div class="clothcontent">
+                <div class="content">
+                  <div class="clothbuy"><span th:text="${cloth.cWhereToBuy}">자라</span> 구매</div>
+                  <div class="clothname"><span class="cName" th:text="${cloth.cName}">초록원피스</span></div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+</body>
+
+<script type="text/javascript" src="../../static/js/jquery-3.4.1.min.js" th:src="@{/js/jquery-3.4.1.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/menuactive.js}"></script>
+<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+<script>
+<!--    $("#userLocation2").chainedTo("#userLocation");-->
+        $(document).ready(function(){
+          loadArea('loadParent',$(this));
+        });
+        $('#userLocation').on("change",function(){
+          loadArea('loadChild',$(this));
+        });
+        function loadArea(selectedType,selectedValue){
+          $.ajax({
+              url: "/region/api",
+              dataType: "JSON",
+              method: "GET"
+          }).done(function(res){
+             if(selectedType == 'loadParent'){
+                  $.each(res, function (index,value){
+                      var hasOption=$('#userLocation option[value="'+value.parentRegion+'"]').length;
+                      if(hasOption==0){
+                          $('#userLocation').append('<option value="'+value.parentRegion+'">'+value.parentRegion+'</option>');
+                      }
+                  });
+             }else if(selectedType == 'loadChild'){
+                  var selectedValueText = $(selectedValue).find('option:selected').text();
+                  $('#userLocation2').empty();
+                  $.each(res, function (index,value){
+
+                      if(selectedValueText==value.parentRegion){
+
+                          $('#userLocation2').append('<option value="'+value.childRegion+'">'+value.childRegion+'</option>');
+                      }
+                  });
+             }
+          });
+        }
+
+        $(document).ready(function(){
+          for(var i = 0; i<3; i++){
+            $('.cName').on('dblclick', function(e){
+              //alert(e.target.id);
+              $('input[id=dCody1]').attr('value',e.target.id);
+            });
+            $('.cName').on('dblclick', function(e){
+              $('input[id=dCody2]').attr('value',e.target.id);
+            });
+            $('.cName').on('dblclick', function(e){
+              //alert(e.target.id);
+              $('input[id=dCody3]').attr('value',e.target.id);
+            });
+          }
+        });
+
+    </script>
+</html>

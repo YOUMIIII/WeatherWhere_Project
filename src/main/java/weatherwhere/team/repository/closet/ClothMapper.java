@@ -3,6 +3,8 @@ package weatherwhere.team.repository.closet;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import weatherwhere.team.domain.closet.Cloth;
+import weatherwhere.team.domain.closet.DiaryContents;
+import weatherwhere.team.domain.closet.DiaryInfo;
 import weatherwhere.team.web.mypage.ClothUpdateForm;
 
 import java.util.List;
@@ -19,5 +21,9 @@ public interface ClothMapper {
     void update(@Param("cId") Long id, @Param("updateParam") ClothUpdateForm updateParam);
 
     void delete(@Param("cId") Long id, @Param("userId") String userId);
+
+    void saveDI(DiaryInfo diaryInfo);
+
+    void saveDC(DiaryContents diaryContents);
 
 }

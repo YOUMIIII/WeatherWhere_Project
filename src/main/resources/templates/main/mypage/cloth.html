@@ -48,29 +48,28 @@
             <div class="formList">
                 <label>메인컬러</label>
                 <div>
-                    <input th:if="${cloth.cColor == '#D7E9B9'}" type="text" value="💚" readonly>
+                    <!--<input th:if="${cloth.cColor == '#D7E9B9'}" type="text" value="💚" readonly>
                     <input th:if="${cloth.cColor == '#000000'}" type="text" value="🖤" readonly>
                     <input th:if="${cloth.cColor == '#F1F1F1'}" type="text" value="🤍" readonly>
-                    <input th:if="${cloth.cColor == '#FF5A5A'}" type="text" value="❤️" readonly>
+                    <input th:if="${cloth.cColor == '#FF5A5A'}" type="text" value="❤" readonly>
                     <input th:if="${cloth.cColor == '#FF9551'}" type="text" value="🧡" readonly>
                     <input th:if="${cloth.cColor == '#FFDA68'}" type="text" value="💛" readonly>
                     <input th:if="${cloth.cColor == '#5685FF'}" type="text" value="💙" readonly>
                     <input th:if="${cloth.cColor == '#AA77FF'}" type="text" value="💜" readonly>
                     <input th:if="${cloth.cColor == '#F7C8E0'}" type="text" value="💕" readonly>
-                    <input th:if="${cloth.cColor == '#D9D9D9'}" type="text" value="회색" readonly>
-                    <!--<th:block th:switch="${cloth.cColor}">
+                    <input th:if="${cloth.cColor == '#D9D9D9'}" type="text" value="회색" readonly>-->
+                    <th:block th:switch="${cloth.cColor}">
                         <input type="text" th:case="|#D7E9B9|" value="🖤" readonly>
                         <input type="text" th:case="|#000000|" value="🖤 검정" readonly>
                         <input type="text" th:case="|#F1F1F1|" value="🖤" readonly>
-                        <input type="text" th:case="|#FF5A5A|" value="❤️" readonly>
-                        <input type="text" th:case="|#FF9551|" value="🧡" readonly>
+                        <input type="text" th:case="|#FF5A5A|" value="❤" readonly>
+                        <input type="text" th:case="|#FF9551|" th:value="🧡" readonly>
                         <input type="text" th:case="|#FFDA68|" value="💛" readonly>
-                        <input type="text" th:case="|#5685FF|" value="💙" readonly>
+                        <input type="text" th:case="|#5685FF|" th:value="💙" readonly>
                         <input type="text" th:case="|#AA77FF|" value="💜" readonly>
                         <input type="text" th:case="|#F7C8E0|" value="💕" readonly>
                         <input type="text" th:case="|#D9D9D9|" value="회색" readonly>
                     </th:block>
-                    <input type="text" id="cColor" th:value="${cloth.cColor}" readonly>-->
                 </div>
             </div>
         </div>

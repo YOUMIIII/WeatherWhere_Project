@@ -15,7 +15,7 @@
 </head>
 <body class="signup">
     <div class="logoWrap">
-        웨더웨어
+        <img th:src="@{/img/logo_dark.png}" width="200px">
     </div>
     <form class="formBox" th:action th:object="${memberJoinForm}" method="POST">
         <h1 class="mainT">회원가입</h1>
@@ -51,24 +51,11 @@
                 <div>
                     <select id="userLocation" th:field="*{userLocation}">
                         <option value="">시/도 선택</option>
-<!--                        <option value="">시/도 선택</option>
-                        <option value="서울특별시">서울특별시</option>
-                        <option value="경기도">경기도</option>-->
                     </select>
                 </div>
                 <div>
                     <select id="userLocation2" th:field="*{userLocation2}">
                         <option value="">시/군/구 선택</option>
-<!--                        <option value="">시/군/구 선택</option>
-                        <option value="종로구" data-chained="서울특별시">종로구</option>
-                        <option value="중구" data-chained="서울특별시">중구</option>
-                        <option value="용산구" data-chained="서울특별시">용산구</option>
-                        <option value="성남시수정구" data-chained="경기도">성남시수정구</option>
-                        <option value="성남시중원구" data-chained="경기도">성남시중원구</option>
-                        <option value="성남시분당구" data-chained="경기도">성남시분당구</option>
-                        <option value="용인시처인구" data-chained="경기도">용인시처인구</option>
-                        <option value="용인시기흥구" data-chained="경기도">용인시기흥구</option>
-                        <option value="용인시수지구" data-chained="경기도">용인시수지구</option>-->
                     </select>
                 </div>
                 <p class="field-error" th:errors="*{userLocation}"></p>

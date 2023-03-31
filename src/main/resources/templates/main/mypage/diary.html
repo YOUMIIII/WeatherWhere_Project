@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
   <title>코디일기</title>
@@ -15,6 +15,7 @@
   <div class="introduce">
     <div id="subT">마이페이지</div>
     <div>코디일기</div>
+    <button th:onclick="|location.href='@{/mypage/diary/add}'|">일기추가</button>
   </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>

@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import weatherwhere.team.domain.closet.Cloth;
+import weatherwhere.team.domain.closet.DiaryContents;
+import weatherwhere.team.domain.closet.DiaryInfo;
 import weatherwhere.team.domain.member.Member;
 import weatherwhere.team.repository.board.BoardDTO;
 import weatherwhere.team.service.BoardService;
@@ -161,10 +163,59 @@ public class MypageController {
 
     @GetMapping("/diary")
     public String diary(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){
-
-        //세션이 유지되면 스케줄으로 이동
         model.addAttribute("member", loginMember);
         return "main/mypage/diary";
+    }
+
+    @GetMapping("/diary/add")
+    public String addDiary(@ModelAttribute("diaryForm") DiaryAddForm form, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){
+        List<Cloth> clothes = clothService.findAll(loginMember.getUserId());
+        model.addAttribute("member", loginMember);
+        model.addAttribute("clothes", clothes);
+        return "main/mypage/adddiary";
+    }
+
+    @PostMapping("/diary/add")
+    public String addDiaryForm(@ModelAttribute("diaryForm") DiaryAddForm form, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, BindingResult bindingResult, MultipartFile file, RedirectAttributes redirectAttributes, Model model ) throws Exception{
+        if(bindingResult.hasErrors()){
+            model.addAttribute("member", loginMember);
+            return "main/mypage/adddiary";
+        }
+        String id = form.getUserId() + form.getDDate();
+
+        DiaryInfo diaryInfo = new DiaryInfo();
+        diaryInfo.setDId(id);
+        diaryInfo.setDDate(form.getDDate());
+        diaryInfo.setDLocation1(form.getDLocation1());
+        diaryInfo.setDLocation2(form.getDLocation2());
+        List<Long> dCody = form.getDCody();
+        for (Long aLong : dCody) {
+            log.info("cody = {}", aLong);
+        }
+        diaryInfo.setDCody1(dCody.get(0));
+        diaryInfo.setDCody2(dCody.get(1));
+        diaryInfo.setDCody3(dCody.get(2));
+        /*diaryInfo.setDCody1(10L);
+        diaryInfo.setDCody2(20L);
+        diaryInfo.setDCody3(30L);*/
+        DiaryInfo savedDI = clothService.saveDI(diaryInfo);
+        DiaryContents diaryContents = new DiaryContents();
+        diaryContents.setDId(id);
+        diaryContents.setUserId(form.getUserId());
+        log.info("userid = {}", form.getUserId());
+        diaryContents.setDScore(form.getDScore());
+        log.info("score = {}", form.getDScore());
+        diaryContents.setDContent(form.getDContent());
+        log.info("content = {}", form.getDContent());
+
+        DiaryContents savedDC = clothService.saveDC(diaryContents, file);
+        log.info("photo = {}", form.getDPhotoName());
+        log.info("photo = {}", form.getDPhotoPath());
+
+        redirectAttributes.addAttribute("status", true);
+        model.addAttribute("member", loginMember);
+        return "redirect:/mypage/diary";
+
     }
 
     @GetMapping("/favorite")

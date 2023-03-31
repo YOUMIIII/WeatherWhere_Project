@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import weatherwhere.team.domain.closet.Cloth;
+import weatherwhere.team.domain.closet.DiaryContents;
+import weatherwhere.team.domain.closet.DiaryInfo;
 import weatherwhere.team.web.mypage.ClothUpdateForm;
 
 import java.util.List;
@@ -35,6 +37,16 @@ public class ClothRepository {
 
     public void delete(Long cId, String userId){
         clothMapper.delete(cId, userId);
+    }
+
+    public DiaryInfo saveDI(DiaryInfo diaryInfo){
+        clothMapper.saveDI(diaryInfo);
+        return diaryInfo;
+    }
+
+    public DiaryContents saveDC(DiaryContents diaryContents){
+        clothMapper.saveDC(diaryContents);
+        return diaryContents;
     }
 
 }

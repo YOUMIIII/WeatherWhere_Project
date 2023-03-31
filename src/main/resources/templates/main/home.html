@@ -65,12 +65,18 @@
         <div class="mainLayout" id="cody">
             <div><h1>오늘의 추천 코디</h1></div><div><button th:onclick="|location.href='@{/mypage/mycloset}'|">옷장보기</button></div>
             <div class="codyBox">
-                <div class="codyImg"><img th:src="@{/img/clothes1.png}" width="60px"></div>
-                <div class="codyName">자켓, 가디건</div>
+                <div class="codyImg"><img th:if="${region.weathers[0].temp < 5}" th:src="@{/img/home/cody/cody4.png}" width="100%"></div>
+                <div class="codyImg"><img th:if="${region.weathers[0].temp < 9 and region.weathers[0].temp >= 5}" src="../../static/img/home/cody/cody5.png"  th:src="@{/img/home/cody/cody5.png}" width="100%"></div>
+                <div class="codyImg"><img th:if="${region.weathers[0].temp < 12 and region.weathers[0].temp >= 9}"  th:src="@{/img/home/cody/cody9.png}" width="100%"></div>
+                <div class="codyImg"><img th:if="${region.weathers[0].temp < 12 and region.weathers[0].temp >= 9}"  th:src="@{/img/home/cody/cody9_2.png}" width="100%"></div>
+                <div class="codyImg"><img th:if="${region.weathers[0].temp < 17 and region.weathers[0].temp >= 12}"  th:src="@{/img/home/cody/cody12.png}" width="100%"></div>
+                <div class="codyImg"><img th:if="${region.weathers[0].temp < 17 and region.weathers[0].temp >= 12}"  th:src="@{/img/home/cody/cody12_2.png}" width="100%"></div>
+                <div class="codyImg"><img th:if="${region.weathers[0].temp < 20 and region.weathers[0].temp >= 17}" th:src="@{/img/home/cody/cody17.png}" width="100%"></div>
+                <div class="codyImg"><img th:if="${region.weathers[0].temp < 23 and region.weathers[0].temp >= 20}"  th:src="@{/img/home/cody/cody20.png}" width="100%"></div>
+                <div class="codyImg"><img th:if="${region.weathers[0].temp < 27 and region.weathers[0].temp >= 23}" th:src="@{/img/home/cody/cody23.png}" width="100%"></div>
+                <div class="codyImg"><img th:if="${region.weathers[0].temp >= 27}" th:src="@{/img/home/cody/cody27.png}" width="100%"></div>
             </div>
             <div class="codyBox">
-                <div class="codyImg"><img th:src="@{/img/clothes2.png}" width="60px"></div>
-                <div class="codyName">스타킹, 청바지, 면바지</div>
             </div>
         </div>
         <div class="mainLayout" id="schedule" th:fragment="schedule">
