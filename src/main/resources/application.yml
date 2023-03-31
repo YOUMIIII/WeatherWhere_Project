@@ -4,13 +4,13 @@
 spring:
   profiles:
 #    active: none
-#    active: dev-dy
-    active: dev-youmi
+    active: dev-dayi
+#    active: dev-youmi
 #    active: dev-yw
   datasource:
-    username: teampj
+#    username: teampj
 #    username: 예워니꺼
-#    username: c##dayi
+    username: c##dayi
     password: 1234
     #initialization-mode: always
     hikari:
@@ -20,10 +20,15 @@ spring:
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
-
+  servlet:
+    multipart:
+      maxFileSize: 200MB #첨부파일 사이즈 설정
+      maxRequestSize: 100MB
+      enabled: true  #경로 설정 가능하게
   jpa:
     hibernate:
       ddl-auto: create #시작할 때 drop, 이후 create
+#      ddl-auto: update #시작할 때 drop, 이후 create
     properties:
       hibernate:
         #show_sql: true
@@ -34,10 +39,17 @@ spring:
 batchSize: 500
 
 logging.level:
-  org.hibernate.SQL: debug
+  org:
+    hibernate.SQL: debug
 #  org.hibernate.type: trace #스프링부트 2.x , hibernate5
 #  org.hibernate.orm.jdbc.bind:  trace #스프링부트 3.x , hibernate6
   #org.springframework.jdbc.core: trace
+
+#  이 옵션을 사용하면 HTTP 요청 메시지를 확인할 수 있다.
+#logging.level.org.apache.coyote.http11=debug
+#    apache:
+#      coyote:
+#        http11: debug
 
 weatherApi:
   serviceKey: FtoUNBRuw9X2Wrr5nb2PAV2ow7GS%2BZHdFi4%2FpEUTNc2BKku4jOaBb0qOyGZxLr10X%2Fy7c1Z2AmPgi1ohvs7wRQ%3D%3D
@@ -70,7 +82,7 @@ resources:
 spring:
   config:
     activate:
-      on-profile: dev-dy
+      on-profile: dev-dayi
   datasource:
     url: jdbc:oracle:thin:@//localhost:1521/xe
 resources:

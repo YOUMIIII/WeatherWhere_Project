@@ -29,6 +29,8 @@
             <div class="formlist">
                 <div class="input">
                     <input type="text" id="boardTitle" name="title" placeholder="글 제목">
+                    <input type="hidden" id="id" name="id" th:value="${board?.id}">
+                    <input type="hidden" id="userId" name="userId" th:value="${board?.userId}">
                 </div>
             </div>
             <div class="formlist">
@@ -38,7 +40,7 @@
                 </p>
             </div>
             <div>
-                <input type="file">
+                <input type="file" name="boardFile" multiple="multiple">
             </div>
             <div class="button" id="save">
                 <input type="submit" value="게시글작성">

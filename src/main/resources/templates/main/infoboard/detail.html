@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <title>정보게시판</title>
     <link rel="stylesheet" type="text/css" href="../../../static/css/infoboard.css" th:href="@{/css/infoboard.css}">
+
+    <!-- jquery cdn 아마도 첨부파일 설정관련-->
     <script src="https://code.jquery.com/jquery-3.6.3.min.js"
             integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
 </head>
@@ -20,8 +22,10 @@
     </div>
     <div id="boardetailmain">
         <div id="boarddetailbtn">
+<!--            todo 즐겨찾기 추가 버튼 동작하도록 수정 필요-->
             <button id="addfavorite" th:onclick="">즐겨찾기 추가</button>
             <button th:onclick="|location.href='@{/board/paging}'|">목록</button>
+<!--            todo 수정 버튼이 동작하지 않는다. 수정필요-->
             <button th:onclick="|location.href='@{/board/update/{id}(id=${board?.id})}'|">수정</button>
             <button th:onclick="|location.href='@{/board/delete/{id}(id=${board?.id})}'|">삭제</button>
 
@@ -48,15 +52,13 @@
             </tr>
             <tr th:if="${board?.fileAttached == 1}">
                 <th>image</th>
-                <td colspan="9"><img th:src="@{|/upload/${board?.storedFileName}|}" alt=""></td>
+                <td colspan="9"><img th:src="@{/img/FileAttached/{img}(img=${board.storedFileName})}" width="500px" alt=""></td>
             </tr>
         </table>
     </div>
-
-
     <!-- 댓글 작성 부분 -->
     <div id="comment-write">
-        <input type="text" id="commentWriter" placeholder="작성자">
+        <input type="hidden" id="userId" th:value="${board?.userId}" >
         <input type="text" id="commentContents" placeholder="내용">
         <button id="comment-write-btn" onclick="commentWrite()">댓글작성</button>
     </div>
@@ -71,16 +73,14 @@
                 <th>작성시간</th>
             </tr>
             <tr th:each="comment: ${commentList}">
-                <td th:text="${comment.id}"></td>
-                <td th:text="${comment.commentWriter}"></td>
-                <td th:text="${comment.commentContents}"></td>
-                <td th:text="${comment.commentPostdate}"></td>
+                <td th:text="${comment?.id}"></td>
+                <td th:text="${board?.userId}"></td>
+                <td th:text="${comment?.commentContents}"></td>
+                <td th:text="${comment?.commentPostdate}"></td>
             </tr>
         </table>
     </div>
 </div>
-
-
 </body>
 </html>
 

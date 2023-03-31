@@ -30,6 +30,10 @@
                 <div class="input">
                     <input type="hidden" id="id" name="id" th:value="${boardUpdate?.id}">
                     <input type="hidden" id="userId" name="userId" th:value="${boardUpdate?.userId}">
+<!--                    <input type="hidden" id="originalFileName" name="originalFileName" th:value="${boardUpdate?.originalFileName}">-->
+<!--                    <input type="hidden" id="storedFileName" name="storedFileName" th:value="${boardUpdate?.storedFileName}">-->
+<!--                    <input type="hidden" id="fileAttached" name="fileAttached" th:value="${boardUpdate?.fileAttached}">-->
+
                     <input type="text" id="boardTitle" name="title" th:value="${boardUpdate?.title}">
                 </div>
             </div>
@@ -41,7 +45,7 @@
                 </p>
             </div>
             <div>
-                <input type="file">
+                <input type="file" name="boardFile" multiple="multiple">
             </div>
             <div class="button" id="update">
                 <input type="submit" name="update" value="수정">

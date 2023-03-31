@@ -46,10 +46,11 @@ public class BoardController {
     public String save(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model,
                        @ModelAttribute BoardDTO boardDTO) throws IOException {
         model.addAttribute("member", loginMember); // 사이드바
+        //todo 여기서 넣어주는 userId를 saveForm 메서드로 옮겨줘야함.
 //        System.out.println("loginMember.getUserId() = " + loginMember.getUserId()); //UserId 확인용
         boardDTO.setUserId(loginMember.getUserId()); //로그인 아이디 boardDTO에 넣기
-        System.out.println("boardDTO = " + boardDTO);
         model.addAttribute("board", boardDTO);
+        System.out.println("DB에 저장될 boardDTO 정보 = " + boardDTO);
 
         boardService.save(boardDTO);
 //        System.out.println("새 글 작성 후 게시글 작성 버튼 클릭 후");
@@ -90,15 +91,11 @@ public class BoardController {
     public String updateForm(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
                              @PathVariable Long id, Model model) {
         model.addAttribute("member", loginMember); // 사이드바 정보 입력부분
-
         BoardDTO boardDTO = boardService.findById(id); // 수정할 글 불러오기
-        String userId = boardService.findById(id).getUserId();
-        boardDTO.setUserId(userId);
-//        System.out.println("수정페이지로 들어옴-----------------------------------------------------------------");
-//        System.out.println("!!!!!!!!!!!!! id = " + id);
-//        System.out.println("!!!!!!!!!!!!! boardDTO = " + boardDTO);
-        model.addAttribute("boardUpdate", boardDTO);
+        System.out.println("불러온 작성글 boardDTO 정보 = " + boardDTO);
 
+        model.addAttribute("boardUpdate", boardDTO);
+        System.out.println("수정 페이지에 보여질 boardDTO = " + boardDTO);
         return "main/infoboard/update";
     }
 
@@ -106,13 +103,12 @@ public class BoardController {
     public String update(@ModelAttribute BoardDTO boardDTO, Model model) {
 
 //        model.addAttribute("boardUpdate", boardDTO);//
-        System.out.println("model에 들어간 boardUpdate = " + boardDTO);
-        boardDTO.setId(boardDTO.getId());
-        boardDTO.setUserId(boardDTO.getUserId());
+        System.out.println("수정페이지 들어오는 버튼 클릭 후 model에 들어간 boardUpdate = " + boardDTO);
+//        boardDTO.setBoardFile(null);
 
         BoardDTO board = boardService.update(boardDTO);
 //        System.out.println("return findById(boardDTO.getId()) = " + board);
-
+        System.out.println("수정 후 모델에 들어갈 boardDTO = " + boardDTO);
         model.addAttribute("board", board);// detail의 board로 넘겨주기위해
 //        System.out.println("글 수정하고 수정버튼 클릭 후------------------------------------------------------------------");
 //        System.out.println("boardDTO = " + boardDTO);
