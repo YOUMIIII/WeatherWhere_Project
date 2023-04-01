@@ -4,10 +4,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import weatherwhere.team.domain.member.Member;
-import weatherwhere.team.repository.region.RegionRepository;
 import weatherwhere.team.repository.member.MemberJpaRepository;
+import weatherwhere.team.repository.region.RegionRepository;
+import weatherwhere.team.web.member.MemberJoinForm;
 
+import java.io.File;
 import java.util.List;
 
 @Slf4j
@@ -50,6 +53,26 @@ public class MemberService {
     public Member login(String userId,String userPw){
         Member loginMember=memberJpaRepository.findLoginMember(userId,userPw);
         return loginMember;
+    }
+
+    public String memberfile(MultipartFile file, MemberJoinForm form) throws Exception{
+        /*우리의 프로젝트경로를 담아주게 된다 - 저장할 경로를 지정*/
+        String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/img/home/profile";
+        log.info("projectpath = {}", projectPath);
+
+        String fileName = form.getUserId() + "_" + "profile";
+        log.info("filename = {}", fileName);
+
+        /*빈 껍데기 생성*/
+        /*File을 생성할건데, 이름은 "name" 으로할거고, projectPath 라는 경로에 담긴다는 뜻*/
+        File saveFile = new File(projectPath, fileName);
+
+        file.transferTo(saveFile);
+
+        /*디비에 파일 넣기*/
+        form.setUserPhoto("/img/home/profile/" + fileName);
+
+        return form.getUserPhoto();
     }
 
 }

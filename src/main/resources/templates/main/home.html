@@ -25,7 +25,7 @@
     <div class="maincontent">
         <div class="introduce">
             <div id="today"></div>
-            <h2 id="subT">우리동네 날씨와 추천코디를 참고해서 오늘도 완벽한 외출을 도와드릴게요!</h2>
+            <h2 id="subT"><span th:text="${member.userId}"></span>님! 오늘도 완벽한 외출을 도와드릴게요!</h2>
         </div>
 
         <div class="mainLayout" id="weatherBox">
@@ -36,12 +36,12 @@
                 <div class="temperatureInfo">
                     <th:block th:switch="${region.weathers[0].sky}">
                         <img th:case="맑음" src="../../static/img/home/weather_sun.png" th:src="@{https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/clear-day.svg}" width="200px">
-                        <img th:case="|구름 많음|" th:src="@{https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/partly-cloudy-day.svg}" width="140px">
-                        <img th:case="흐림" th:src="@{https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/cloudy.svg}" width="140px">
-                        <img th:case="비" th:src="@{https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/drizzle.svg}" width="140px">
-                        <img th:case="|비/눈|" th:src="@{https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/sleet.svg}" width="140px">
-                        <img th:case="눈" th:src="@{https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/snow.svg}" width="140px">
-                        <img th:case="소나기" th:src="@{https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/drizzle.svg}" width="140px">
+                        <img th:case="|구름 많음|" th:src="@{https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/partly-cloudy-day.svg}" width="200px">
+                        <img th:case="흐림" th:src="@{https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/cloudy.svg}" width="200px">
+                        <img th:case="비" th:src="@{https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/drizzle.svg}" width="200px">
+                        <img th:case="|비/눈|" th:src="@{https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/sleet.svg}" width="200px">
+                        <img th:case="눈" th:src="@{https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/snow.svg}" width="200px">
+                        <img th:case="소나기" th:src="@{https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/drizzle.svg}" width="200px">
                     </th:block>
                 </div>
             </div>

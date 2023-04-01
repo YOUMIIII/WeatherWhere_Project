@@ -20,6 +20,18 @@
         select * from cloth_info where user_id = #{userId}
     </select>
 
+    <select id="findFavorites" resultType="weatherwhere.team.domain.closet.Cloth">
+        select * from cloth_info where user_id = #{userId} and c_count >= 2
+    </select>
+
+    <select id="findTops" resultType="weatherwhere.team.domain.closet.Cloth">
+        select * from cloth_info where user_id = #{userId} and c_kind1 = 'top'
+    </select>
+
+    <select id="findBottoms" resultType="weatherwhere.team.domain.closet.Cloth">
+        select * from cloth_info where user_id = #{userId} and c_kind1 = 'bottom'
+    </select>
+
     <update id="update">
         update cloth_info
         set c_name=#{updateParam.cName},
@@ -48,8 +60,19 @@
         values (#{dId}, #{userId}, #{dScore}, #{dContent}, #{dPhotoName}, #{dPhotoPath})
     </insert>
 
+    <update id="updateClothCount">
+        update cloth_info
+        set c_count = c_count + 1
+        where c_id = ${cId}
+    </update>
+
     <select id="findAllDiary" resultType="weatherwhere.team.domain.closet.Diary">
-        select * from diary_info, diary_contents
-        where diary_info.d_id = diary_contents.d_id and diary_contents.user_id = #{userId}
+        select di.d_id, di.d_date, di.D_LOCATION1, di.D_LOCATION2, dc.USER_ID, dc.D_SCORE, dc.D_CONTENT, dc.D_PHOTO_PATH, ci.C_NAME AS d_cody_name1, ci2.C_NAME AS d_cody_name2, ci3.c_name AS d_cody_name3
+        from DIARY_INFO di
+        LEFT JOIN DIARY_CONTENTS dc ON di.D_ID = dc.D_ID
+        LEFT JOIN CLOTH_INFO ci ON di.D_CODY1 = ci.C_ID
+        LEFT JOIN CLOTH_INFO ci2 ON di.D_CODY2 = ci2.C_ID
+        LEFT JOIN CLOTH_INFO ci3 ON di.D_CODY3 = ci3.C_ID
+        order by d_date desc
     </select>
 </mapper>

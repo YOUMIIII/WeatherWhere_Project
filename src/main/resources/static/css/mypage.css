@@ -336,14 +336,16 @@ a{
     margin-top:50px;
     border:0.5px solid #5F6879;
     border-radius:5px;
+}
 
+#detailClothImg img{
+    max-width:300px;
 }
 
 #detailClothImg div{
     display:table-cell;
     vertical-align:middle;
     text-align:center;
-
 }
 
 #detailCloth{
@@ -477,24 +479,23 @@ input[type="checkbox"] {
     width:73%;
 	position:absolute; /* 현재 이 라인을 넣으면 안에 컨텐츠가 있는만큼 사이즈가능함 */
 	padding-bottom:30px;
+	display:table;
 }
-
 
 .diary{
     background-color:white;
-    margin-bottom:20px;
     margin-left:20px;
-    margin-top:20px;
+    margin-top:30px;
     padding:10px;
     width:300px;
     border-radius:5px;
     float:left;
-
+    display:table-cell;
 }
 
 .dlistcontents{
     padding:20px;
-    font-size:15px;
+    font-size:13px;
     line-height:25px;
     border:0.5px solid #494F5B;
 }
@@ -507,8 +508,9 @@ input[type="checkbox"] {
     display:inline-block;
     background-color:#494F5B;
     color:white;
-    padding:5px;
-    margin-bottom:15px;
+    padding:5px 5px;
+    margin-bottom:5px;
+    font-size:13px;
 }
 
 .dlistlist{
@@ -520,4 +522,8 @@ input[type="checkbox"] {
   color:#FFDA68;
   margin-top:10px;
   margin-bottom:15px;
+}
+
+#dcontent{
+    font-size:14px;
 }

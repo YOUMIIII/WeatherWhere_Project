@@ -18,6 +18,9 @@ public interface ClothMapper {
     Cloth findById(@Param("cId") Long id, @Param("userId") String userId);
 
     List<Cloth> findAll(String userId);
+    List<Cloth> findFavorites(String userId);
+    List<Cloth> findTops(String userId);
+    List<Cloth> findBottoms(String userId);
 
     void update(@Param("cId") Long id, @Param("updateParam") ClothUpdateForm updateParam);
 
@@ -26,6 +29,8 @@ public interface ClothMapper {
     void saveDI(DiaryInfo diaryInfo);
 
     void saveDC(DiaryContents diaryContents);
+
+    void updateClothCount(Long cId);
 
     List<Diary> findAllDiary(String userId);
 

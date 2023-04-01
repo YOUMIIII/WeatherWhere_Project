@@ -5,6 +5,20 @@
 #profile{
     padding-top:200px;
     height:163px;
+    text-align:center;
+}
+
+#profileImg{
+    width:100px;
+    border-radius: 70%;
+    overflow: hidden;
+    margin-left:55px;
+}
+
+#profileImg img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 #logo, #profile .id{

@@ -127,7 +127,7 @@ input[type="checkbox"]{
 #successbackground{
     margin-top:100px;
     padding-top:100%;
-    width:600px;
+    width:400px;
     background-size:contain;
     background-repeat:no-repeat;
     position:relative;
@@ -144,8 +144,8 @@ input[type="checkbox"]{
 
 #sucesstext{
     line-height:45px;
-    font-size:25px;
-    width:400px;
+    font-size:20px;
+    width:500px;
     margin-bottom:30px;
 }
 

@@ -8,7 +8,6 @@ import weatherwhere.team.domain.closet.Diary;
 import weatherwhere.team.domain.closet.DiaryContents;
 import weatherwhere.team.domain.closet.DiaryInfo;
 import weatherwhere.team.web.mypage.ClothUpdateForm;
-import weatherwhere.team.web.mypage.DiaryAddForm;
 
 import java.util.List;
 
@@ -32,6 +31,16 @@ public class ClothRepository {
     public List<Cloth> findAll(String userId){
         return clothMapper.findAll(userId);
     }
+    public List<Cloth> findFavorites(String userId){
+        return clothMapper.findFavorites(userId);
+    }
+    public List<Cloth> findTops(String userId){
+        return clothMapper.findTops(userId);
+    }
+
+    public List<Cloth> findBottoms(String userId){
+        return clothMapper.findBottoms(userId);
+    }
 
     public void update(Long cId, ClothUpdateForm updateParam) {
         clothMapper.update(cId, updateParam);
@@ -49,6 +58,10 @@ public class ClothRepository {
     public DiaryContents saveDC(DiaryContents diaryContents){
         clothMapper.saveDC(diaryContents);
         return diaryContents;
+    }
+
+    public void updateClothCount(Long cId){
+        clothMapper.updateClothCount(cId);
     }
 
     public List<Diary> findAllDiary(String userId){

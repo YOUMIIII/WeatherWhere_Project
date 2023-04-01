@@ -7,10 +7,12 @@
 <body>
 <div class="main" th:fragment="sidebar">
     <div>
-      <img id="logo" th:src="@{/img/logomain.png}" width="150px;"></img>
+      <img id="logo" th:src="@{/img/logomain.png}" width="150px;">
     </div>
       <div id="profile">
-        <img src="../../static/img/profile2.png" th:src="@{/img/profile2.png}" width="100px">
+        <div id="profileImg">
+          <img src="../../static/img/mypage/diary/april.png" th:src="@{${member.userPhoto}}" width="100px">
+        </div>
         <h1 class="id"><span class="id" th:text="${member?.userId}">jojo39</span>님</h1>
       </div>
       <div id="nav">

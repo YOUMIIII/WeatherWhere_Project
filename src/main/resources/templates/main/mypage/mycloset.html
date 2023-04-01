@@ -97,13 +97,58 @@
             </div>
         </div>
         <div id="menu2" class="tabcont">
-            <h1>menu2</h1>
+            <div class="closetcontent">
+                <div class="cloth" th:each="favorite : ${favorites}">
+                    <a th:href="@{/mypage/mycloset/{cId}(cId=${favorite.cId})}">
+                        <div class="clothimg"><div class="clothimgdiv"><img th:src="@{${favorite.cPhotoPath}}" alt="옷사진"></div></div>
+                        <div name="cColor" id="cfavColor" th:style="|background-color:'${favorite.cColor}';|">
+                            <div class="clothcontent">
+                                <div class="content">
+                                    <div class="clothbuy"><span th:text="${favorite.cWhereToBuy}">자라</span> 구매</div>
+                                    <div class="clothname"><span th:text="${favorite.cName}">초록원피스</span></div>
+                                </div>
+                                <div class="content"><img src="../../../img/mypage/heart.png" th:src="@{/img/mypage/heart.png}"></div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
         </div>
         <div id="menu3" class="tabcont">
-            <h1>menu3</h1>
+            <div class="closetcontent">
+                <div class="cloth" th:each="top : ${tops}">
+                    <a th:href="@{/mypage/mycloset/{cId}(cId=${top.cId})}">
+                        <div class="clothimg"><div class="clothimgdiv"><img th:src="@{${top.cPhotoPath}}" alt="옷사진"></div></div>
+                        <div name="cColor" id="ctopColor" th:style="|background-color:'${top.cColor}';|">
+                            <div class="clothcontent">
+                                <div class="content">
+                                    <div class="clothbuy"><span th:text="${top.cWhereToBuy}">자라</span> 구매</div>
+                                    <div class="clothname"><span th:text="${top.cName}">초록원피스</span></div>
+                                </div>
+                                <div class="content"><img src="../../../img/mypage/heart.png" th:src="@{/img/mypage/heart.png}"></div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
         </div>
         <div id="menu4" class="tabcont">
-            <h1>menu4</h1>
+            <div class="closetcontent">
+                <div class="cloth" th:each="bottom : ${bottoms}">
+                    <a th:href="@{/mypage/mycloset/{cId}(cId=${bottom.cId})}">
+                        <div class="clothimg"><div class="clothimgdiv"><img th:src="@{${bottom.cPhotoPath}}" alt="옷사진"></div></div>
+                        <div name="cColor" id="cbottomColor" th:style="|background-color:'${bottom.cColor}';|">
+                            <div class="clothcontent">
+                                <div class="content">
+                                    <div class="clothbuy"><span th:text="${bottom.cWhereToBuy}">자라</span> 구매</div>
+                                    <div class="clothname"><span th:text="${bottom.cName}">초록원피스</span></div>
+                                </div>
+                                <div class="content"><img src="../../../img/mypage/heart.png" th:src="@{/img/mypage/heart.png}"></div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
         </div>
 
     </div>

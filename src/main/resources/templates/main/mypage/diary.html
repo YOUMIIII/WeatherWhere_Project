@@ -22,7 +22,7 @@
       <div class="diary" th:each="diary : ${diaries}">
       <div class="dlistphoto"><img src="../../../static/img/mypage/diary/april.png" th:src="@{${diary.dPhotoPath}}" width="300px"></div>
       <div class="dlistcontents">
-        <div class="dlistlist"><p th:text="${diary.dCody1}">베이지자켓</p> <p th:text="${diary.dCody2}">데이지티</p> <p th:text="${diary.dCody3}">데이지스커트</p></div>
+        <div class="dlistlist"><p th:text="${diary.dCodyName1}">베이지자켓</p> <p th:text="${diary.dCodyName2}">데이지티</p> <p th:text="${diary.dCodyName3}">데이지스커트</p></div>
         <div class="dlistlist">
           <label th:text="${diary.dDate}">2023-04-01</label>
         </div>
@@ -41,7 +41,7 @@
           </th:block>
         </div>
         <div class="dlistlist">
-          <div  th:text="${diary.dContent}">
+          <div id="dcontent" th:text="${diary.dContent}">
             날씨도 기분도 완벽했던 날.<br>
             오늘보다 조금만 더 더우면 외투는 안입고다닐듯
           </div>

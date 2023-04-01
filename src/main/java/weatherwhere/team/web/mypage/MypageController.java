@@ -60,8 +60,14 @@ public class MypageController {
     @GetMapping("/mycloset")
     public String mycloset(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){
         List<Cloth> clothes = clothService.findAll(loginMember.getUserId());
+        List<Cloth> favorites = clothService.findFavorites(loginMember.getUserId());
+        List<Cloth> tops = clothService.findTops(loginMember.getUserId());
+        List<Cloth> bottoms = clothService.findBottoms(loginMember.getUserId());
         model.addAttribute("member", loginMember);
         model.addAttribute("clothes", clothes);
+        model.addAttribute("favorites", favorites);
+        model.addAttribute("tops", tops);
+        model.addAttribute("bottoms", bottoms);
         return "main/mypage/mycloset";
     }
 
@@ -197,26 +203,26 @@ public class MypageController {
         diaryInfo.setDCody1(dCody.get(0));
         diaryInfo.setDCody2(dCody.get(1));
         diaryInfo.setDCody3(dCody.get(2));
-        /*diaryInfo.setDCody1(10L);
-        diaryInfo.setDCody2(20L);
-        diaryInfo.setDCody3(30L);*/
+
         DiaryInfo savedDI = clothService.saveDI(diaryInfo);
         DiaryContents diaryContents = new DiaryContents();
         diaryContents.setDId(id);
         diaryContents.setUserId(form.getUserId());
-        log.info("userid = {}", form.getUserId());
         diaryContents.setDScore(form.getDScore());
-        log.info("score = {}", form.getDScore());
         diaryContents.setDContent(form.getDContent());
-        log.info("content = {}", form.getDContent());
-
         DiaryContents savedDC = clothService.saveDC(diaryContents, file);
-        log.info("photo = {}", savedDC.getDPhotoName());
-        log.info("photo = {}", savedDC.getDPhotoPath());
+
+
+        //일기에 추가된 옷에 count 컬럼 1씩 증가
+        clothService.updateClothCount(form.getDCody().get(0));
+        clothService.updateClothCount(form.getDCody().get(1));
+        clothService.updateClothCount(form.getDCody().get(2));
+
+        //일기 리스트 가져오기
         List<Diary> diaries = clothService.findAllDiary(loginMember.getUserId());
         model.addAttribute("diaries", diaries);
         model.addAttribute("member", loginMember);
-        return "main/mypage/diary";
+        return "redirect:/mypage/diary";
 
     }
 

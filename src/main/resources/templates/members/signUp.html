@@ -17,7 +17,7 @@
     <div class="logoWrap">
         <img th:src="@{/img/logo_dark.png}" width="200px">
     </div>
-    <form class="formBox" th:action th:object="${memberJoinForm}" method="POST">
+    <form class="formBox" th:action th:object="${memberJoinForm}" method="POST" enctype="multipart/form-data">
         <h1 class="mainT">회원가입</h1>
         <div class="subT">*는 필수 입력란 입니다</div>
         <div class="loginInfoWrap">
@@ -62,8 +62,8 @@
             </div>
             <div class="info">
                 <div class="label">프로필 사진</div>
-                <div><input type="text" id="userPhoto" th:field="*{userPhoto}"></div>
-                <p></p>
+                <div><input type="file" name="file"></div>
+                <input type="hidden" th:field="*{userPhoto}">
             </div>
         </div>
         <div class="policyWrap">

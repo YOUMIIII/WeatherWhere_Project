@@ -35,7 +35,7 @@ public class ClothService {
             if(file.isEmpty()){
                 cloth.setCPhoto("nofile");
                 //파일 첨부 안할경우 기본사진으로
-                cloth.setCPhotoPath("/img/files/0dc00081-7a6f-4826-927d-f3d4cbcd7100_jean.png");
+                cloth.setCPhotoPath("/img/files/imgx.png");
             }else{
                 /*우리의 프로젝트경로를 담아주게 된다 - 저장할 경로를 지정*/
                 String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/img/files";
@@ -71,13 +71,23 @@ public class ClothService {
     public List<Cloth> findAll(String userId){
         return clothRepository.findAll(userId);
     }
+    public List<Cloth> findFavorites(String userId){
+        return clothRepository.findFavorites(userId);
+    }
+    public List<Cloth> findTops(String userId){
+        return clothRepository.findTops(userId);
+    }
+
+    public List<Cloth> findBottoms(String userId){
+        return clothRepository.findBottoms(userId);
+    }
 
     public void update(Long cId, ClothUpdateForm updateParam, MultipartFile file) throws Exception {
         if(updateParam.getCName() != null && updateParam.getCWhereToBuy() != null && updateParam.getCKind1() != null){
             if(file.isEmpty()){
                 updateParam.setCPhoto("nofile");
                 //파일 첨부 안할경우 기본사진으로
-                updateParam.setCPhotoPath("/img/files/0dc00081-7a6f-4826-927d-f3d4cbcd7100_jean.png");
+                updateParam.setCPhotoPath("/img/files/imgx.png");
             }else{
                 /*우리의 프로젝트경로를 담아주게 된다 - 저장할 경로를 지정*/
                 String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/img/files";
@@ -117,7 +127,7 @@ public class ClothService {
             if(file.isEmpty()){
                 diaryContents.setDPhotoName("emptyphoto");
                 //파일 첨부 안할경우 기본사진으로
-                diaryContents.setDPhotoPath("/img/mypage/diary/emptyphoto.png");
+                diaryContents.setDPhotoPath("/img/mypage/diary/imgx.png");
             }else{
                 /*우리의 프로젝트경로를 담아주게 된다 - 저장할 경로를 지정*/
                 String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/img/mypage/diary";
@@ -143,6 +153,11 @@ public class ClothService {
             }
         return clothRepository.saveDC(diaryContents);
     }
+
+    public void updateClothCount(Long cId){
+        clothRepository.updateClothCount(cId);
+    }
+
 
     public List<Diary> findAllDiary(String userId){
         return clothRepository.findAllDiary(userId);

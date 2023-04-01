@@ -7,9 +7,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import weatherwhere.team.domain.member.Member;
 import weatherwhere.team.repository.member.MemberJpaRepository;
-import weatherwhere.team.repository.member.MemberRepository;
-
-import javax.annotation.PostConstruct;
 
 @Component
 @RequiredArgsConstructor
@@ -26,7 +23,7 @@ public class TestDataInit {
         member.setUserMail("test@naver.com");
         member.setParentRegion("경기도");
         member.setChildRegion("용인시수지구");
-        member.setUserPhoto("photo");
+        member.setUserPhoto("/img/home/profile/profile.png");
 
         memberJpaRepository.save(member);
     }

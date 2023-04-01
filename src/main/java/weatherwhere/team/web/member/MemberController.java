@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.multipart.MultipartFile;
 import weatherwhere.team.domain.member.Member;
 import weatherwhere.team.service.MemberService;
 
@@ -31,7 +31,7 @@ public class MemberController {
     }
 
     @PostMapping("/join")
-    public String save(Model model,@Validated @ModelAttribute("memberJoinForm") weatherwhere.team.web.member.MemberJoinForm form, BindingResult bindingResult){
+    public String save(@Validated @ModelAttribute("memberJoinForm") weatherwhere.team.web.member.MemberJoinForm form, BindingResult bindingResult, Model model, MultipartFile file) throws Exception{
 
         if(!(form.getUserPw().equals(form.getUserPwCheck()))){
             bindingResult.reject("pwError","작성하신 비밀번호가 일치하지 않습니다.");
@@ -39,6 +39,12 @@ public class MemberController {
         if(bindingResult.hasErrors()){
             //폼에 유효성 문제가 있을 경우 다시 회원가입 페이지로.
             return "/members/signUp";
+        }
+
+        if(file.isEmpty()){
+            form.setUserPhoto("/img/home/profile/profile.png"); // 사진 등록 안하면 기본사진
+        } else {
+            form.setUserPhoto(memberService.memberfile(file, form));
         }
 
         //멤버 객체 생성 (회원가입 X)
