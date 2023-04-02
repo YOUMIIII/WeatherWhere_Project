@@ -53,7 +53,7 @@
             </tr>
             <tr th:if="${board?.fileAttached == 1}">
                 <th>image</th>
-                <td colspan="9"><img th:src="@{/img/FileAttached/{img}(img=${board.storedFileName})}" width="500px" alt=""></td>
+                <td colspan="9"><img th:src="@{|/img/FileAttached/${board.storedFileName}|}" width="500px" alt=""></td>
             </tr>
         </table>
     </div>

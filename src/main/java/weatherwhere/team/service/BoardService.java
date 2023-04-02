@@ -56,16 +56,22 @@ public class BoardService {
             String originalFilename = boardFile.getOriginalFilename(); // 2.
             String storedFileName = "image_" + originalFilename; // 3.
 
+            //transferTo 설정 방법1
+//            String fileSavePath = System.getProperty("user.dir") + "/src/main/resources/static/img/FileAttached"; //4
+//            boardFile.transferTo(new File(fileSavePath, storedFileName)); // 5.
 
-            String fileSavePath = System.getProperty("user.dir") + "/src/main/resources/static/img/FileAttached"; //4
-            System.out.println("파일 저장 경로fileSavePath = " + fileSavePath);
 
-            boardFile.transferTo(new File(fileSavePath, storedFileName)); // 5.
+            //transferTo 설정 방법2
+            String fileSavePath = System.getProperty("user.dir") + "/src/main/resources/static/img/FileAttached" + storedFileName;
+            boardFile.transferTo(new File(fileSavePath)); // 5.
+
+            System.out.println("fileSavePath = " + fileSavePath);
+
             BoardEntity boardEntity = BoardEntity.toSaveFileEntity(boardDTO);
             Long savedId = boardRepository.save(boardEntity).getId();
             BoardEntity board = boardRepository.findById(savedId).get();
 
-            BoardFileEntity boardFileEntity = BoardFileEntity.toBoardFileEntity(board, originalFilename, storedFileName, fileSavePath);
+            BoardFileEntity boardFileEntity = BoardFileEntity.toBoardFileEntity(board, originalFilename, storedFileName);
             boardFileRepository.save(boardFileEntity);
         }
 
@@ -81,6 +87,9 @@ public class BoardService {
         return boardDTOList;
     }
 
+    
+
+
     //게시글 수 확인
     public Long count() {
         Long count = boardRepository.count();
@@ -88,12 +97,13 @@ public class BoardService {
         return count;
     }
 
-    public String findPath(Long id) {
-        Optional<BoardFileEntity> fileEntityById = boardFileRepository.findById(id);
-        BoardFileEntity boardFileEntity = fileEntityById.get();
-        String path = boardFileEntity.getFilePath();
-        return path;
-    }
+    //저장된 파일경로 찾기
+//    public String findPath(Long id) {
+//        Optional<BoardFileEntity> fileEntityById = boardFileRepository.findById(id);
+//        BoardFileEntity boardFileEntity = fileEntityById.get();
+//        String path = boardFileEntity.getFilePath();
+//        return path;
+//    }
 
 
     @Transactional

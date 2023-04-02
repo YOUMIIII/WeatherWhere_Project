@@ -45,15 +45,23 @@ public class BoardController {
     //글 등록 완료
     @PostMapping("/save") // 글 작성 후 DB에 저장하는 버튼 클릭 시 동작하는 부분
     public String save(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model,
-                       @ModelAttribute("board") BoardDTO boardDTO) throws IOException {
+                       @ModelAttribute("board")
+                       BoardDTO boardDTO)
+            throws IOException {
         model.addAttribute("member", loginMember); // 사이드바
-
-        System.out.println("boardDTO 에 저장된 userId : " + boardDTO.getUserId()); //UserId 확인용
-        boardDTO.setStoredFileName(boardDTO.getStoredFileName());
-        System.out.println("boardDTO.getStoredFileName() = " + boardDTO.getStoredFileName());
-        System.out.println("DB에 저장될 boardDTO 정보 = " + boardDTO);
-
+//        System.out.println("boardDTO 에 저장된 userId : " + boardDTO.getUserId()); //UserId 확인용
         boardService.save(boardDTO);
+        
+        if (boardDTO.getBoardFile().isEmpty()) { //첨부파일 유무 확인
+            boardDTO.setFileAttached(0);
+        } else {
+            boardDTO.setFileAttached(1);
+
+            boardDTO.setOriginalFileName(boardDTO.getBoardFile().getOriginalFilename());
+            boardDTO.setStoredFileName("image_" + boardDTO.getOriginalFileName());
+        }
+        System.out.println("DB에 저장되는 boardDTO = " + boardDTO);
+
         return "main/infoboard/save";
     }
 
