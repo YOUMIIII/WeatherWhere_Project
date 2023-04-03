@@ -20,44 +20,63 @@
         </div>
     </div>
     <div id="form">
-        <form>
-        <div class="changeForm">
-            <div class="label"><label for="changePw">비밀번호</label></div>
-            <div class="input"><input type="text" id="changePw" th:value="${member.userPw}"></div>
-        </div>
-        <div class="changeForm">
-            <div class="label"><label for="changeMail">이메일</label></div>
-            <div class="input"><input type="text" id="changeMail" th:value="${member.userMail}"></div>
-        </div>
-        <div class="changeForm">
-            <div class="label"><label>설정지역</label></div>
-            <select id="userLocation" th:field="${member.parentRegion}">
-                <option value="" th:value="${member.parentRegion}">시/도 선택</option>
-            </select>
-            <select id="userLocation2" th:field="${member.childRegion}">
-                <option value="" th:value="${member.childRegion}">시/군/구 선택</option>
-            </select>
-        </div>
-        <div class="changeForm">
-            <div class="label"><label for="changePhoto">프로필사진</label></div>
-            <div class="input"><input type="file" id="changePhoto"></div>
-        </div>
-        <div class="changeForm">
-            <div id="changeBtn">
-                <button type="button" th:onclick="|location.href='@{/mypage}'|">취소</button>
-                <button type="reset">다시작성</button>
-                <button type="submit">수정</button>
+        <form class="formBox" th:action th:object="${memberEditForm}" method="POST" enctype="multipart/form-data">
+            <div class="changeForm">
+                <div class="label"><label for="userId">아이디</label></div>
+                <div class="label"><input type="text" id="userId" th:field="*{userId}" readonly></div>
             </div>
-        </div>
-        </form>
-    </div>
+            <div class="changeForm">
+                <div class="label"><label for="userPw">비밀번호</label></div>
+                <div class="input"><input type="password" name="userPw" id="userPw" th:field="*{userPw}" th:errorclass="field-error"></div>
+                <p id="pwT" class="field-error" th:errors="*{userPw}"></p>
+            </div>
+            <div class="changeForm">
+                <div class="label"><label for="userPwCheck">비밀번호 확인</label></div>
+                <div><input type="password" id="userPwCheck" th:field="*{userPwCheck}" onkeyup="samePassword(this);" ></div>
+                <p id="pwChT" class="field-error" th:if="${#fields.hasGlobalErrors()}" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
+            </div>
+            <div class="changeForm">
+                <div class="label"><label for="userMail">이메일</label></div>
+                <div class="input"><input type="text" id="userMail" th:name="userMail" th:field="*{userMail}" th:errorclass="field-error"></div>
+                <p id="mailT" class="field-error" th:errors="*{userMail}"></p>
+            </div>
+            <div class="changeForm">
+                <div class="label">설정지역</div>
+                <input id="loc1" type="hidden" th:value="${memberEditForm.userLocation}">
+                <input id="loc2" type="hidden" th:value="${memberEditForm.userLocation2}">
+                <div>
+                    <select id="userLocation" th:field="*{userLocation}">
+                        <option value="">시/도 선택</option>
+                    </select>
+                </div>
+                <div>
+                    <select id="userLocation2" th:field="*{userLocation2}">
+                        <option value="">시/군/구 선택</option>
+                    </select>
+                </div>
+                <p class="field-error" th:errors="*{userLocation}"></p>
+            </div>
+            <div class="changeForm">
+                <div class="label"><label for="userPhoto">프로필사진</label></div>
+                <div class="input">
+                    <div><input type="file" name="file" id="userPhoto"></div>
+                    <input type="hidden" th:field="*{userPhoto}">
+                </div>
+            <div class="changeForm">
+                <div id="changeBtn">
+                    <button type="button" th:onclick="|location.href='@{/mypage}'|">취소</button>
+                    <button type="reset">다시작성</button>
+                    <button type="submit">수정</button>
+                </div>
+            </div>
+            </div>
+    </form>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
 <script type="text/javascript" th:src="@{/js/menuactive.js}"></script>
 <script type="text/javascript" src="../../static/js/jquery-3.4.1.min.js" th:src="@{/js/jquery-3.4.1.min.js}"></script>
 <script>
-<!--    $("#userLocation2").chainedTo("#userLocation");-->
-            $(document).ready(function(){
+        $(document).ready(function(){
             loadArea('loadParent',$(this));
         });
         $('#userLocation').on("change",function(){
@@ -70,10 +89,21 @@
                     method: "GET"
                 }).done(function(res){
                    if(selectedType == 'loadParent'){
+                        var loc1=$('#loc1').val();
+                        var loc2=$('#loc2').val();
                         $.each(res, function (index,value){
                             var hasOption=$('#userLocation option[value="'+value.parentRegion+'"]').length;
                             if(hasOption==0){
+                                if(value.parentRegion===loc1){
+                                    $('#userLocation').append('<option value="'+value.parentRegion+'" selected>'+value.parentRegion+'</option>');
+                                }
                                 $('#userLocation').append('<option value="'+value.parentRegion+'">'+value.parentRegion+'</option>');
+                            }
+                            if(value.parentRegion===loc1){
+                                if(value.childRegion===loc2){
+                                    $('#userLocation2').append('<option value="'+value.childRegion+'" selected>'+value.childRegion+'</option>');
+                                }
+                                $('#userLocation2').append('<option value="'+value.childRegion+'">'+value.childRegion+'</option>');
                             }
                         });
                    }else if(selectedType == 'loadChild'){
@@ -82,7 +112,6 @@
                         $.each(res, function (index,value){
 
                             if(selectedValueText==value.parentRegion){
-
                                 $('#userLocation2').append('<option value="'+value.childRegion+'">'+value.childRegion+'</option>');
                             }
                         });

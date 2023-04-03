@@ -32,10 +32,11 @@ public class MemberJpaRepository {
                 .getResultList();
     }
 
-    public List<Member> findByUserId(String userId){
-        return em.createQuery("select m from Member m where m.userId=:user_id",Member.class)
-                .setParameter("user_id",userId)
+    public Member findByUserId(String userId){
+        List<Member> resultList = em.createQuery("select m from Member m where m.userId=:user_id", Member.class)
+                .setParameter("user_id", userId)
                 .getResultList();
+        return resultList.isEmpty()? null:resultList.get(0);
     }
 
     public Member findLoginMember(String userId, String userPw){

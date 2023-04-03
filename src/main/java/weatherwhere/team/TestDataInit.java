@@ -36,7 +36,20 @@ public class TestDataInit {
         member.setUserMail("test@naver.com");
         member.setParentRegion("경기도");
         member.setChildRegion("용인시수지구");
-        member.setUserPhoto("photo");
+        member.setUserPhoto("/img/home/profile/profile.png");
+        memberJpaRepository.save(member);
+    }
+
+    @Transactional
+    @EventListener(ApplicationReadyEvent.class)
+    public void init3(){
+        Member member = new Member();
+        member.setUserId("qwer");
+        member.setUserPw("qwer!");
+        member.setUserMail("qwer@naver.com");
+        member.setParentRegion("서울특별시");
+        member.setChildRegion("강동구");
+        member.setUserPhoto("/img/home/profile/profile.png");
         memberJpaRepository.save(member);
     }
 }
