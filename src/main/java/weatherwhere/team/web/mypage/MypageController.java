@@ -20,8 +20,12 @@ import weatherwhere.team.domain.member.Member;
 import weatherwhere.team.repository.board.BoardDTO;
 import weatherwhere.team.service.BoardService;
 import weatherwhere.team.service.ClothService;
+import weatherwhere.team.service.MemberService;
 import weatherwhere.team.web.SessionConst;
+import weatherwhere.team.web.member.MemberJoinForm;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Slf4j
@@ -29,6 +33,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/mypage")
 public class MypageController {
+
+    private final MemberService memberService;
     private final BoardService boardService;
     private final ClothService clothService;
 
@@ -40,22 +46,47 @@ public class MypageController {
         return "main/mypage";
     }
 
+
     @GetMapping("/update-infomation")
-    public String updateInfo(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){
+    public String updateInfo(HttpServletRequest request, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){
 
         //세션이 유지되면 스케줄으로 이동
+        model.addAttribute("memberEditForm", MemberEditForm.createMemberEditForm(loginMember));
         model.addAttribute("member", loginMember);
         return "main/mypage/updatemyinfo";
     }
 
     //수정완료페이지 만들고 주석풀기
-/*    @PostMapping("/update-infomation")
-    public String successUpdateInfo(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){
+    @PostMapping("/update-infomation")
+    public String successUpdateInfo(@Validated @ModelAttribute("memberEditForm") MemberEditForm form, BindingResult bindingResult,@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model, MultipartFile file,HttpServletRequest request) throws Exception {
 
-        //세션이 유지되면 스케줄으로 이동
-        model.addAttribute("member", loginMember);
+        if(!(form.getUserPw().equals(form.getUserPwCheck()))){
+            model.addAttribute("member", loginMember);
+            bindingResult.reject("pwError","작성하신 비밀번호가 일치하지 않습니다.");
+        }
+        if(bindingResult.hasErrors()){
+            model.addAttribute("member", loginMember);
+            log.info("errors={}", bindingResult);
+            //폼에 유효성 문제가 있을 경우 다시 회원가입 페이지로.
+            return "main/mypage/updatemyinfo";
+        }
+        if(file.isEmpty()){
+            form.setUserPhoto("/img/home/profile/profile.png"); // 사진 등록 안하면 기본사진
+        } else {
+            form.setUserPhoto(memberService.memberfile(file, form));
+        }
+
+        //멤버 정보 업데이트
+        Member updateMember = memberService.updateMember(loginMember.getId(), form);
+        //SessionAttribute 도 함께 수정
+        HttpSession session = request.getSession();
+        session.setAttribute(SessionConst.LOGIN_MEMBER,updateMember);
+
+        log.info("회원 {} 정보 변경 : 지역 {} , {}",updateMember.getUserId(),updateMember.getParentRegion(),updateMember.getChildRegion());
+
+
         return "main/mypage/updatemyinfosuccess";
-    }*/
+    }
 
     @GetMapping("/mycloset")
     public String mycloset(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){

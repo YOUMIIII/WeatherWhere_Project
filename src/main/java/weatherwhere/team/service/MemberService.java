@@ -8,7 +8,9 @@ import org.springframework.web.multipart.MultipartFile;
 import weatherwhere.team.domain.member.Member;
 import weatherwhere.team.repository.member.MemberJpaRepository;
 import weatherwhere.team.repository.region.RegionRepository;
+import weatherwhere.team.web.member.MemberForm;
 import weatherwhere.team.web.member.MemberJoinForm;
+import weatherwhere.team.web.mypage.MemberEditForm;
 
 import java.io.File;
 import java.util.List;
@@ -30,23 +32,22 @@ public class MemberService {
         return member.getUserId();
     }
 
-    public Member findOne(Long memberId){
-        return memberJpaRepository.findOne(memberId);
+    public Member updateMember(Long id, MemberEditForm memberEditForm){
+        //트랜잭션이 있는 계층에서 영속 상태의 엔티티를 조회하고 엔티티의 데이터를 변경
+        Member member = memberJpaRepository.findOne(id);
+        return Member.setEditInfo(member, memberEditForm);//엔티티에서 값을 전부 set 해준 뒤 멤버 객체를 반환
+    }
+
+    public Member findMember(String userId){
+        return memberJpaRepository.findByUserId(userId);
     }
 
     private void validatedDuplicatedMember(Member member) {
-        List<Member> findMembers=memberJpaRepository.findByUserId(member.getUserId());
+        Member findMember=memberJpaRepository.findByUserId(member.getUserId());
 
-        if(!findMembers.isEmpty()){
+        if(findMember==null){
             throw new IllegalStateException("이미 존재하는 회원입니다.");
         }
-    }
-
-    public void update(Long id, String userId) {
-        //member 를 찾아옴
-        Member member = memberJpaRepository.findOne(id);
-        //변경감지 시작
-        member.setUserId(userId);
     }
 
 
@@ -55,7 +56,7 @@ public class MemberService {
         return loginMember;
     }
 
-    public String memberfile(MultipartFile file, MemberJoinForm form) throws Exception{
+    public String memberfile(MultipartFile file, MemberForm form) throws Exception{
         /*우리의 프로젝트경로를 담아주게 된다 - 저장할 경로를 지정*/
         String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/img/home/profile";
         log.info("projectpath = {}", projectPath);

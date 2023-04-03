@@ -3,6 +3,7 @@ package weatherwhere.team.domain.member;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import weatherwhere.team.web.mypage.MemberEditForm;
 
 import javax.persistence.*;
 
@@ -44,10 +45,18 @@ public class Member {
         member.setUserId(userId);
         member.setUserPw(userPw);
         member.setUserMail(userMail);
-//        member.setUserLocationNum(userLocationNum);
         member.setParentRegion(parentRegion);
         member.setChildRegion(childRegion);
         member.setUserPhoto(userPhoto);
+        return member;
+    }
+
+    public static Member setEditInfo(Member member,MemberEditForm form){
+        member.setUserPw(form.getUserPw());
+        member.setUserMail(form.getUserMail());
+        member.setParentRegion(form.getUserLocation());
+        member.setChildRegion(form.getUserLocation2());
+        member.setUserPhoto(form.getUserPhoto());
         return member;
     }
 

@@ -3,9 +3,169 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
     <title>스케줄관리</title>
     <link rel="stylesheet" type="text/css" href="../../static/css/schedule.css" th:href="@{/css/schedule.css}">
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.css' rel='stylesheet' />
+    <style>
+        :root{
+          --fc-button-text-color: #fff;
+          --fc-button-bg-color: #F6F6F6;
+          --fc-button-border-color: #F6F6F6;
+          --fc-button-hover-bg-color: #FDEEDC;
+          --fc-button-hover-border-color: #FDEEDC;
+          --fc-button-active-bg-color: #FFA857;
+          --fc-button-active-border-color: #FFA857;
+          --fc-today-bg-color: rgba(254, 236, 233, 0.50);
 
+        }
+
+        .container{
+            width:100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+        }
+        .container>#calendar{
+            grid-column-start:1;
+            grid-column-end:3;
+        }
+        .container>#calendar-list{
+            grid-column-start:3;
+            grid-column-end:4;
+            grid-row-start:1;
+            grid-row-end:2;
+        }
+        .container>#calendar-form{
+            grid-column-start:3;
+            grid-column-end:4;
+            grid-row-start:2;
+            grid-row-end:3;
+        }
+
+        .fc-header-toolbar{
+            width: 40%;
+        }
+
+        .fc-dayGridMonth-button{
+            border-radius:1.5rem;
+            width:30%;
+        }
+        .fc-timeGridWeek-button{
+            border-radius:1.5rem;
+            width:30%;
+        }
+        .fc-timeGridDay-button{
+            border-radius:1.5rem;
+            width:30%;
+        }
+
+        .fc .fc-button-primary:not(:disabled).fc-button-active{
+
+            border:none;
+            margin:5% 2% 5% 1%;
+        }
+
+        .fc .fc-button-primary:focus, .fc .fc-button-primary:not(:disabled).fc-button-active:focus{
+
+            border:none;
+            box-shadow:none;
+            margin:5% 2% 5% 1%;
+        }
+
+        .fc .fc-button-primary:not(:disabled).fc-button-active:hover{
+
+            border:none;
+            margin:5% 2% 5% 1%;
+        }
+
+        .fc .fc-button-primary[aria-pressed="false"]{
+            color:#F1A661;
+            border:none;
+            margin:5% 2% 5% 1%;
+        }
+        .fc .fc-button-primary:hover{
+
+            border:none;
+            margin:5% 2% 5% 1%;
+        }
+
+
+        #fc-dom-1{
+            width: 70%;
+            margin-left: 2%;
+            display: inline-block;
+            font-size: 1.3rem;
+            letter-spacing: .1rem;
+            word-spacing: .2rem;
+            font-weight: 600;
+            vertical-align: middle;
+        }
+
+        .fc .fc-button .fc-icon{
+            font-size:1rem;
+            color:#EEEEEE;
+        }
+        .fc .fc-prev-button{
+            background-color:#FFA857;
+            display: inline-block;
+            border-radius: 2rem;
+            font-size:1rem;
+            line-height:0.5rem;
+            padding:0.2rem;
+            vertical-align: middle;
+
+        }
+       .fc .fc-next-button{
+            background-color:#FFA857;
+            display: inline-block;
+            border-radius: 2rem;
+            font-size:1rem;
+            line-height:0.5rem;
+            padding:0.2rem;
+            vertical-align: middle;
+
+        }
+
+        .fc-col-header-cell{
+            height:5Vh;
+        }
+
+        .fc .fc-scrollgrid{
+            border-radius: 0.5rem;
+            border-style: hidden;
+            box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .fc-col-header-cell{
+            background-color:#FFBFA9;
+        }
+
+        .fc-timegrid-axis{
+            background-color:#FFBFA9;
+        }
+
+        .fc-col-header-cell-cushion{
+            margin-top:1rem;
+            font-size:1rem;
+        }
+
+        .fc-daygrid-day-number{
+            font-size:1rem;
+        }
+
+        .fc-timegrid-axis-cushion{
+            font-size:1rem;
+        }
+
+        .fc-timegrid-slot-label-cushion{
+            font-size:1rem;
+        }
+
+
+
+
+    </style>
 </head>
 <body>
     <div>
@@ -13,73 +173,64 @@
         </div>
     </div>
     <div class="maincontent">
-    <div class="introduce">
-        <h1>스케줄 관리</h1>
-        <h2 id="subT"><span th:text="${member.userId}">jojo39</span>님의 외출 스케줄 입니다!</h2>
-    </div>
-    <div id="todayschedule" th:insert="~{main/home :: schedule}">
-        <!--<h1>오늘의 외출 스케줄</h1>
-        <ul>
-            <li>08:00 출근</li>
-            <li>18:00 퇴근</li>
-            <li>19:00 만두산책</li>
-        </ul>-->
-    </div>
-    <div class="mainLayout" id="routine">
-        <h1>나만의 외출 루틴 체크리스트</h1>
-    </div>
-    <div class="mainLayout" id="weekly">
-        <table>
-            <tr>
-                <th>1</th>
-                <th>2</th>
-                <th>3</th>
-                <th>4</th>
-                <th>5</th>
-                <th>6</th>
-                <th>7</th>
-            </tr>
-            <tr>
-                <td><ul></ul></td>
-                <td>
-                    <ul>
-                        <li>08:00 출근</li>
-                        <li>18:00 퇴근</li>
-                    </ul>
-                </td>
-                <td>
-                    <ul>
-                        <li>08:00 출근</li>
-                        <li>18:00 퇴근</li>
-                        <li>18:00 개발팀회식</li>
-                    </ul>
-                </td>
-                <td>
-                    <ul>
-                        <li>08:00 출근</li>
-                        <li>18:00 퇴근</li>
-                    </ul>
-                </td>
-                <td>
-                    <ul>
-                        <li>08:00 출근</li>
-                        <li>18:00 퇴근</li>
-                        <li>19:00 만두산책</li>
-                    </ul>
-                </td>
-                <td>
-                    <ul>
-                        <li>08:00 출근</li>
-                        <li>18:00 퇴근</li>
-                    </ul>
-                </td>
-                <td><ul></ul></td>
-            </tr>
-        </table>
-    </div>
+        <div class="introduce">
+            <h1>스케줄 관리</h1>
+            <h2 id="subT"><span th:text="${member.userId}">jojo39</span>님의 외출 스케줄 입니다!</h2>
+        </div>
+        <div id="todayschedule" th:insert="~{main/home :: schedule}">
+
+        </div>
+        <div class="container">
+            <div id="calendar"></div>
+            <div id="calendar-list" style="background-color:green;">
+                <button>ok</button>
+            </div>
+            <div id="calendar-form" style="background-color:blue;">
+                <button>ok</button>
+            </div>
+        </div>
     </div>
     <!-- 사이드바html에 페이지별 버튼 활성화 추가하고 싶었는데 타임리프 fragment는 메인화면으로 js를 못 가져와서 모든 페이지 하단에 추가함 -->
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
     <script type="text/javascript" th:src="@{/js/menuactive.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.5/index.global.min.js'></script>
+    <script>
+
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'dayGridMonth',
+          height: '80vh',
+          selectable: false,
+          headerToolbar: {
+            left: 'dayGridMonth,timeGridWeek,timeGridDay,title,prev,next',
+            right: ''
+          },
+          events: [
+                {
+                  id: 'a',
+                  title: 'my event',
+                  start: '2023-03-11 00:00',
+                  end: '2023-03-12 00:00',
+                  classNames: 'event1',
+                  backgroundColor: 'lavender',
+                  borderColor: 'lavender',
+                },
+                {
+                  id: 'b',
+                  title: 'my event2',
+                  start: '2023-03-11 16:00',
+                  end: '2023-03-12 00:00',
+                  classNames: 'event2',
+                  backgroundColor: 'blue',
+                  borderColor: 'blue',
+                  display: 'auto',
+                },
+          ],
+        });
+        calendar.render();
+    });
+    </script>
+
 </body>
 </html>
