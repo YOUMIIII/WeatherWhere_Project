@@ -108,6 +108,8 @@ public class BoardService {
         if (optionalBoardEntity.isPresent()) {
             BoardEntity boardEntity = optionalBoardEntity.get();
             BoardDTO boardDTO = BoardDTO.toBoardDTO(boardEntity);
+            System.out.println("\uD83D\uDC9A 글번호로 게시글 찾기");
+            System.out.println("조회해서 반환할 boardDTO = " + boardDTO);
             return boardDTO;
         } else {
             return null;

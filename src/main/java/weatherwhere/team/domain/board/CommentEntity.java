@@ -17,7 +17,6 @@ public class CommentEntity extends TimeEntity {
 
     @Column(length = 20, nullable = false)
     private String userId;
-    //userId를 연동하는걸 해야할거 같은데 우선은 이렇게 따로 작동하도록
 
     @Column
     private String commentContents;
@@ -32,6 +31,7 @@ public class CommentEntity extends TimeEntity {
     public static CommentEntity toSaveEntity(CommentDTO commentDTO, BoardEntity boardEntity) {
         CommentEntity commentEntity = new CommentEntity();
         commentEntity.setUserId(commentDTO.getUserId());
+        System.out.println("\uD83D\uDC9A댓글 작성한 userId = " + commentEntity.getUserId());
         commentEntity.setCommentContents(commentDTO.getCommentContents());
         commentEntity.setBoardEntity(boardEntity);
         return commentEntity;

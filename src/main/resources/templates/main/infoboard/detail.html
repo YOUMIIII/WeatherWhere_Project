@@ -59,8 +59,8 @@
     </div>
     <!-- 댓글 작성 부분 -->
     <div id="comment-write">
-        <!--        <input type="hidden" id="userId" th:value="${board?.userId}" >-->
-        <input type="hidden" id="writer" th:value="${board?.userId}">
+        <input type="hidden" id="writer" th:value="${member?.userId}">
+<!--        <input type="text" id="writer" th:value="${member?.userId}">-->
         <input type="text" id="commentContents" placeholder="내용">
         <button id="comment-write-btn" onclick="commentWrite()">댓글작성</button>
     </div>
@@ -75,9 +75,10 @@
                 <th>작성시간</th>
             </tr>
             <tr th:each="comment: ${commentList}">
-<!--                댓글 -->
+                <!--                댓글 -->
                 <td th:text="${comment?.id}"></td>
-                <td th:text="${board?.userId}"></td>
+<!--                <td th:text="${member?.userId}"></td>-->
+                <td th:value="${comment?.userId}"></td>
                 <td th:text="${comment?.commentContents}"></td>
                 <td th:text="${comment?.commentPostdate}"></td>
             </tr>
@@ -85,37 +86,38 @@
     </div>
 </div>
 </body>
-
 <script>
     const updateReq = () => {
         const id = [[${board.id}]];
         location.href = "/board/update/" + id;
     }
-
-
-
 </script>
-
-
 <script th:inline="javascript">
 
 const commentWrite = () => {
-const writer = document.getElementById("userId").value;
+<!--const writer = document.getElementById("userId").value;-->
+const writer = document.getElementById("writer").value;
 const contents = document.getElementById("commentContents").value;
+const id = [[${board.id}]];
+
 console.log("작성자: ", writer);
 console.log("내용: ", contents);
-const id = [[${board.id}]];
+console.log("번호: ", id);
+
+<!--comment 저장하는 부분 아마도? CommentService.save??-->
 $.ajax({
 // 요청방식: post, 요청주소: /comment/save, 요청데이터: 작성자, 작성내용, 게시글번호
 type: "post",
 url: "/comment/save",
 data: {
-"commentWriter": writer,
+<!--"변수명" : 위의 const -->
+"userId": writer,
 "commentContents": contents,
 "boardId": id
 },
 success: function (res) {
 console.log("요청성공", res);
+<!--화면 출력부분-->
 let output = "<table>";
     output += "<tr><th>댓글번호</th>";
         output += "<th>작성자</th>";
@@ -124,24 +126,23 @@ let output = "<table>";
     for (let i in res) {
     output += "<tr>";
         output += "<td>" + res[i].id + "</td>";
-        output += "<td>" + res[i].commentWriter + "</td>";
+        output += "<td>" + res[i].userId + "</td>";
         output += "<td>" + res[i].commentContents + "</td>";
         output += "<td>" + res[i].commentPostdate + "</td>";
         output += "</tr>";
     }
     output += "</table>";
 document.getElementById('comment-list').innerHTML = output;
-document.getElementById('commentWriter').value = '';
+<!--위의 const 와 같은 형식인듯-->
+<!--document.getElementById('userId').value = '';-->
+document.getElementById('writer').value = '';
 document.getElementById('commentContents').value = '';
 },
 error: function (err) {
 console.log("요청실패", err);
 }
 });
-
 }
-
-
 </script>
 
 </html>

@@ -51,7 +51,7 @@ public class BoardController {
         model.addAttribute("member", loginMember); // 사이드바
 //        System.out.println("boardDTO 에 저장된 userId : " + boardDTO.getUserId()); //UserId 확인용
         boardService.save(boardDTO);
-        
+
         if (boardDTO.getBoardFile().isEmpty()) { //첨부파일 유무 확인
             boardDTO.setFileAttached(0);
         } else {
@@ -70,25 +70,30 @@ public class BoardController {
         // DB 에서 전체 게시글 데이터를 가져와서 list.html 에 보여준다.
         List<BoardDTO> boardDTOList = boardService.findAll();
         model.addAttribute("boardList", boardDTOList);
+//        return "";
         return "paging";
-//        return "main/infoboard";
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}") //detail.html 화면에 넘겨줄 정보들
     public String findById(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
                            @PathVariable Long id, Model model,
                            @PageableDefault(page = 1) Pageable pageable) {
         model.addAttribute("member", loginMember); // 사이드바 정보 입력부분
+        System.out.println("\uD83E\uDDE1 로그인 ID 확인 글 작성자인지 로그인한 사람껀지 확인 = " + loginMember.getUserId());
+        System.out.println("loginMember = " + loginMember);
+        
         /*
             해당 게시글의 조회수를 하나 올리고
             게시글 데이터를 가져와서 detail.html 에 출력
          */
         boardService.updateHits(id);
         BoardDTO boardDTO = boardService.findById(id);
+        System.out.println("\uD83D\uDC9A 반환된 boardDTO = " + boardDTO);
         /* 댓글 목록 가져오기 */
         List<CommentDTO> commentDTOList = commentService.findAll(id);
-        model.addAttribute("commentList", commentDTOList);
-        model.addAttribute("board", boardDTO);
+        System.out.println("\uD83E\uDDE1 commentDTOList = " + commentDTOList);
+        model.addAttribute("commentList", commentDTOList); //댓글 목록
+        model.addAttribute("board", boardDTO); //게시글 정보
         model.addAttribute("page", pageable.getPageNumber());
         return "main/infoboard/detail";
     }
