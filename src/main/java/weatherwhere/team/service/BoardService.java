@@ -31,8 +31,8 @@ public class BoardService {
 
     public void save(BoardDTO boardDTO) throws IOException {
         // 파일 첨부 여부에 따라 로직 분리
-//        if (boardDTO.getBoardFile().isEmpty()) {
-        if (boardDTO.getBoardFile() == null) {
+        if (boardDTO.getBoardFile().isEmpty()) {
+//        if (boardDTO.getBoardFile() == null) {
             System.out.println("BoardService.save 실행됨.");
 
             // 첨부 파일 없음.
@@ -97,15 +97,6 @@ public class BoardService {
         return count;
     }
 
-    //저장된 파일경로 찾기
-//    public String findPath(Long id) {
-//        Optional<BoardFileEntity> fileEntityById = boardFileRepository.findById(id);
-//        BoardFileEntity boardFileEntity = fileEntityById.get();
-//        String path = boardFileEntity.getFilePath();
-//        return path;
-//    }
-
-
     @Transactional
     public void updateHits(Long id) {
         boardRepository.updateHits(id);
@@ -123,9 +114,11 @@ public class BoardService {
         }
     }
 
-    public BoardDTO update(BoardDTO boardDTO) {
-        BoardEntity boardEntity = BoardEntity.toUpdateEntity(boardDTO);
-        boardRepository.save(boardEntity);
+    public BoardDTO update(BoardDTO boardDTO) { //위의 save와 비슷하게 수정해야할듯???
+        //todo(dayi) : bController의 update메서드에서 이 메서드를 호출하여 실행할 때 이 메서드 안에 호출된 toUpdateEntity를 수정해야할거 같다.
+        //BoardEntity의 toUpdateEntity 메서드 수정하기 파일 첨부가 유지되도록
+        BoardEntity boardEntity = BoardEntity.toUpdateEntity(boardDTO); //여긴 한거 같은데
+        boardRepository.save(boardEntity); //이제 여기를 수정할 차례, 여기까지 수정해보고 실행해본 뒤에 제대로 동작하는지 확인하기
         return findById(boardDTO.getId());
     }
 

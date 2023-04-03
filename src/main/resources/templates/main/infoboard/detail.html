@@ -22,12 +22,12 @@
     </div>
     <div id="boardetailmain">
         <div id="boarddetailbtn">
-<!--            todo(dayi) : 즐겨찾기 추가 버튼 동작하도록 수정 필요-->
+            <!--            todo(dayi) : 즐겨찾기 추가 버튼 동작하도록 수정 필요-->
             <button id="addfavorite" th:onclick="">즐겨찾기 추가</button>
             <button th:onclick="|location.href='@{/board/paging}'|">목록</button>
-<!--            todo(dayi) : 수정할 때 첨부 파일이 날아가는 부분 수정필요-->
+            <!--            todo(dayi) : 수정할 때 첨부 파일이 날아가는 부분 수정필요-->
             <button th:onclick="|location.href='@{/board/update/{id}(id=${board?.id})}'|">수정</button>
-<!--            <button th:onclick="updateReq()">수정</button>-->
+            <!--            <button th:onclick="updateReq()">수정</button>-->
             <button th:onclick="|location.href='@{/board/delete/{id}(id=${board?.id})}'|">삭제</button>
 
         </div>
@@ -59,7 +59,8 @@
     </div>
     <!-- 댓글 작성 부분 -->
     <div id="comment-write">
-        <input type="hidden" id="userId" th:value="${board?.userId}" >
+        <!--        <input type="hidden" id="userId" th:value="${board?.userId}" >-->
+        <input type="hidden" id="writer" th:value="${board?.userId}">
         <input type="text" id="commentContents" placeholder="내용">
         <button id="comment-write-btn" onclick="commentWrite()">댓글작성</button>
     </div>
@@ -74,6 +75,7 @@
                 <th>작성시간</th>
             </tr>
             <tr th:each="comment: ${commentList}">
+<!--                댓글 -->
                 <td th:text="${comment?.id}"></td>
                 <td th:text="${board?.userId}"></td>
                 <td th:text="${comment?.commentContents}"></td>
@@ -90,15 +92,15 @@
         location.href = "/board/update/" + id;
     }
 
+
+
 </script>
 
-</html>
 
-<!--
 <script th:inline="javascript">
 
 const commentWrite = () => {
-const writer = document.getElementById("commentWriter").value;
+const writer = document.getElementById("userId").value;
 const contents = document.getElementById("commentContents").value;
 console.log("작성자: ", writer);
 console.log("내용: ", contents);
@@ -137,4 +139,9 @@ console.log("요청실패", err);
 }
 });
 
-}-->
+}
+
+
+</script>
+
+</html>

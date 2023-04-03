@@ -37,7 +37,7 @@ public class BoardDTO {
         this.hits = hits;
         this.postdateTime = postdateTime;
         this.contents = contents;
-//        this.region = region;
+        this.region = region;
     }
 
     //게시판 리스트 보여질 내용
@@ -62,6 +62,8 @@ public class BoardDTO {
         boardDTO.setContents(boardEntity.getContents());  // 내용
         boardDTO.setPostdateTime(boardEntity.getPostdateTime()); // 작성일
         boardDTO.setUpdateTime(boardEntity.getUpdateTime()); // 수정일
+        //지역 추가
+        boardDTO.setRegion(boardEntity.getRegion()); //지역
 
         //첨부파일 여부
         if (boardEntity.getFileAttached() == 0) { //boardEntity에 첨부파일이 없다면

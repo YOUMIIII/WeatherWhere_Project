@@ -113,7 +113,6 @@ public class BoardController {
         model.addAttribute("member", loginMember); // 사이드바
 //        model.addAttribute("boardUpdate", boardDTO);//
         System.out.println("수정페이지 들어오는 버튼 클릭 후 model에 들어간 boardUpdate = " + boardDTO);
-//        boardDTO.setBoardFile(null);
 
         BoardDTO board = boardService.update(boardDTO);
 //        System.out.println("return findById(boardDTO.getId()) = " + board);
