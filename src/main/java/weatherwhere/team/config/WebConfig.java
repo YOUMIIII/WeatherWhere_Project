@@ -15,8 +15,8 @@ public class WebConfig implements WebMvcConfigurer {
     private String savePath = "///Users/youmi/IdeaProjects/HtmlPractice/src/main/resources/static/img/**"; // 실제 파일 저장 경로(mac)
 
 
-    private String fileResourcePath = "/resources/static/img/FileAttached/**"; // view 에서 접근할 경로
-    private String fileSavePath = "file:///"+System.getProperty("user.dir") + "/src/main/resources/static"; // 실제 파일 저장 경로(win)
+    private String fileResourcePath = "/img/FileAttached/**"; // view 에서 접근할 경로
+    private String fileSavePath = "file:///"+System.getProperty("user.dir") + "/src/main/resources/static/img/FileAttached/"; // 실제 파일 저장 경로(win)
 
 
 /*    private String resourcePath = "/upload/**"; // view 에서 접근할 경로
