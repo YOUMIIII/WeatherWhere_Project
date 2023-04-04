@@ -66,7 +66,7 @@ public class BoardService {
 
 
             //transferTo 설정 방법2
-            String fileSavePath = System.getProperty("user.dir") + "/src/main/resources/static/img/FileAttached" + storedFileName;
+            String fileSavePath = System.getProperty("user.dir") + "/src/main/resources/static/img/FileAttached/" + storedFileName;
             boardFile.transferTo(new File(fileSavePath)); // 5.
 
             System.out.println("fileSavePath = " + fileSavePath);

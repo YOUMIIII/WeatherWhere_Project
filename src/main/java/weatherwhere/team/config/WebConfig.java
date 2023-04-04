@@ -1,5 +1,6 @@
 package weatherwhere.team.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -8,13 +9,14 @@ import weatherwhere.team.web.login.intercepter.LogInterceptor;
 import weatherwhere.team.web.login.intercepter.LoginCheckInterceptor;
 
 @Configuration
+@Slf4j
 public class WebConfig implements WebMvcConfigurer {
     private String resourcePath = "/resources/static/img/**"; // view 에서 접근할 경로
     private String savePath = "///Users/youmi/IdeaProjects/HtmlPractice/src/main/resources/static/img/**"; // 실제 파일 저장 경로(mac)
 
 
     private String fileResourcePath = "/resources/static/img/FileAttached/**"; // view 에서 접근할 경로
-    private String fileSavePath = "file:///" + System.getProperty("user.dir") + "/src/main/resources/static/img/FileAttached"; // 실제 파일 저장 경로(win)
+    private String fileSavePath = "file:///"+System.getProperty("user.dir") + "/src/main/resources/static"; // 실제 파일 저장 경로(win)
 
 
 /*    private String resourcePath = "/upload/**"; // view 에서 접근할 경로
@@ -39,6 +41,7 @@ public class WebConfig implements WebMvcConfigurer {
                         "file:src/main/resources/static/img/mypage/diary/");
         registry.addResourceHandler(fileResourcePath)
                 .addResourceLocations(fileSavePath);
+        log.info("fileSavePath : {}", fileSavePath);
         registry.addResourceHandler("/img/sidebar/menu/**")
                 .addResourceLocations(
                         "file:src/main/resources/static/img/sidebar/menu/");
