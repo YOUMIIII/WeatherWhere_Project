@@ -88,7 +88,7 @@ public class BoardController {
         boardService.favoriateSave(boardDTO, loginId);
         System.out.println("\uD83E\uDDE1loginId = " + loginId);
         System.out.println("\uD83E\uDDE1boardDTO = " + boardDTO);
-
+        System.out.println("\uD83E\uDDE1글번호 = " + boardDTO.getId());
 //        if (boardDTO.getBoardFile().isEmpty()) { //첨부파일 유무 확인
 //            boardDTO.setFileAttached(0);
 //        } else {

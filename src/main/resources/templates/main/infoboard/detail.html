@@ -94,6 +94,7 @@
         location.href = "/board/update/" + id;
     }
 </script>
+<!--todo : 즐겨찾기 DB저장 목록에 지역을 추가해야함. 안그러면 작성글에서 지역이 지워짐.-->
 <script th:inline="javascript">
 
 const commentWrite = () => {
@@ -150,7 +151,7 @@ console.log("요청실패", err);
 const addfavorite = () => {
 
 <!--//글번호, 작성자, 유형, 제목, 내용, 지역, 조회수, 로그인ID-->
-console.log("번호: ", [[${board.id}]]);
+<!--지역을 추가해야함 안그러면 업데이트 되버려서 글에서 지역이 지워짐.-->
 
 	const boardId = [[${board.id}]];
 	const userId = [[${board.userId}]];
@@ -168,7 +169,10 @@ console.log("번호: ", [[${board.id}]]);
 
 <!--// "변수명" : 위 const 명,-->
 		data: {
-			"boardId" : boardId,
+<!--		둘 다 안됨.-->
+<!--			"boardId" : boardId,-->
+<!--			"board.id" : boardId,-->
+			"id" : boardId,
 			"userId" : userId,
 			"postType" : postType,
 			"title" : title,
