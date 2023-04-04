@@ -32,7 +32,10 @@ public class BoardEntity extends TimeEntity {
     private String contents;
 
     @Column
-    private String region;
+    private String parentRegion;
+
+    @Column
+    private String childRegion;
 
     @Column
     private int hits;
@@ -66,7 +69,8 @@ public class BoardEntity extends TimeEntity {
         boardEntity.setHits(0); //조회수 시작은 0
         boardEntity.setFileAttached(0); // 파일 없음.
         //지역 추가
-        boardEntity.setRegion(boardDTO.getRegion());
+        boardEntity.setParentRegion(boardDTO.getParentRegion());
+        boardEntity.setChildRegion(boardDTO.getChildRegion());
 
         System.out.println("BoardEntity.toSaveEntoity 실행됨.");
         System.out.println("boardEntity.setId = " + boardEntity.getId());
@@ -87,7 +91,8 @@ public class BoardEntity extends TimeEntity {
         //todo(dayi) : 글 수정할 때 첨부파일 유지되도록 수정하기 위해 추가해야하는 부분 아직 작성 중
         boardEntity.setFileAttached(boardDTO.getFileAttached());
         //지역 추가
-        boardEntity.setRegion(boardDTO.getRegion());
+        boardEntity.setParentRegion(boardDTO.getParentRegion());
+        boardEntity.setChildRegion(boardDTO.getChildRegion());
         return boardEntity;
     }
 
@@ -102,7 +107,8 @@ public class BoardEntity extends TimeEntity {
         boardEntity.setHits(0); //조회수 시작은 0
         boardEntity.setFileAttached(1); // 파일 있음.
         //지역 추가
-        boardEntity.setRegion(boardDTO.getRegion());
+        boardEntity.setParentRegion(boardDTO.getParentRegion());
+        boardEntity.setChildRegion(boardDTO.getChildRegion());
         return boardEntity;
     }
 }

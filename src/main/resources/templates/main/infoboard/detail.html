@@ -24,7 +24,7 @@
         <div id="boarddetailbtn">
             <!--            todo(dayi) : 즐겨찾기 추가 버튼 동작하도록 수정 필요-->
             <button id="addfavorite" th:onclick="">즐겨찾기 추가</button>
-            <button th:onclick="|location.href='@{/board/paging}'|">목록</button>
+            <button th:if="${#strings.equals(member.userId, board.userId)}" th:onclick="|location.href='@{/board/paging/region(parentRegion=${board.parentRegion},childRegion=${board.childRegion})}'|">목록</button>
             <!--            todo(dayi) : 수정할 때 첨부 파일이 날아가는 부분 수정필요-->
             <button th:onclick="|location.href='@{/board/update/{id}(id=${board?.id})}'|">수정</button>
             <!--            <button th:onclick="updateReq()">수정</button>-->

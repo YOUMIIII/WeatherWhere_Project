@@ -1,10 +1,7 @@
 package weatherwhere.team.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,11 +11,13 @@ import weatherwhere.team.repository.board.BoardDTO;
 import weatherwhere.team.repository.board.BoardFileRepository;
 import weatherwhere.team.repository.board.BoardRepository;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 // DTO -> Entity (Entity Class)
 // Entity -> DTO (DTO Class)
@@ -29,7 +28,7 @@ public class BoardService {
     private final BoardRepository boardRepository;
     private final BoardFileRepository boardFileRepository;
 
-    public void save(BoardDTO boardDTO) throws IOException {
+    public Long save(BoardDTO boardDTO) throws IOException {
         // 파일 첨부 여부에 따라 로직 분리
         if (boardDTO.getBoardFile().isEmpty()) {
 //        if (boardDTO.getBoardFile() == null) {
@@ -38,7 +37,8 @@ public class BoardService {
             // 첨부 파일 없음.
             BoardEntity boardEntity = BoardEntity.toSaveEntity(boardDTO);
             System.out.println("boardEntity = " + boardEntity);
-            boardRepository.save(boardEntity);
+            Long savedId=boardRepository.save(boardEntity).getId();
+            return savedId;
         } else {
             // 첨부 파일 있음.
             /*
@@ -73,6 +73,8 @@ public class BoardService {
 
             BoardFileEntity boardFileEntity = BoardFileEntity.toBoardFileEntity(board, originalFilename, storedFileName);
             boardFileRepository.save(boardFileEntity);
+
+            return savedId;
         }
 
     }
@@ -146,7 +148,26 @@ public class BoardService {
         System.out.println("boardEntities.isLast() = " + boardEntities.isLast()); // 마지막 페이지 여부
 
         // 목록: id, postType, userid, title, hits, postdateTime
-        Page<BoardDTO> boardDTOS = boardEntities.map(board -> new BoardDTO(board.getId(), board.getPostType(), board.getUserId(), board.getTitle(), board.getHits(), board.getPostdateTime()));
+        Page<BoardDTO> boardDTOS = boardEntities.map(board -> BoardDTO.toBoardDTO(board));
         return boardDTOS;
     }
+
+
+    @Transactional
+    public Page<BoardDTO> searchRegionAndPaging(String parentRegion,String childRegion,Pageable pageable){
+
+        // 지역1, 지역2, Pageable 로 DB 에서 조건 검색
+        List<BoardEntity> boardEntityList = boardRepository.findAllBoardEntityByParentRegionAndChildRegion(parentRegion, childRegion,pageable);
+        //DTO 에 담기
+        List<BoardDTO> dtoList = boardEntityList.stream()
+                .map(boardEntity -> BoardDTO.toBoardDTO(boardEntity))
+                .collect(Collectors.toList());
+        
+        //Page<BoardDTO> 로 반환
+        return new PageImpl<>(dtoList);
+        //class PageImpl<T> extends Object implements Page<T>
+        //생성자 : PageImpl(List<T> content)
+    }
+
+
 }

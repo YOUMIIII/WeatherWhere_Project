@@ -20,7 +20,7 @@
           <ul>
             <li class="active"><a th:href="@{/}"><div class="menuIcon"><img th:src="@{/img/sidebar/menu/home.png}" width="90%"><div class="menuIconHover"><img th:src="@{/img/sidebar/menu/home_active.png}" width="90%"></div></div></a></li>
             <li><a th:href="@{/schedule}"><div class="menuIcon"><img th:src="@{/img/sidebar/menu/schedule.png}" width="90%"><div class="menuIconHover"><img th:src="@{/img/sidebar/menu/schedule_active.png}" width="90%"></div></div></a></li>
-            <li><a th:href="@{/board/paging}"><div class="menuIcon"><img th:src="@{/img/sidebar/menu/infoboard.png}" width="90%"><div class="menuIconHover"><img th:src="@{/img/sidebar/menu/infoboard_active.png}" width="90%"></div></div></a></li>
+            <li><a th:href="@{/board/paging/region(parentRegion=${member.parentRegion},childRegion=${member.childRegion})}"><div class="menuIcon"><img th:src="@{/img/sidebar/menu/infoboard.png}" width="90%"><div class="menuIconHover"><img th:src="@{/img/sidebar/menu/infoboard_active.png}" width="90%"></div></div></a></li>
             <li id="mypage">
               <a th:href="@{/mypage}">
                 <div class="menuIcon"><img th:src="@{/img/sidebar/menu/mypage.png}" width="90%"><div class="menuIconHover"><img th:src="@{/img/sidebar/menu/mypage_active.png}" width="90%"></div></div>

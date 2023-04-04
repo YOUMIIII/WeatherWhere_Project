@@ -31,14 +31,17 @@
       <div id="mainLayout">
           <div id="option">
               <div id="optionselect">
-                  <select >
-                      <option value="">시/도 선택</option>
-                      <option>서울특별시</option>
-                  </select>
-                  <select id="userLocation2">
-                      <option value="">시/군/구 선택</option>
-                      <option>세종특별자치시</option>
-                  </select>
+                  <div>
+                      <select id="userLocation">
+                          <option value="">시/도 선택</option>
+                      </select>
+                  </div>
+                  <div>
+                      <select id="userLocation2">
+                          <option value="">시/군/구 선택</option>
+                      </select>
+                  </div>
+                  <button onclick="goToBoard()">Go</button>
               </div>
               <div>
                   <select id="searchoption">
@@ -69,9 +72,9 @@
                   <tr th:each="board: ${boardList}">
                       <td th:text="${board.id}"></td>
                       <td th:text="${board.postType}"></td>
-                      <td><a th:href="@{|/board/${board.id}|(page=${boardList.number + 1})}" th:text="${board.userId}"></a></td>
+                      <td><a th:href="@{|/board/${board.id}|(page=${boardList.number + 1})}" th:text="${board.title}"></a></td>
 <!--                      <td><a th:text="${board.userId}"></a></td>-->
-                      <td th:text="${board.title}"></td>
+                      <td th:text="${board.userId}"></td>
                       <td th:text="*{#temporals.format(board.postdateTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
                       <td th:text="${board.hits}"></td>
                   </tr>
@@ -116,8 +119,67 @@
 
 <script>
     const saveReq = () => {
-        location.href = "/board/save";
+        var location1=document.getElementById("userLocation").value;
+        var location2=document.getElementById("userLocation2").value;
+        location.href = "/board/save?parentRegion="+location1+"&childRegion="+location2;
     }
 
+    function goToBoard(){
+        var location1=document.getElementById("userLocation").value;
+        var location2=document.getElementById("userLocation2").value;
+        location.href="/board/paging/region?parentRegion="+location1+"&childRegion="+location2;
+    }
 </script>
+
+<script type="text/javascript" src="../../static/js/jquery-3.4.1.min.js" th:src="@{/js/jquery-3.4.1.min.js}"></script>
+<script>
+        $(document).ready(function(){
+            loadArea('loadParent',$(this));
+        });
+        $('#userLocation').on("change",function(){
+            loadArea('loadChild',$(this));
+        });
+        function loadArea(selectedType,selectedValue){
+                $.ajax({
+                    url: "/region/api",
+                    dataType: "JSON",
+                    method: "GET"
+                }).done(function(res){
+                   if(selectedType == 'loadParent'){
+                        var urlParams=new URL(location.href).searchParams;
+                        var loc1=urlParams.get('parentRegion');
+                        var loc2=urlParams.get('childRegion');
+                        $.each(res, function (index,value){
+                            var hasOption=$('#userLocation option[value="'+value.parentRegion+'"]').length;
+                            if(hasOption==0){
+                                if(value.parentRegion===loc1){
+                                    $('#userLocation').append('<option value="'+value.parentRegion+'" selected>'+value.parentRegion+'</option>');
+                                }else{
+                                    $('#userLocation').append('<option value="'+value.parentRegion+'">'+value.parentRegion+'</option>');
+                                }
+
+                            }
+                            if(value.parentRegion===loc1){
+                                if(value.childRegion===loc2){
+                                    $('#userLocation2').append('<option value="'+value.childRegion+'" selected>'+value.childRegion+'</option>');
+                                }else{
+                                    $('#userLocation2').append('<option value="'+value.childRegion+'">'+value.childRegion+'</option>');
+                                }
+                            }
+                        });
+                   }else if(selectedType == 'loadChild'){
+                        var selectedValueText = $(selectedValue).find('option:selected').text();
+                        $('#userLocation2').empty();
+                        $.each(res, function (index,value){
+
+                            if(selectedValueText==value.parentRegion){
+                                $('#userLocation2').append('<option value="'+value.childRegion+'">'+value.childRegion+'</option>');
+                            }
+                        });
+                   }
+                });
+        }
+
+    </script>
+
 </html>

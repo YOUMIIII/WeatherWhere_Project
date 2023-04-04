@@ -28,20 +28,18 @@
             </div>
             <div class="formlist">
                 <div class="input">
-                    <input type="hidden" id="id" name="id" th:value="${boardUpdate?.id}">
-                    <input type="hidden" id="userId" name="userId" th:value="${boardUpdate?.userId}">
-<!--                    <input type="hidden" id="originalFileName" name="originalFileName" th:value="${boardUpdate?.originalFileName}">-->
-<!--                    <input type="hidden" id="storedFileName" name="storedFileName" th:value="${boardUpdate?.storedFileName}">-->
-<!--                    <input type="hidden" id="fileAttached" name="fileAttached" th:value="${boardUpdate?.fileAttached}">-->
-
-                    <input type="text" id="boardTitle" name="title" th:value="${boardUpdate?.title}">
+                    <input type="text" id="boardTitle" name="title" th:value="${board?.title}">
+                    <input type="hidden" id="id" name="id" th:value="${board?.id}">
+                    <input type="hidden" id="userId" name="userId" th:value="${board?.userId}">
+                    <input type="hidden" id="storedFileName" name="storedFileName" th:value="${board?.storedFileName}">
+                    <input type="hidden" id="parentRegion" name="parentRegion" th:value="${board?.parentRegion}">
+                    <input type="hidden" id="childRegion" name="childRegion" th:value="${board?.childRegion}">
                 </div>
             </div>
 
             <div class="formlist">
                 <p>
-                    <textarea id="boardContents" name="contents" rows="25"
-                              th:text="${boardUpdate?.contents}"></textarea>
+                    <textarea id="boardContents" name="contents" rows="25" th:text="${board?.contents}"></textarea>
                 </p>
             </div>
             <div>
@@ -49,7 +47,7 @@
             </div>
             <div class="button" id="update">
                 <input type="submit" name="update" value="수정">
-                <button type="button" th:onclick="|location.href='@{/board/paging}'|">목록보기</button>
+                <button type="button" th:onclick="|location.href='@{/board/paging/region(parentRegion=${board.parentRegion},childRegion=${board.childRegion})}'|">목록보기</button>
             </div>
         </form>
     </div>

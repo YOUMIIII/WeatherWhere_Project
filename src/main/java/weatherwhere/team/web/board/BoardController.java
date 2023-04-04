@@ -3,10 +3,12 @@ package weatherwhere.team.web.board;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import weatherwhere.team.domain.member.Member;
 import weatherwhere.team.repository.board.BoardDTO;
 import weatherwhere.team.repository.board.CommentDTO;
@@ -15,6 +17,8 @@ import weatherwhere.team.service.CommentService;
 import weatherwhere.team.web.SessionConst;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 /*
@@ -33,24 +37,29 @@ public class BoardController {
     private final CommentService commentService;
 
     @GetMapping("/save") // 새글작성 버튼 클릭 시 동작하는 부분
-    public String saveForm(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model,
-                           @ModelAttribute("board") BoardDTO boardDTO) {
+    public String saveForm(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
+                           Model model,
+                           @ModelAttribute("board") BoardDTO boardDTO,
+                           @RequestParam String parentRegion,
+                           @RequestParam String childRegion) {
         model.addAttribute("member", loginMember); // 사이드바
 
         boardDTO.setUserId(loginMember.getUserId());
+        boardDTO.setParentRegion(parentRegion);
+        boardDTO.setChildRegion(childRegion);
         System.out.println("새 글작성 버튼 클릭 시 회원 ID 확인 : loginMember.getUserId() = " + loginMember.getUserId()); // UserId 확인용
         return "main/infoboard/write";
     }
 
     //글 등록 완료
     @PostMapping("/save") // 글 작성 후 DB에 저장하는 버튼 클릭 시 동작하는 부분
-    public String save(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model,
-                       @ModelAttribute("board")
-                       BoardDTO boardDTO)
-            throws IOException {
+    public String save(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
+                       Model model,
+                       @ModelAttribute("board") BoardDTO boardDTO)
+                                                                    throws IOException {
         model.addAttribute("member", loginMember); // 사이드바
 //        System.out.println("boardDTO 에 저장된 userId : " + boardDTO.getUserId()); //UserId 확인용
-        boardService.save(boardDTO);
+        Long savedId = boardService.save(boardDTO);
 
         if (boardDTO.getBoardFile().isEmpty()) { //첨부파일 유무 확인
             boardDTO.setFileAttached(0);
@@ -62,7 +71,8 @@ public class BoardController {
         }
         System.out.println("DB에 저장되는 boardDTO = " + boardDTO);
 
-        return "main/infoboard/save";
+
+        return "redirect:/board/"+savedId;
     }
 
     @GetMapping("/board")
@@ -81,7 +91,6 @@ public class BoardController {
         model.addAttribute("member", loginMember); // 사이드바 정보 입력부분
         System.out.println("\uD83E\uDDE1 로그인 ID 확인 글 작성자인지 로그인한 사람껀지 확인 = " + loginMember.getUserId());
         System.out.println("loginMember = " + loginMember);
-        
         /*
             해당 게시글의 조회수를 하나 올리고
             게시글 데이터를 가져와서 detail.html 에 출력
@@ -101,19 +110,19 @@ public class BoardController {
     @GetMapping("/update/{id}") // 상세보기페이지에서 수정 버튼 클릭 시 동작하는 부분
     public String updateForm(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
                              @PathVariable Long id,
-                             BoardDTO boardDTO, Model model) {
+                             Model model) {
         model.addAttribute("member", loginMember); // 사이드바 정보 입력부분
-        boardDTO = boardService.findById(id); // 수정할 글 불러오기
-        System.out.println("불러온 작성글 boardDTO 정보 = " + boardDTO);
-
-        model.addAttribute("boardUpdate", boardDTO);
-        System.out.println("수정 페이지에 보여질 boardDTO = " + boardDTO);
+        BoardDTO editDTO = boardService.findById(id);// 수정할 글 불러오기
+        System.out.println("불러온 작성글 boardDTO 정보 = " + editDTO);
+        model.addAttribute("board", editDTO);
+        System.out.println("수정 페이지에 보여질 boardDTO = " + editDTO);
         return "main/infoboard/update";
     }
 
     @PostMapping("/update/") // 수정페이지에서 글 수정 후 수정버튼 클릭 시 동작하는 부분
     public String update(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
-                         @ModelAttribute BoardDTO boardDTO, Model model) {
+                         @ModelAttribute BoardDTO boardDTO,
+                         Model model) {
 
         model.addAttribute("member", loginMember); // 사이드바
 //        model.addAttribute("boardUpdate", boardDTO);//
@@ -133,11 +142,14 @@ public class BoardController {
     //삭제 코드 작성 완료
     @GetMapping("/delete/{id}")
     public String delete(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
-                         @PathVariable("id") Long id) { // 삭제 버튼 클릭 시 동작하는 부분
+                         @PathVariable("id") Long id,
+                         RedirectAttributes redirectAttributes) { // 삭제 버튼 클릭 시 동작하는 부분
         System.out.println("삭제 버튼 클릭");
 //        boardService. // userId 가져오기
-        String userId = boardService.findById(id).getUserId();
-
+        BoardDTO boardDTO = boardService.findById(id);
+        redirectAttributes.addAttribute("parentRegion",boardDTO.getParentRegion());
+        redirectAttributes.addAttribute("childRegion", boardDTO.getChildRegion());
+        String userId= boardDTO.getUserId();
 //        System.out.println("로그인 ID = " + loginMember.getUserId()); //로그인 userId 확인용
 //        System.out.println("글작성 ID = " + userId); // 글 작성자
 //        System.out.println("게시글 번호 : id = " + id); //글 번호
@@ -148,7 +160,7 @@ public class BoardController {
 //            System.out.println(loginMember.getUserId() + userId);
             boardService.delete(id); // boardRepository에서 id 가져옴.
         }
-        return "redirect:/board/paging";
+        return "redirect:/board/paging/region";
 
     }
 
@@ -161,7 +173,6 @@ public class BoardController {
         int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
         //* blockLimit + 1;은 시작 숫자를 말하는듯???  // 1 4 7 10 ~~
         int endPage = ((startPage + blockLimit - 1) < boardList.getTotalPages()) ? startPage + blockLimit - 1 : boardList.getTotalPages();
-
         // page 갯수 20개
         // 현재 사용자가 3페이지
         // 1 2 3
@@ -173,6 +184,27 @@ public class BoardController {
         model.addAttribute("boardList", boardList);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
+        model.addAttribute("member", loginMember);
+        return "main/infoboard";
+    }
+
+    @GetMapping("/paging/region")
+    public String pagingByRegion(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
+                                 @PageableDefault(size=5,sort = {"id"},direction = Sort.Direction.DESC) Pageable pageable,
+                                 @RequestParam String parentRegion,
+                                 @RequestParam String childRegion,
+                                 Model model){
+        // @PageableDefault : 컨트롤러에 Pageable 의 기본값을 설정할 때 사용
+        // value 0 , page 0 , size 10 , sort (정렬 기준이 되는 column) 없음 , direction (정렬 방식) ASC
+        Page<BoardDTO> boardList = boardService.searchRegionAndPaging(parentRegion,childRegion,pageable);
+        int blockLimit = 5;
+        int startPage = (pageable.getPageNumber()/blockLimit) * blockLimit + 1;
+        int endPage = Math.max(startPage + blockLimit - 1,boardList.getTotalPages());
+
+        //boardList.getNumber() -> 현재 슬라이스의 번호를 구함
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("boardList", boardList);
         model.addAttribute("member", loginMember);
         return "main/infoboard";
     }

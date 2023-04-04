@@ -28,16 +28,18 @@
             </div>
             <div class="formlist">
                 <div class="input">
-                    <input type="text" id="boardTitle" name="title" placeholder="글 제목">
+                    <input type="text" id="boardTitle" name="title" placeholder="글 제목" th:value="${board?.title}">
                     <input type="hidden" id="id" name="id" th:value="${board?.id}">
                     <input type="hidden" id="userId" name="userId" th:value="${board?.userId}">
                     <input type="hidden" id="storedFileName" name="storedFileName" th:value="${board?.storedFileName}">
+                    <input type="hidden" id="parentRegion" name="parentRegion" th:value="${board?.parentRegion}">
+                    <input type="hidden" id="childRegion" name="childRegion" th:value="${board?.childRegion}">
                 </div>
             </div>
             <div class="formlist">
                 <p>
                     <textarea id="boardContents" name="contents" rows="25"
-                              placeholder="이 지역에 대해 궁금한 점이나 자랑하고 싶은 곳을 추천해주세요😄"></textarea>
+                              placeholder="이 지역에 대해 궁금한 점이나 자랑하고 싶은 곳을 추천해주세요😄" th:value="${board?.contents}"></textarea>
                 </p>
             </div>
             <div>
@@ -59,7 +61,9 @@
 </body>
 <script>
     const listReq = () => {
-        location.href = "/board/paging";
+        var location1=document.getElementById("parentRegion").value;
+        var location2=document.getElementById("childRegion").value;
+        location.href = "/board/paging/region?parentRegion="+location1+"&childRegion="+location2;
     }
 
 </script>
