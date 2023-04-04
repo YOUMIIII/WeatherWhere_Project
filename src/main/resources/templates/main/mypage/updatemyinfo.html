@@ -13,10 +13,9 @@
     </div>
     <div class="maincontent">
         <div class="introduce">
-            <div id="topT">마이페이지</div>
-            <div>정보수정</div>
+            <div id="topT">마이페이지 > 정보수정</div>
+            <div>기본정보 변경</div>
             <div id="subT">
-                개인정보 보호를 위해 비밀번호는 주기적으로 변경을 권장드려요!
             </div>
         </div>
         <div id="form">
@@ -24,14 +23,14 @@
                     <div class="modal_body">
                         <div>
                             <span th:text="${member.userId}">jojo39</span>님의 정보가 변경되었습니다.</div>
-                        <div><button type="button" class="btnCloseModal" th:onclick="|location.href='@{/mypage/update-infomation}'|">확인</button></div>
+                        <div><button type="button" class="btnCloseModal" th:onclick="|location.href='@{/mypage/update-information-select}'|">확인</button></div>
                     </div>
                 </div>
             <form class="formBox" action="updatemyinfo.html" th:action th:object="${memberEditForm}" method="POST" enctype="multipart/form-data">
-                <div class="changeForm">
+                <!--<div class="changeForm">
                     <div class="label"><label for="userId">아이디</label></div>
                     <div class="input"><input type="text" id="userId" th:field="*{userId}" readonly></div>
-                </div>
+                </div>-->
 
                 <div class="changeForm">
                     <div class="label"><label for="userMail">이메일</label></div>
@@ -74,9 +73,8 @@
                 </div>
                 <div class="changeForm">
                     <div id="changeBtn">
-                        <button type="button" th:onclick="|location.href='@{/mypage}'|">취소</button>
-                        <button type="reset">다시작성</button>
                         <button type="submit">수정</button>
+                        <button type="button" th:onclick="|location.href='@{/mypage/update-information-select}'|">취소</button>
                     </div>
                 </div>
         </form>

@@ -13,18 +13,18 @@
     </div>
     <div class="maincontent">
         <div class="introduce">
-            <div id="topT">마이페이지</div>
-            <div>정보수정</div>
+            <div id="topT">마이페이지 > 정보수정</div>
+            <div>비밀번호 변경</div>
             <div id="subT">
-                개인정보 보호를 위해 비밀번호는 주기적으로 변경을 권장드려요!
+                개인정보 보호를 위해 비밀번호는 주기적인 변경을 권장드려요!
             </div>
         </div>
         <div id="form">
                 <div class="modal" th:if="${param.status}">
                     <div class="modal_body">
                         <div>
-                            <span th:text="${member.userId}">jojo39</span>님의 정보가 변경되었습니다.</div>
-                        <div><button type="button" class="btnCloseModal" th:onclick="|location.href='@{/mypage/update-infomation}'|">확인</button></div>
+                            <span th:text="${member.userId}">jojo39</span>님의 비밀번호가 변경되었습니다.</div>
+                        <div><button type="button" class="btnCloseModal" th:onclick="|location.href='@{/mypage/update-information-select}'|">확인</button></div>
                     </div>
                 </div>
             <form class="formBox" action="updatemypw.html" th:action th:object="${memberEditPwForm}" method="POST">
@@ -42,8 +42,8 @@
 
                 <div class="changeForm">
                     <div id="changeBtn">
-                        <button type="button" th:onclick="|location.href='@{/mypage}'|">취소</button>
                         <button type="submit">수정</button>
+                        <button type="button" th:onclick="|location.href='@{/mypage/update-information-select}'|">취소</button>
                     </div>
                 </div>
         </form>
@@ -51,5 +51,13 @@
     </div>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
 <script type="text/javascript" th:src="@{/js/menuactive.js}"></script>
+    <script>
+      const modal = document.querySelector('.modal');
+      const btnCloseModal = document.querySelector('.btnCloseModal');
+
+      btnCloseModal.addEventListener('click', () => {
+        modal.style.display = 'none';
+      });
+    </script>
 </body>
 </html>

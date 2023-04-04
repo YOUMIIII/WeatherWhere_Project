@@ -5,9 +5,6 @@
     <meta charset="UTF-8">
     <title>옷 상세</title>
     <link rel="stylesheet" type="text/css" href="../../../static/css/mypage.css" th:href="@{/css/mypage.css}">
-    <style>
-
-    </style>
 </head>
 <body>
 <div>
@@ -17,7 +14,7 @@
 <div class="maincontent">
     <div class="introduce">
         <div id="subT">마이페이지 > 내 옷장</div>
-        <div>옷 상세</div>
+        <div th:text="${cloth.cName}"></div>
     </div>
     <div id="addClothSuccess" th:if="${param.status}" th:text="'옷장 추가 완료😉'"></div>
     <form method="post" action="mycloset.html" th:action>

@@ -38,6 +38,9 @@ public class MypageController {
     private final BoardService boardService;
     private final ClothService clothService;
 
+    private String pw = "";
+
+
     @GetMapping("")
     public String mypage(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){
 
@@ -47,15 +50,15 @@ public class MypageController {
     }
 
 
-    @GetMapping("/update-infomation-checkpw")
+    @GetMapping("/update-information-checkpw")
     public String checkPw(HttpServletRequest request, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){
         model.addAttribute("member", loginMember);
         model.addAttribute("memberCheckPwForm", new MemberCheckPwForm());
         return "main/mypage/updatemyinfo-checkpw";
     }
 
-    @PostMapping("/update-infomation-checkpw")
-    public String checkPwSuccess(@Validated @ModelAttribute("memberCheckPwForm") MemberCheckPwForm form, BindingResult bindingResult, HttpServletRequest request, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){
+    @PostMapping("/update-information-checkpw")
+    public String checkPwSuccess(@Validated @ModelAttribute("memberCheckPwForm") MemberCheckPwForm form, BindingResult bindingResult, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){
         if(!(form.getUserPw().equals(loginMember.getUserPw()))){
             bindingResult.addError(
                     new FieldError("memberCheckPwForm", "userPw", form.getUserPw(), false, null, null, "기존 비밀번호와 일치하지 않습니다.")
@@ -66,24 +69,43 @@ public class MypageController {
 
 //        model.addAttribute("memberEditForm", MemberEditForm.createMemberEditForm(loginMember));
         model.addAttribute("member", loginMember);
-        return "main/mypage/updatemyinfo-select";
+        setBringPw(form.getUserPw());
+        return "redirect:/mypage/update-information-select";
     }
 
-    @GetMapping("/update-infomation-select")
+    public void setBringPw(String pw){
+        this.pw = pw;
+    }
+
+    public String bringPw(){
+        return pw;
+    }
+
+    @GetMapping("/update-information-select")
     public String updateInfoSelect(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){
+        if(bringPw().equals("")){
+            model.addAttribute("member", loginMember);
+            model.addAttribute("memberCheckPwForm", new MemberCheckPwForm());
+            return "redirect:/mypage/update-information-checkpw";
+        }
         model.addAttribute("member", loginMember);
         return "main/mypage/updatemyinfo-select";
     }
 
-    @GetMapping("/update-infomation-pw")
+    @GetMapping("/update-information-pw")
     public String updateInfoPw(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){
+        if(bringPw().equals("")){
+            model.addAttribute("member", loginMember);
+            model.addAttribute("memberCheckPwForm", new MemberCheckPwForm());
+            return "redirect:/mypage/update-information-checkpw";
+        }
         model.addAttribute("member", loginMember);
         model.addAttribute("memberEditPwForm", new MemberEditPwForm());
         return "main/mypage/updatemypw";
     }
 
-    @PostMapping("/update-infomation-pw")
-    public String updateInfoPwSuccess(@Validated @ModelAttribute("memberEditForm") MemberEditPwForm form, BindingResult bindingResult, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){
+    @PostMapping("/update-information-pw")
+    public String updateInfoPwSuccess(@Validated @ModelAttribute("memberEditPwForm") MemberEditPwForm form, BindingResult bindingResult, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model, RedirectAttributes redirectAttributes, HttpServletRequest request){
         if(!(form.getUserPw().equals(form.getUserPwCheck()))){
             model.addAttribute("member", loginMember);
             bindingResult.reject("pwError","작성하신 비밀번호가 일치하지 않습니다.");
@@ -92,26 +114,38 @@ public class MypageController {
         if(bindingResult.hasErrors()){
             model.addAttribute("member", loginMember);
             //에러있으면 다시 수정페이지로.
-            return "main/mypage/updatemyinfo";
+            return "main/mypage/updatemypw";
         }
 
-        model.addAttribute("member", loginMember);
-        model.addAttribute("memberEditPwForm", new MemberEditPwForm());
-        return "main/mypage/updatemypw";
+        Member updateMember = memberService.updateMemberPw(loginMember.getId(), form);
+        //SessionAttribute 도 함께 수정
+        HttpSession session = request.getSession();
+        session.setAttribute(SessionConst.LOGIN_MEMBER, updateMember);
+
+        log.info("회원 {} 정보 변경 : 지역 {} , {}",updateMember.getUserId(),updateMember.getParentRegion(),updateMember.getChildRegion());
+
+        //정상적으로 수정되면 모달창 띄우기 위해 status값 전달
+        redirectAttributes.addAttribute("status", true);
+        model.addAttribute("member", updateMember);
+        return "redirect:/mypage/update-information-pw";
     }
 
     //비밀번호 외의 정보수정
 
-    @GetMapping("/update-infomation")
+    @GetMapping("/update-information")
     public String updateInfo(HttpServletRequest request, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){
-
+        if(bringPw().equals("")){
+            model.addAttribute("member", loginMember);
+            model.addAttribute("memberCheckPwForm", new MemberCheckPwForm());
+            return "redirect:/mypage/update-information-checkpw";
+        }
         model.addAttribute("memberEditForm", MemberEditForm.createMemberEditForm(loginMember));
         model.addAttribute("member", loginMember);
         return "main/mypage/updatemyinfo";
     }
 
     //비밀번호 외의 정보수정
-    @PostMapping("/update-infomation")
+    @PostMapping("/update-information")
     public String successUpdateInfo(@Validated @ModelAttribute("memberEditForm") MemberEditForm form, BindingResult bindingResult, MultipartFile file, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model, RedirectAttributes redirectAttributes, HttpServletRequest request) throws Exception {
 
         if(bindingResult.hasErrors()){
@@ -143,7 +177,7 @@ public class MypageController {
         //정상적으로 수정되면 모달창 띄우기 위해 status값 전달
         redirectAttributes.addAttribute("status", true);
         model.addAttribute("member", updateMember);
-        return "redirect:/mypage/update-infomation";
+        return "redirect:/mypage/update-information";
     }
 
     @GetMapping("/mycloset")

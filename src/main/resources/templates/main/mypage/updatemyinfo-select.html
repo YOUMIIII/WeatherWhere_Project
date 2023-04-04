@@ -18,8 +18,10 @@
             <div id="subT">
             </div>
         </div>
-        <div><button type="button">비밀번호 변경</button></div>
-        <div><button type="button">기본정보 변경</button></div>
+        <div id="updateinfolistbtn">
+            <div><button type="button" th:onclick="|location.href='@{/mypage/update-information-pw}'|">비밀번호 변경</button></div>
+            <div><button type="button" th:onclick="|location.href='@{/mypage/update-information}'|">기본정보 변경</button></div>
+        </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>

@@ -8,7 +8,6 @@ import weatherwhere.team.domain.member.Member;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -46,5 +45,7 @@ public class MemberJpaRepository {
                 .getResultList();
         return resultList.isEmpty()? null:resultList.get(0);
     }
+
+
 
 }

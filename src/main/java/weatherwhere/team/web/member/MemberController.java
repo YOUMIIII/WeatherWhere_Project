@@ -7,10 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import weatherwhere.team.domain.member.Member;
 import weatherwhere.team.service.MemberService;
@@ -66,25 +63,13 @@ public class MemberController {
         return "members/signupsuccess";
     }
 
-
-//    @ModelAttribute("userLocations")
-//    public List<Location> userLocations() {
-//        List<Location> userLocations = new ArrayList<>();
-//        userLocations.add(new Location("SEOUL", "서울특별시"));
-//        userLocations.add(new Location("GYEONGGI", "경기도"));
-//        userLocations.add(new Location("GANGWON", "강원도"));
-//        return userLocations;
-//    }
-//
-//    @ModelAttribute("userLocation2")
-//    public List<Location> subLocationCodes() {
-//        List<Location> userLocation2 = new ArrayList<>();
-//        userLocation2.add(new Location("YONGIN", "용인시"));
-//        userLocation2.add(new Location("SUNGNAM", "성남시"));
-//        userLocation2.add(new Location("GWANGJU", "광주시"));
-//        return userLocation2;
-//    }
-
-
+    @ResponseBody
+    @RequestMapping(value = "/memberIdChk", method = RequestMethod.POST)
+    public int memberIdChk(String userId) throws Exception{
+        log.info("memberIdChk() 진입");
+        int result = memberService.idCheck(userId);
+        log.info("결과값 = {}" + result);
+        return result;
+    }
 
 }

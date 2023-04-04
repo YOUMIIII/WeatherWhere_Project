@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import weatherwhere.team.domain.member.Member;
-import weatherwhere.team.repository.member.MemberJpaRepository;
-import weatherwhere.team.repository.member.MemberRepository;
 import weatherwhere.team.service.MemberService;
 import weatherwhere.team.web.SessionConst;
 

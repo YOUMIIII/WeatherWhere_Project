@@ -15,4 +15,8 @@
         where userId = #{userId} and userPw = #{userPw}
     </select>
 
+    <select id="idCheck" resultType="int">
+        select count(*) from member where user_Id = #{userId}
+    </select>
+
 </mapper>

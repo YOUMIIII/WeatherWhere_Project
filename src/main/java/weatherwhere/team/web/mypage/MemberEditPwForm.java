@@ -1,6 +1,7 @@
 package weatherwhere.team.web.mypage;
 
 import lombok.Data;
+import weatherwhere.team.domain.member.Member;
 import weatherwhere.team.web.member.MemberForm;
 
 import javax.validation.constraints.NotNull;
@@ -13,4 +14,10 @@ public class MemberEditPwForm extends MemberForm {
 
     @NotNull(message = "필수 입력란 입니다")
     private String userPwCheck;
+
+    public static MemberEditPwForm createMemberEditPwForm(Member member){
+        MemberEditPwForm form = new MemberEditPwForm();
+        form.setUserPw(member.getUserPw());
+        return form;
+    }
 }

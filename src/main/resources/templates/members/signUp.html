@@ -6,6 +6,27 @@
     <title>회원가입</title>
     <link rel="stylesheet" type="text/css" href="../../static/css/signUp.css" th:href="@{/css/signUp.css}">
     <script type="text/javascript" src="../../static/js/checkbox.js" th:src="@{/js/checkbox.js}"></script>
+    <script>
+        function fn_idcheck() {
+            $.ajax({
+                url : "/members/memberIdChk",
+                type : "POST",
+                dataType : "JSON",
+                data : {"userId" : $("#userId").val()},
+                success : function (data) {
+                    if(data == 1){
+                        $("#olmessage").text("이미 사용중인 ID 입니다.");
+                        $("#olmessage").addClass("olmessagef");
+                        $("#olmessage").removeClass("olmessaget");
+                    } else {
+                        $("#olmessage").text("사용 가능한 ID 입니다.");
+                        $("#olmessage").addClass("olmessaget");
+                        $("#olmessage").removeClass("olmessagef");
+                    }
+                }
+            });
+        }
+    </script>
     <style>
         .field-error {
             border-color: #dc3545;
@@ -24,8 +45,10 @@
             <h3 class="infoT">로그인 정보</h3>
             <div class="info">
                 <div class="label"><label for="userId">아이디</label></div>
-                <div><input type="text" id="userId" th:field="*{userId}" th:errorclass="field-error" placeholder="영문자 최소 2자, 최대 10자로 입력해주세요." ></div>
+                <div><input type="text" id="userId" th:field="*{userId}" th:errorclass="field-error" placeholder="영문자 최소 2자, 최대 10자로 입력해주세요." >
+                <button type="button" id="idcheck" onclick="fn_idcheck();" value="N">중복확인</button></div>
                 <p class="field-error" th:errors="*{userId}"></p>
+                <p th:id="olmessage"></p>
             </div>
             <div class="info">
                 <div class="label"><label for="userPw">비밀번호</label></div>
@@ -79,7 +102,6 @@
         </div>
     </form>
     <script type="text/javascript" src="../../static/js/jquery-3.4.1.min.js" th:src="@{/js/jquery-3.4.1.min.js}"></script>
-<!--    <script type="text/javascript" src="../../static/js/jquery.chained.js" th:src="@{/js/jquery.chained.js}"></script>-->
     <script>
 <!--    $("#userLocation2").chainedTo("#userLocation");-->
             $(document).ready(function(){

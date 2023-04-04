@@ -7,7 +7,7 @@
             select clothIdNum.nextval from dual
         </selectKey>
         insert into cloth_info (user_id, c_id, c_name, c_kind1, c_kind2, c_kind3, c_where_to_buy, c_color, c_photo, c_photo_path)
-        values (#{userId}, #{cId}, #{cName}, #{cKind1}, #{cKind2}, #{cKind3}, #{cWhereToBuy}, #{cColor}, #{cPhoto}, #{cPhotoPath})
+        values (#{userId}, #{cId}, #{cName}, #{cKind1}, #{cKind2}, #{cKind3}, #{cWhereToBuy}, #{cColor}, #{cPhoto}, #{cPhotdoPath})
     </insert>
 
     <select id="findById" resultType="weatherwhere.team.domain.closet.Cloth">

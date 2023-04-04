@@ -3,6 +3,7 @@ package weatherwhere.team.domain.member;
 import lombok.Getter;
 import lombok.Setter;
 import weatherwhere.team.web.mypage.MemberEditForm;
+import weatherwhere.team.web.mypage.MemberEditPwForm;
 
 import javax.persistence.*;
 
@@ -58,4 +59,8 @@ public class Member {
         return member;
     }
 
+    public static Member setEditPw(Member member, MemberEditPwForm form){
+        member.setUserPw(form.getUserPw());
+        return member;
+    }
 }

@@ -117,6 +117,20 @@ input[type="checkbox"]{
     color:#999;
 }
 
+#idcheck{
+    width:80px;
+    height:35px;
+    font-family:'IM_Hyemin-Regular';
+    font-size:15px;
+    cursor:pointer;
+
+}
+
+#userId{
+    width:300px;
+    margin-right:20px;
+}
+
 /* 회원가입완료 css */
 
 #background{
@@ -159,6 +173,15 @@ button{
     cursor:pointer;
 }
 
+.olmessagef {
+    color: #dc3545;
+    display:block;
+}
+
+.olmessaget {
+    color: blue;
+    display:block;
+}
 
 
 

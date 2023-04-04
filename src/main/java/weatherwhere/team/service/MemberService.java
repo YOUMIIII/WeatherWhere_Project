@@ -7,13 +7,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import weatherwhere.team.domain.member.Member;
 import weatherwhere.team.repository.member.MemberJpaRepository;
+import weatherwhere.team.repository.member.MemberRepository;
 import weatherwhere.team.repository.region.RegionRepository;
 import weatherwhere.team.web.member.MemberForm;
-import weatherwhere.team.web.member.MemberJoinForm;
 import weatherwhere.team.web.mypage.MemberEditForm;
+import weatherwhere.team.web.mypage.MemberEditPwForm;
 
 import java.io.File;
-import java.util.List;
 
 @Slf4j
 @Service
@@ -22,6 +22,8 @@ import java.util.List;
 public class MemberService {
 
     private final MemberJpaRepository memberJpaRepository;
+
+    private final MemberRepository memberRepository;
     private final RegionRepository regionRepository;
 
 
@@ -36,6 +38,12 @@ public class MemberService {
         //트랜잭션이 있는 계층에서 영속 상태의 엔티티를 조회하고 엔티티의 데이터를 변경
         Member member = memberJpaRepository.findOne(id);
         return Member.setEditInfo(member, memberEditForm);//엔티티에서 값을 전부 set 해준 뒤 멤버 객체를 반환
+    }
+
+    public Member updateMemberPw(Long id, MemberEditPwForm memberEditPwForm){
+        //트랜잭션이 있는 계층에서 영속 상태의 엔티티를 조회하고 엔티티의 데이터를 변경
+        Member member = memberJpaRepository.findOne(id);
+        return Member.setEditPw(member, memberEditPwForm);//엔티티에서 값을 전부 set 해준 뒤 멤버 객체를 반환
     }
 
     public Member findMember(String userId){
@@ -74,6 +82,10 @@ public class MemberService {
         form.setUserPhoto("/img/home/profile/" + fileName);
 
         return form.getUserPhoto();
+    }
+
+    public int idCheck(String userId){
+        return memberRepository.idCheck(userId);
     }
 
 }
