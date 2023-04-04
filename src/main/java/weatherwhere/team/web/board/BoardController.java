@@ -75,6 +75,38 @@ public class BoardController {
         return "redirect:/board/"+savedId;
     }
 
+    //즐겨찾기
+    @PostMapping("/addfavorite")
+    public void addfavorite(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model,
+                            @ModelAttribute("board")
+                            BoardDTO boardDTO)
+            throws IOException {
+        model.addAttribute("member", loginMember); // 사이드바
+//        System.out.println("boardDTO 에 저장된 userId : " + boardDTO.getUserId()); //UserId 확인용
+
+        String loginId = loginMember.getUserId();
+        boardService.favoriateSave(boardDTO, loginId);
+        System.out.println("\uD83E\uDDE1loginId = " + loginId);
+        System.out.println("\uD83E\uDDE1boardDTO = " + boardDTO);
+
+//        if (boardDTO.getBoardFile().isEmpty()) { //첨부파일 유무 확인
+//            boardDTO.setFileAttached(0);
+//        } else {
+//            boardDTO.setFileAttached(1);
+//
+//            boardDTO.setOriginalFileName(boardDTO.getBoardFile().getOriginalFilename());
+//            boardDTO.setStoredFileName("image_" + boardDTO.getOriginalFileName());
+//        }
+//        System.out.println("DB에 저장되는 boardDTO = " + boardDTO);
+
+//        return "main/infoboard/save";
+    }
+
+
+
+
+
+
     @GetMapping("/board")
     public String findAll(Model model) {
         // DB 에서 전체 게시글 데이터를 가져와서 list.html 에 보여준다.

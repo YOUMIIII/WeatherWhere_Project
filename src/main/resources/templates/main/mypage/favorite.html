@@ -54,13 +54,17 @@
                     <th>작성일</th>
                     <th>조회수</th>
                 </tr>
-                <tr th:each="board: ${boardList}">
-                    <td th:text="${board.id}">106</td>
-                    <td>질문</td>
-                    <td class="boardtitle" id="boardtitle"><a th:href="@{|/board/${board.id}|(page=${boardList.number + 1})}" th:text="${board.boardTitle}">2001아울렛에 아기랑 갈만한 음식점 있나요?</a></td>
-                    <td th:text="${board.boardWriter}">youmiiii</td>
-                    <td th:text="*{#temporals.format(board.boardCreatedTime, 'yy/MM/dd')}">23/04/13</td>
-                    <td th:text="${board.boardHits}">3</td>
+<!--                 마이페이지에서 연결되는 부분 표시-->
+<!--                <button th:onclick="|location.href='@{/mypage/favorite}'|">👍 즐겨찾기 게시글</button>-->
+                        <!--board -> bookmark-->
+
+                <tr th:each="bookmark: ${boardList}">
+                    <td th:text="${bookmark.id}"></td>
+                    <td th:text="${bookmark.postType}"></td>
+                    <td class="boardtitle" id="boardtitle"><a th:href="@{|/mypage/favorite/${bookmark.id}|(page=${boardList.number + 1})}" th:text="${bookmark.boardTitle}"></a></td>
+                    <td th:text="${bookmark.boardWriter}"></td>
+                    <td th:text="*{#temporals.format(bookmark.boardCreatedTime, 'yy/MM/dd')}"></td>
+                    <td th:text="${bookmark.boardHits}"></td>
                     <!--<td th:text="${board.id}">106</td>
                     <td><a th:href="@{|/board/${board.id}|(page=${boardList.number + 1})}" th:text="${board.boardTitle}"></a></td>
                     <td th:text="${board.boardWriter}"></td>
@@ -68,13 +72,14 @@
                     <td th:text="${board.boardHits}"></td>-->
                 </tr>
             </table>
+<!--            @{/board/paging~}에서 /board/를 /mypage/favorite/로-->
             <div id="paging">
                 <!-- 첫번째 페이지로 이동 -->
                 <!-- /board/paging?page=1 -->
-                <a th:href="@{/board/paging(page=1)}">&lt;&lt;</a>
+                <a th:href="@{/mypage/favorite/paging(page=1)}">&lt;&lt;</a>
                 <!-- 이전 링크 활성화 비활성화 -->
                 <!-- boardList.getNumber() 사용자:2페이지 getNumber()=1 -->
-                <a th:href="${boardList.first} ? '#' : @{/board/paging(page=${boardList.number})}">&lt;</a>
+                <a th:href="${boardList.first} ? '#' : @{/mypage/favorite/paging(page=${boardList.number})}">&lt;</a>
 
                 <!-- 페이지 번호 링크(현재 페이지는 숫자만)
                         for(int page=startPage; page<=endPage; page++)-->
@@ -83,15 +88,15 @@
                       <span th:if="${page == boardList.number + 1}" th:text="${page}"></span>
                     <!-- 현재페이지 번호가 아닌 다른 페이지번호에는 링크를 보여줌 -->
                       <span th:unless="${page == boardList.number + 1}">
-                          <a th:href="@{/board/paging(page=${page})}" th:text="${page}"></a>
+                          <a th:href="@{/mypage/favorite/paging(page=${page})}" th:text="${page}"></a>
                       </span>
                   </span>
 
                 <!-- 다음 링크 활성화 비활성화
                     사용자: 2페이지, getNumber: 1, 3페이지-->
-                <a th:href="${boardList.last} ? '#' : @{/board/paging(page=${boardList.number + 2})}">&gt;</a>
+                <a th:href="${boardList.last} ? '#' : @{/mypage/favorite/paging(page=${boardList.number + 2})}">&gt;</a>
                 <!-- 마지막 페이지로 이동 -->
-                <a th:href="@{/board/paging(page=${boardList.totalPages})}">&gt;&gt;</a>
+                <a th:href="@{/mypage/favorite/paging(page=${boardList.totalPages})}">&gt;&gt;</a>
             </div>
         </div>
     </div>

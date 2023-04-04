@@ -7,9 +7,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import weatherwhere.team.domain.board.BoardEntity;
 import weatherwhere.team.domain.board.BoardFileEntity;
+import weatherwhere.team.domain.board.FavoriteEntity;
 import weatherwhere.team.repository.board.BoardDTO;
 import weatherwhere.team.repository.board.BoardFileRepository;
 import weatherwhere.team.repository.board.BoardRepository;
+import weatherwhere.team.repository.board.FavoriteRepository;
 
 import javax.swing.*;
 import java.io.File;
@@ -27,6 +29,8 @@ import java.util.stream.Collectors;
 public class BoardService {
     private final BoardRepository boardRepository;
     private final BoardFileRepository boardFileRepository;
+    private final FavoriteRepository favoriteRepository;
+
 
     public Long save(BoardDTO boardDTO) throws IOException {
         // 파일 첨부 여부에 따라 로직 분리
@@ -89,6 +93,43 @@ public class BoardService {
         return boardDTOList;
     }
 
+
+    public void favoriateSave(BoardDTO boardDTO, String loginId) throws IOException {
+        BoardEntity boardEntity = BoardEntity.toSaveEntity(boardDTO);
+        Long savedId = boardRepository.save(boardEntity).getId(); //이거 아마 글번호?
+        BoardEntity favoBoard = boardRepository.findById(savedId).get();
+
+        FavoriteEntity favoriteEntity = FavoriteEntity.save(favoBoard, boardDTO, loginId);
+        //fileEntity도 거쳐야할까??
+        favoriteRepository.save(favoriteEntity);
+    }
+
+
+
+    public Page<BoardDTO> favoritePaging(Pageable pageable) {
+        int page = pageable.getPageNumber() - 1;
+        int pageLimit = 5; // 한 페이지에 보여줄 글 갯수
+        // 한페이지당 3개씩 글을 보여주고 정렬 기준은 id 기준으로 내림차순 정렬
+        // page 위치에 있는 값은 0부터 시작
+        Page<BoardEntity> boardEntities =
+                boardRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
+
+
+
+        System.out.println("boardEntities.getContent() = " + boardEntities.getContent()); // 요청 페이지에 해당하는 글
+        System.out.println("boardEntities.getTotalElements() = " + boardEntities.getTotalElements()); // 전체 글갯수
+        System.out.println("boardEntities.getNumber() = " + boardEntities.getNumber()); // DB로 요청한 페이지 번호
+        System.out.println("boardEntities.getTotalPages() = " + boardEntities.getTotalPages()); // 전체 페이지 갯수
+        System.out.println("boardEntities.getSize() = " + boardEntities.getSize()); // 한 페이지에 보여지는 글 갯수
+        System.out.println("boardEntities.hasPrevious() = " + boardEntities.hasPrevious()); // 이전 페이지 존재 여부
+        System.out.println("boardEntities.isFirst() = " + boardEntities.isFirst()); // 첫 페이지 여부
+        System.out.println("boardEntities.isLast() = " + boardEntities.isLast()); // 마지막 페이지 여부
+
+        // 목록: id, postType, userid, title, hits, postdateTime
+        Page<BoardDTO> boardDTOS = boardEntities.map(board -> BoardDTO.toBoardDTO(board));
+//        Page<BoardDTO> boardDTOS = boardEntities.map(board -> new BoardDTO(board.getId(), board.getPostType(), board.getUserId(), board.getTitle(), board.getHits(), board.getPostdateTime()));
+        return boardDTOS;
+    }
     
 
 

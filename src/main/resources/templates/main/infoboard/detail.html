@@ -23,7 +23,11 @@
     <div id="boardetailmain">
         <div id="boarddetailbtn">
             <!--            todo(dayi) : 즐겨찾기 추가 버튼 동작하도록 수정 필요-->
-            <button id="addfavorite" th:onclick="">즐겨찾기 추가</button>
+            <button id="addfavorite" th:onclick="addfavorite">즐겨찾기 추가</button>
+            <!--            <button type="submit" id="addfavorite" >즐겨찾기 추가</button>-->
+            <!--            <input type="submit" id="addfavorite" value="즐겨찾기 추가">-->
+<!--            <input type="submit" id="boarddetailmain" name="boarddetailmain"  value="즐겨찾기 추가">-->
+
             <button th:if="${#strings.equals(member.userId, board.userId)}" th:onclick="|location.href='@{/board/paging/region(parentRegion=${board.parentRegion},childRegion=${board.childRegion})}'|">목록</button>
             <!--            todo(dayi) : 수정할 때 첨부 파일이 날아가는 부분 수정필요-->
             <button th:onclick="|location.href='@{/board/update/{id}(id=${board?.id})}'|">수정</button>
@@ -143,6 +147,43 @@ console.log("요청실패", err);
 }
 });
 }
+
+
+const addfavorite = () => {
+
+<!--//글번호, 작성자, 유형, 제목, 내용, 지역, 조회수, 로그인ID-->
+console.log("번호: ", [[${board.id}]]);
+
+	const boardId = [[${board.id}]];
+	const userId = [[${board.userId}]];
+	const postType = [[${board.postType}]];
+	const title = [[${board.title}]];
+	const contents = [[${board.contents}]];
+<!--	const region = [[${board.region}]];-->
+	const hits = [[${board.hits}]];
+	const loginId = [[${member.userId}]];
+
+	$.ajax({
+<!--//요청방식: post, 요청주소: /mypage/favorite, 요청데이터: 글번호, 작성자, 유형, 제목, 내용, 지역, 조회수, 로그인ID-->
+		type: "post",
+		url: "/mypage/favorite",
+
+<!--// "변수명" : 위 const 명,-->
+		data: {
+			"boardId" : boardId,
+			"userId" : userId,
+			"postType" : postType,
+			"title" : title,
+			"contents" : contents,
+			"hits" : hits,
+			"member.userId" : loginId
+		},
+		success: function (res) {
+		console.log("요청성공", res);
+		}
+	});
+}
+
 </script>
 
 </html>
