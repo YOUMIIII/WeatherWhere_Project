@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>아이디찾기</title>
+    <link rel="stylesheet" type="text/css" href="../../static/css/default.css" th:href="@{/css/default.css}">
+</head>
+<body>
+<div id="loginScreen">
+    <section id="loginSidebar">
+        <header><img id="logo" src="../../static/img/logo.png" th:src="@{/img/logo.png}" width="190px" /></header>
+        <div id="loginText">오늘도 당신의 하루를<br>웨더웨어와 함께하세요.</div>
+        <div id="loginImg"><img src="../../static/img/login/logodrawing.png" th:src="@{/img/login/logodrawing.png}" width="100%" /></div>
+    </section>
+    <section id="loginMain">
+        <div id="mainT">가입시 작성했던 이메일을 입력해주세요 💌</div>
+        <div id="findformBox">
+            <div class="modal" th:if="${param.status}">
+                <div class="modal_body">
+                    <div>
+                        아이디는 <span th:text="${param.userId}">jojo39</span> 입니다.</div>
+                    <div><button type="button" class="btnCloseModal" th:onclick="|location.href='@{/login}'|">로그인</button></div>
+                </div>
+            </div>
+            <form th:action th:object="${form}" method="POST">
+                <p class="mail">
+                    <input type="text" id="userMail" th:field="*{userMail}" placeholder="이메일">
+                </p>
+            <input type="submit" id="findId" value="아이디찾기">
+            </form>
+        </div>
+    </section>
+</div>
+</body>
+</html>

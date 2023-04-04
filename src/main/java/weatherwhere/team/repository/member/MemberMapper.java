@@ -14,5 +14,6 @@ public interface MemberMapper {
 
     int idCheck(String userId);
 
+    String findId(String userMail);
 
 }

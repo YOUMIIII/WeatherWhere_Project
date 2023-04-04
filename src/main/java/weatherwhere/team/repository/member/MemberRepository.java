@@ -23,8 +23,11 @@ public class MemberRepository {
         return memberMapper.login(loginId, loginPw);
     }
 
-
     public Integer idCheck(String userId){
         return memberMapper.idCheck(userId);
+    }
+
+    public String findId(String userMail){
+        return memberMapper.findId(userMail);
     }
 }

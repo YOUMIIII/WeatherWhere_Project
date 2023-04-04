@@ -3,11 +3,13 @@ package weatherwhere.team.web.login;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import weatherwhere.team.domain.member.Member;
 import weatherwhere.team.service.MemberService;
 import weatherwhere.team.web.SessionConst;
@@ -57,5 +59,19 @@ public class LoginController {
             session.invalidate();
         }
         return "redirect:/login";
+    }
+
+    @GetMapping("/members/findId")
+    public String findId(@ModelAttribute("form") FindIdPwForm form){
+        return "login/findId";
+    }
+
+    @PostMapping("/members/findId")
+    public String findIdSuccess(@ModelAttribute("form") FindIdPwForm form, RedirectAttributes redirectAttributes, Model model){
+        String id = memberService.findId(form.getUserMail());
+        form.setUserId(id);
+        redirectAttributes.addAttribute("status", true);
+        redirectAttributes.addAttribute("userId", id);
+        return "redirect:/members/findId";
     }
 }

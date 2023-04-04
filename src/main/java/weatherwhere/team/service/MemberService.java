@@ -88,5 +88,9 @@ public class MemberService {
         return memberRepository.idCheck(userId);
     }
 
+    public String findId(String userMail){
+        return memberRepository.findId(userMail);
+    }
+
 }
 
