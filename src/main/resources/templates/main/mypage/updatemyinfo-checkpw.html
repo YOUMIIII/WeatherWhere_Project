@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>정보수정</title>
+    <link rel="stylesheet" type="text/css" href="../../../static/css/mypage.css" th:href="@{/css/mypage.css}">
+</head>
+<body>
+    <div>
+        <div class="leftBar" th:insert="~{main/sidebar :: sidebar}">
+        </div>
+    </div>
+    <div class="maincontent">
+        <div class="introduce">
+            <div id="topT">마이페이지</div>
+            <div>비밀번호 확인</div>
+            <div id="subT">
+            </div>
+        </div>
+        <div id="form">
+            <form class="formBox" th:action th:object="${memberCheckPwForm}" method="POST">
+                <div class="changeForm">
+                    <div class="label"><label for="userPw">현재비밀번호</label></div>
+                    <div class="input"><input type="password" name="userPwBefore" id="userPw" th:field="*{userPw}" th:errorclass="field-error"></div>
+                    <p id="pwbT" class="field-error" th:errors="*{userPw}">정보를 확인해주세요</p>
+                </div>
+
+                <div class="changeForm">
+                    <div id="changeBtn">
+                        <button type="button" th:onclick="|location.href='@{/mypage}'|">취소</button>
+                        <button type="reset">다시작성</button>
+                        <button type="submit" th:onclick="|location.href='@{/mypage/update-infomation-select}'|">수정</button>
+                    </div>
+                </div>
+        </form>
+    </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <script type="text/javascript" th:src="@{/js/menuactive.js}"></script>
+</body>
+</html>

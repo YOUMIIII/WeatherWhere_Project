@@ -1,6 +1,5 @@
 package weatherwhere.team.domain.member;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import weatherwhere.team.web.mypage.MemberEditForm;
@@ -52,7 +51,6 @@ public class Member {
     }
 
     public static Member setEditInfo(Member member,MemberEditForm form){
-        member.setUserPw(form.getUserPw());
         member.setUserMail(form.getUserMail());
         member.setParentRegion(form.getUserLocation());
         member.setChildRegion(form.getUserLocation2());

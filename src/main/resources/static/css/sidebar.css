@@ -4,14 +4,14 @@
 
 #profile{
     padding-top:200px;
-    height:163px;
     text-align:center;
 }
 
 #profileImg{
     width:100px;
-    border-radius: 70%;
-    overflow: hidden;
+    height:100px;
+    border-radius:70%;
+    overflow:hidden;
     margin-left:55px;
 }
 
@@ -21,14 +21,14 @@
     object-fit: cover;
 }
 
-#logo, #profile .id{
+#logo{
     font-size:18px;
-    color: #D7DEEB;
+    color: #393939;
     padding-bottom:30px;
 }
 
 .id{
-    padding-top:10px;
+    margin-top:10px;
 }
 
 .main{
@@ -44,7 +44,7 @@
     width:100%;
     height:70px;
     border:0px;
-    background-color:white;
+    background-color:#F6F6F6;
     cursor:pointer; /* 커서 올라가면 손가락모양 */
 }
 
@@ -57,10 +57,6 @@
     color:#D0DBFF;
     text-decoration:underline;
     cursor:pointer; /* 커서 올라가면 손가락모양 */
-}
-
-#logout a:hover{
-    color:#FFFFFF;
 }
 
 .menuIcon{
@@ -78,6 +74,43 @@
     display:block;
 }
 
-li.active .menuIconHover{
+li.active .menuIconHover, li.active .subtab{
     display:block;
+}
+
+.subtab{
+    display:none;
+    position:absolute;
+    margin-left:30px;
+    color:#898989;
+}
+
+#mypage:hover .subtab{
+    display:block;
+}
+
+.gt{
+    width:30px;
+}
+
+.subtab li div{
+    display:inline-block;
+}
+
+.subtab li{
+    text-align:left;
+    margin-top:5px;
+    margin-bottom:5px;
+}
+
+.subtab li a{
+    color:#898989;
+}
+
+.subtab li:hover .gt, .subtab li:hover a{
+    color:#FF9838;
+}
+
+li.click .gt, li.click .submenu a{
+    color:#FF9838;
 }

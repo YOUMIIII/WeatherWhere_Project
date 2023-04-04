@@ -3,14 +3,14 @@
 
 body{
     background-color:white;
-    color:#2D3037;
+    color:#393939;
 }
 
 .mainLayout{
     float:left;
     width: 500px;
     border-radius: 15px;
-    background-color: #EBEBEB;
+    background-color: #F6F6F6;
     margin-left : 10px;
     margin-right: 40px;
     margin-top : 20px;
@@ -18,7 +18,7 @@ body{
 
 .mainLayout h1{ /* 각 박스의 제목 */
     font-size:18px;
-    margin:20px;
+    margin:20px 0px 0px 20px;
 }
 
 #temperature{
@@ -38,7 +38,7 @@ body{
 
 .temperatureInfo p{
     text-align:center;
-    margin:10px 15px 10px 30px;
+    margin:15px 15px 15px 30px;
 }
 
 #temLocation{
@@ -46,7 +46,7 @@ body{
 }
 
 #temNumber{
-    font-size:120px;
+    font-size:100px;
 }
 
 #temMaxMin{
@@ -70,7 +70,9 @@ body{
     width:15%; /*값 조정 필요*/
     text-align:center;
     font-size:15px;
-    color:#2D3037;
+    color:#393939;
+    font-family:'IM_Hyemin-Regular';
+
 }
 
 #cody{
@@ -128,13 +130,15 @@ body{
 button{
     width:80px;
     height:30px;
-    margin-left:190px;
-    font-size:13px;
-    border-radius:5px;
+    margin-left:240px;
+    font-size:14px;
+    border-radius:15px;
     border:none;
-    background-color:#494F5B;
+    background-color:#FF9838;
     color:white;
     cursor:pointer;
+    font-family:'IM_Hyemin-Bold';
+
 }
 
 

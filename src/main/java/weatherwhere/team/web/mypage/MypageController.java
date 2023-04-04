@@ -8,6 +8,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,7 +23,6 @@ import weatherwhere.team.service.BoardService;
 import weatherwhere.team.service.ClothService;
 import weatherwhere.team.service.MemberService;
 import weatherwhere.team.web.SessionConst;
-import weatherwhere.team.web.member.MemberJoinForm;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -47,31 +47,87 @@ public class MypageController {
     }
 
 
+    @GetMapping("/update-infomation-checkpw")
+    public String checkPw(HttpServletRequest request, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){
+        model.addAttribute("member", loginMember);
+        model.addAttribute("memberCheckPwForm", new MemberCheckPwForm());
+        return "main/mypage/updatemyinfo-checkpw";
+    }
+
+    @PostMapping("/update-infomation-checkpw")
+    public String checkPwSuccess(@Validated @ModelAttribute("memberCheckPwForm") MemberCheckPwForm form, BindingResult bindingResult, HttpServletRequest request, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){
+        if(!(form.getUserPw().equals(loginMember.getUserPw()))){
+            bindingResult.addError(
+                    new FieldError("memberCheckPwForm", "userPw", form.getUserPw(), false, null, null, "기존 비밀번호와 일치하지 않습니다.")
+            );
+            model.addAttribute("member", loginMember);
+            return "main/mypage/updatemyinfo-checkpw";
+        }
+
+//        model.addAttribute("memberEditForm", MemberEditForm.createMemberEditForm(loginMember));
+        model.addAttribute("member", loginMember);
+        return "main/mypage/updatemyinfo-select";
+    }
+
+    @GetMapping("/update-infomation-select")
+    public String updateInfoSelect(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){
+        model.addAttribute("member", loginMember);
+        return "main/mypage/updatemyinfo-select";
+    }
+
+    @GetMapping("/update-infomation-pw")
+    public String updateInfoPw(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){
+        model.addAttribute("member", loginMember);
+        model.addAttribute("memberEditPwForm", new MemberEditPwForm());
+        return "main/mypage/updatemypw";
+    }
+
+    @PostMapping("/update-infomation-pw")
+    public String updateInfoPwSuccess(@Validated @ModelAttribute("memberEditForm") MemberEditPwForm form, BindingResult bindingResult, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){
+        if(!(form.getUserPw().equals(form.getUserPwCheck()))){
+            model.addAttribute("member", loginMember);
+            bindingResult.reject("pwError","작성하신 비밀번호가 일치하지 않습니다.");
+        }
+
+        if(bindingResult.hasErrors()){
+            model.addAttribute("member", loginMember);
+            //에러있으면 다시 수정페이지로.
+            return "main/mypage/updatemyinfo";
+        }
+
+        model.addAttribute("member", loginMember);
+        model.addAttribute("memberEditPwForm", new MemberEditPwForm());
+        return "main/mypage/updatemypw";
+    }
+
+    //비밀번호 외의 정보수정
+
     @GetMapping("/update-infomation")
     public String updateInfo(HttpServletRequest request, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){
 
-        //세션이 유지되면 스케줄으로 이동
         model.addAttribute("memberEditForm", MemberEditForm.createMemberEditForm(loginMember));
         model.addAttribute("member", loginMember);
         return "main/mypage/updatemyinfo";
     }
 
-    //수정완료페이지 만들고 주석풀기
+    //비밀번호 외의 정보수정
     @PostMapping("/update-infomation")
-    public String successUpdateInfo(@Validated @ModelAttribute("memberEditForm") MemberEditForm form, BindingResult bindingResult,@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model, MultipartFile file,HttpServletRequest request) throws Exception {
+    public String successUpdateInfo(@Validated @ModelAttribute("memberEditForm") MemberEditForm form, BindingResult bindingResult, MultipartFile file, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model, RedirectAttributes redirectAttributes, HttpServletRequest request) throws Exception {
 
-        if(!(form.getUserPw().equals(form.getUserPwCheck()))){
-            model.addAttribute("member", loginMember);
-            bindingResult.reject("pwError","작성하신 비밀번호가 일치하지 않습니다.");
-        }
         if(bindingResult.hasErrors()){
             model.addAttribute("member", loginMember);
-            log.info("errors={}", bindingResult);
-            //폼에 유효성 문제가 있을 경우 다시 회원가입 페이지로.
+            //에러있으면 다시 수정페이지로.
             return "main/mypage/updatemyinfo";
         }
+
+        //수정 폼이 정상일 경우
+        String essentialPhotoPath = "/img/home/profile/profile.png";
         if(file.isEmpty()){
-            form.setUserPhoto("/img/home/profile/profile.png"); // 사진 등록 안하면 기본사진
+            if(loginMember.getUserPhoto().equals(essentialPhotoPath)){
+                form.setUserPhoto(essentialPhotoPath); // 사진 등록 안하면 기본사진
+            }else {
+                form.setUserPhoto(loginMember.getUserPhoto());
+            }
         } else {
             form.setUserPhoto(memberService.memberfile(file, form));
         }
@@ -84,8 +140,10 @@ public class MypageController {
 
         log.info("회원 {} 정보 변경 : 지역 {} , {}",updateMember.getUserId(),updateMember.getParentRegion(),updateMember.getChildRegion());
 
-
-        return "main/mypage/updatemyinfosuccess";
+        //정상적으로 수정되면 모달창 띄우기 위해 status값 전달
+        redirectAttributes.addAttribute("status", true);
+        model.addAttribute("member", updateMember);
+        return "redirect:/mypage/update-infomation";
     }
 
     @GetMapping("/mycloset")
@@ -108,39 +166,6 @@ public class MypageController {
         model.addAttribute("cloth", new Cloth());
         return "main/mypage/addcloth";
     }
-
-    /*@PostMapping("/mycloset/addcloth")
-    public String addCloth(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, RedirectAttributes redirectAttributes, ContentAddForm form) throws IOException {
-        Cloth cloth = new Cloth();
-        cloth.setUserId(form.getUserId());
-        cloth.setClothName(form.getClothName());
-        cloth.setClothKind1(form.getClothKind1());
-        cloth.setClothKind2(form.getClothKind2());
-        cloth.setClothKind3(form.getClothKind3());
-        cloth.setClothBuy(form.getClothBuy());
-        cloth.setClothColor(form.getClothColor());
-
-        UploadImg attachFile = fileStore.storeFile(form.getAttachFile());
-        List<UploadImg> imageFiles = fileStore.storeFiles(form.getImageFiles());
-        cloth.setAttachFile(attachFile);
-        cloth.setImageFiles(imageFiles);
-
-        Cloth savedCloth = clothService.save(cloth);
-
-        redirectAttributes.addAttribute("member", loginMember);
-        redirectAttributes.addAttribute("clothId", savedCloth.getClothId());
-
-        return "redirect:/mypage/mycloset/{clothId}";
-    }*/
-
-
-
-    /*@PostMapping("/mycloset/addcloth")
-    public String addCloth(@ModelAttribute("cloth") Cloth cloth, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, RedirectAttributes redirectAttributes){
-        Cloth savedCloth = clothService.save(cloth);
-        redirectAttributes.addAttribute("clothId", savedCloth.getClothId());
-        return "redirect:/mypage/mycloset/{clothId}";
-    }*/
 
     @PostMapping("/mycloset/addcloth")
     public String addCloth(@Validated @ModelAttribute("cloth") ClothAddForm form, BindingResult bindingResult, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, MultipartFile file, RedirectAttributes redirectAttributes, Model model) throws Exception{

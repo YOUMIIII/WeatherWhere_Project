@@ -2,17 +2,19 @@
 @import url('reset.css');
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap');
 @font-face {
-    font-family: 'ONE-Mobile-POP';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
     font-family: 'IM_Hyemin-Bold';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2106@1.1/IM_Hyemin-Bold.woff2') format('woff');
     font-weight: normal;
     font-style: normal;
 }
+
+@font-face {
+    font-family: 'IM_Hyemin-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2106@1.1/IM_Hyemin-Regular.woff2') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 /* http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
    License: none (public domain)
@@ -45,7 +47,6 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
-    font-family: 'Nanum Gothic', sans-serif;
 }
 ol, ul {
 	list-style: none;
@@ -74,7 +75,7 @@ a {
     padding-top:70px;
     position:fixed; /* 메인컨텐츠에 내용이 많아져도 leftbar는 고정 */
     text-align:center;
-    background-color:#494F5B;
+    background-color:#F6F6F6;
 }
 
 .maincontent{ /* 사이드바 제외한 화면 - 모든 페이지 최대한 통일하기 */
@@ -97,10 +98,14 @@ a {
 .introduce #subT{ /* 제목설명 h2 */
     font-size: 18px;
     line-height: 30px;
-    font-family:'IM_Hyemin-Bold';
+    font-family:'IM_Hyemin-Regular';
 }
 
 #topT{
     font-size: 17px;
     line-height:30px;
+}
+
+body{
+    font-family:'IM_Hyemin-Bold';
 }

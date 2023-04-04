@@ -18,16 +18,26 @@
       <div id="nav">
         <nav>
           <ul>
-            <li class="active"><a th:href="@{/}"><div class="menuIcon"><img th:src="@{/img/menu1.png}" width="100%"><div class="menuIconHover"><img th:src="@{/img/menu1_hover.png}" width="100%"></div></div></a></li>
-            <li><a th:href="@{/schedule}"><div class="menuIcon"><img th:src="@{/img/menu2.png}" width="100%"><div class="menuIconHover"><img th:src="@{/img/menu2_hover.png}" width="100%"></div></div></a></li>
-            <li><a th:href="@{/board/paging}"><div class="menuIcon"><img th:src="@{/img/menu3.png}" width="100%"><div class="menuIconHover"><img th:src="@{/img/menu3_hover.png}" width="100%"></div></div></a></li>
-            <li><a th:href="@{/mypage}"><div class="menuIcon"><img th:src="@{/img/menu4.png}" width="100%"><div class="menuIconHover"><img th:src="@{/img/menu4_hover.png}" width="100%"></div></div></a></li>
+            <li class="active"><a th:href="@{/}"><div class="menuIcon"><img th:src="@{/img/sidebar/menu/home.png}" width="90%"><div class="menuIconHover"><img th:src="@{/img/sidebar/menu/home_active.png}" width="90%"></div></div></a></li>
+            <li><a th:href="@{/schedule}"><div class="menuIcon"><img th:src="@{/img/sidebar/menu/schedule.png}" width="90%"><div class="menuIconHover"><img th:src="@{/img/sidebar/menu/schedule_active.png}" width="90%"></div></div></a></li>
+            <li><a th:href="@{/board/paging}"><div class="menuIcon"><img th:src="@{/img/sidebar/menu/infoboard.png}" width="90%"><div class="menuIconHover"><img th:src="@{/img/sidebar/menu/infoboard_active.png}" width="90%"></div></div></a></li>
+            <li id="mypage">
+              <a th:href="@{/mypage}">
+                <div class="menuIcon"><img th:src="@{/img/sidebar/menu/mypage.png}" width="90%"><div class="menuIconHover"><img th:src="@{/img/sidebar/menu/mypage_active.png}" width="90%"></div></div>
+              </a>
+              <ul class="subtab">
+                <li class="active"><div class="gt"> > </div><div class="submenu"><a th:href="@{/mypage/update-infomation-checkpw}">정보수정</a></div></li>
+                <li><div class="gt"> > </div><div class="submenu"><a th:href="@{/mypage/mycloset}">내 옷장</a></div></li>
+                <li><div class="gt"> > </div><div class="submenu"><a th:href="@{/mypage/diary}">코디일기</a></div></li>
+                <li><div class="gt"> > </div><div class="submenu"><a th:href="@{/mypage/favorite}">즐겨찾기 게시글</a></div></li>
+              </ul>
+            </li>
           </ul>
         </nav>
       </div>
       <div id="logout">
         <a th:href="@{/logout}" >
-          로그아웃
+          <div class="menuIcon"><img th:src="@{/img/sidebar/menu/logout.png}" width="90%"><div class="menuIconHover"><img th:src="@{/img/sidebar/menu/logout_active.png}" width="90%"></div></div>
         </a>
       </div>
     </div>

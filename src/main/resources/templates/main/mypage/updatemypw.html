@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>정보수정</title>
+    <link rel="stylesheet" type="text/css" href="../../../static/css/mypage.css" th:href="@{/css/mypage.css}">
+</head>
+<body>
+    <div>
+        <div class="leftBar" th:insert="~{main/sidebar :: sidebar}">
+        </div>
+    </div>
+    <div class="maincontent">
+        <div class="introduce">
+            <div id="topT">마이페이지</div>
+            <div>정보수정</div>
+            <div id="subT">
+                개인정보 보호를 위해 비밀번호는 주기적으로 변경을 권장드려요!
+            </div>
+        </div>
+        <div id="form">
+                <div class="modal" th:if="${param.status}">
+                    <div class="modal_body">
+                        <div>
+                            <span th:text="${member.userId}">jojo39</span>님의 정보가 변경되었습니다.</div>
+                        <div><button type="button" class="btnCloseModal" th:onclick="|location.href='@{/mypage/update-infomation}'|">확인</button></div>
+                    </div>
+                </div>
+            <form class="formBox" action="updatemypw.html" th:action th:object="${memberEditPwForm}" method="POST">
+
+                <div class="changeForm">
+                    <div class="label"><label for="userPw">비밀번호</label></div>
+                    <div class="input"><input type="password" name="userPw" id="userPw" th:field="*{userPw}" th:errorclass="field-error"></div>
+                    <p id="pwT" class="field-error" th:errors="*{userPw}">정보를 확인해주세요</p>
+                </div>
+                <div class="changeForm">
+                    <div class="label"><label for="userPwCheck">비밀번호 확인</label></div>
+                    <div><input type="password" id="userPwCheck" th:field="*{userPwCheck}" onkeyup="samePassword(this);" ></div>
+                    <p id="pwChT" class="field-error" th:if="${#fields.hasGlobalErrors()}" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
+                </div>
+
+                <div class="changeForm">
+                    <div id="changeBtn">
+                        <button type="button" th:onclick="|location.href='@{/mypage}'|">취소</button>
+                        <button type="submit">수정</button>
+                    </div>
+                </div>
+        </form>
+    </div>
+    </div>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+<script type="text/javascript" th:src="@{/js/menuactive.js}"></script>
+</body>
+</html>

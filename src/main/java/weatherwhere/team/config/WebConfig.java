@@ -39,6 +39,12 @@ public class WebConfig implements WebMvcConfigurer {
                         "file:src/main/resources/static/img/mypage/diary/");
         registry.addResourceHandler(fileResourcePath)
                 .addResourceLocations(fileSavePath);
+        registry.addResourceHandler("/img/sidebar/menu/**")
+                .addResourceLocations(
+                        "file:src/main/resources/static/img/sidebar/menu/");
+        registry.addResourceHandler("/img/home/profile/**")
+                .addResourceLocations(
+                        "file:src/main/resources/static/img/home/profile/");
 
     }
 
