@@ -25,9 +25,6 @@ public class RegionService {
     @Value("${resources.location}")
     private String resourceLocation;
 
-    @Value("${weatherApi.serviceKey}")
-    private String serviceKey;
-
     public void post() {
         List<Region> regions = Region.createOnlyRegion(resourceLocation);
         regionJdbcRepository.saveAll(regions);

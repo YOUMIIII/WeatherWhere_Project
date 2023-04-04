@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import weatherwhere.team.domain.Region;
@@ -32,6 +33,8 @@ public class WeatherService {
 
     private final RegionRepository regionRepository;
 
+    @Value("${weatherApi.serviceKey}")
+    private String serviceKey;
 
     public Region createWeatherList(String parentRegion,String childRegion){
         Region region=regionRepository.findByParentChild(parentRegion, childRegion);
@@ -83,7 +86,7 @@ public class WeatherService {
         HttpURLConnection conn= null;
         StringBuilder resultBuilder= null;
         try {
-            urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8")+ "=" +  "FtoUNBRuw9X2Wrr5nb2PAV2ow7GS%2BZHdFi4%2FpEUTNc2BKku4jOaBb0qOyGZxLr10X%2Fy7c1Z2AmPgi1ohvs7wRQ%3D%3D");
+            urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8")+ "=" +  serviceKey);
             urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호*/
             urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("336", "UTF-8")); /*한 페이지 결과 수*/
             urlBuilder.append("&" + URLEncoder.encode("dataType","UTF-8") + "=" + URLEncoder.encode("JSON", "UTF-8")); /*요청자료형식(XML/JSON) Default: XML*/
@@ -151,7 +154,7 @@ public class WeatherService {
                             Integer.parseInt(temp),
                             Integer.parseInt(sky),
                             Integer.parseInt(pty),
-                            Integer.parseInt(pop),
+                            pop==null? 0:Integer.parseInt(pop),
                             Integer.parseInt(nx),
                             Integer.parseInt(ny),
                             region);
