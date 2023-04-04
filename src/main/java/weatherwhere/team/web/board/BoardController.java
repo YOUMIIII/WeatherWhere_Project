@@ -77,7 +77,7 @@ public class BoardController {
 
     //즐겨찾기
     @PostMapping("/addfavorite")
-    public void addfavorite(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model,
+    public String addfavorite(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model,
                             @ModelAttribute("board")
                             BoardDTO boardDTO)
             throws IOException {
@@ -99,7 +99,7 @@ public class BoardController {
 //        }
 //        System.out.println("DB에 저장되는 boardDTO = " + boardDTO);
 
-//        return "main/infoboard/save";
+        return "main/infoboard/detail";
     }
 
 

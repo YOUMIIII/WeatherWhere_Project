@@ -23,16 +23,14 @@
     <div id="boardetailmain">
         <div id="boarddetailbtn">
             <!--            todo(dayi) : 즐겨찾기 추가 버튼 동작하도록 수정 필요-->
-            <button id="addfavorite" th:onclick="addfavorite">즐겨찾기 추가</button>
-            <!--            <button type="submit" id="addfavorite" >즐겨찾기 추가</button>-->
-            <!--            <input type="submit" id="addfavorite" value="즐겨찾기 추가">-->
-<!--            <input type="submit" id="boarddetailmain" name="boarddetailmain"  value="즐겨찾기 추가">-->
+<!--            <button type="submit" id="addfavorite" th:onclick="addfavorite">즐겨찾기 추가</button>-->
+            <input type="submit" id="addfavorite" name="boardetailmain" value="즐겨찾기 추가" th:onclick="addfavorite()">
 
-            <button th:if="${#strings.equals(member.userId, board.userId)}" th:onclick="|location.href='@{/board/paging/region(parentRegion=${board.parentRegion},childRegion=${board.childRegion})}'|">목록</button>
+            <button th:onclick="|location.href='@{/board/paging/region(parentRegion=${board.parentRegion},childRegion=${board.childRegion})}'|">목록</button>
             <!--            todo(dayi) : 수정할 때 첨부 파일이 날아가는 부분 수정필요-->
-            <button th:onclick="|location.href='@{/board/update/{id}(id=${board?.id})}'|">수정</button>
+            <button th:if="${#strings.equals(member.userId, board.userId)}" th:onclick="|location.href='@{/board/update/{id}(id=${board?.id})}'|" >수정</button>
             <!--            <button th:onclick="updateReq()">수정</button>-->
-            <button th:onclick="|location.href='@{/board/delete/{id}(id=${board?.id})}'|">삭제</button>
+            <button th:if="${#strings.equals(member.userId, board.userId)}" th:onclick="|location.href='@{/board/delete/{id}(id=${board?.id})}'|">삭제</button>
 
         </div>
         <table class="boarddetail">
@@ -165,7 +163,8 @@ console.log("번호: ", [[${board.id}]]);
 	$.ajax({
 <!--//요청방식: post, 요청주소: /mypage/favorite, 요청데이터: 글번호, 작성자, 유형, 제목, 내용, 지역, 조회수, 로그인ID-->
 		type: "post",
-		url: "/mypage/favorite",
+<!--		url: "/mypage/favorite",-->
+		url: "/board/addfavorite",
 
 <!--// "변수명" : 위 const 명,-->
 		data: {

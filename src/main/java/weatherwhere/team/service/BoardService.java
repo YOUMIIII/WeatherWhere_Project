@@ -95,6 +95,8 @@ public class BoardService {
 
 
     public void favoriateSave(BoardDTO boardDTO, String loginId) throws IOException {
+        System.out.println("Controller에서 넘어온 boardDTO = " + boardDTO);
+        System.out.println("Controller에서 넘어온 loginId = " + loginId);
         BoardEntity boardEntity = BoardEntity.toSaveEntity(boardDTO);
         Long savedId = boardRepository.save(boardEntity).getId(); //이거 아마 글번호?
         BoardEntity favoBoard = boardRepository.findById(savedId).get();
