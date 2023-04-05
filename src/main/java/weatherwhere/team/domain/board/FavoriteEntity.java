@@ -19,34 +19,7 @@ public class FavoriteEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY) //auto increment
     private Long id;
 
-
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "userId")
     private String memberId;
-
-//    @Column
-//    private String postdate;
-
-//    @Column
-//    private String region;
-
-//    @Column
-//    private String postType;
-
-//    @Column
-//    private String title;
-
-//    @Column
-//    private String contents;
-
-//    @Column
-//    private String parentRegion;
-
-//    @Column
-//    private String childRegion;
-
-//    @Column
-//    private LocalDateTime dateTime;
 
     /*
       @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
