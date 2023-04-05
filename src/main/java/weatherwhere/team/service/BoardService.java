@@ -1,6 +1,7 @@
 package weatherwhere.team.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +27,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class BoardService {
     private final BoardRepository boardRepository;
     private final BoardFileRepository boardFileRepository;
@@ -198,16 +200,14 @@ public class BoardService {
 
     @Transactional
     public Page<BoardDTO> searchRegionAndPaging(String parentRegion,String childRegion,Pageable pageable){
-
+        int page = pageable.getPageNumber() - 1;
+        int pageLimit = 5;
         // 지역1, 지역2, Pageable 로 DB 에서 조건 검색
-        List<BoardEntity> boardEntityList = boardRepository.findAllBoardEntityByParentRegionAndChildRegion(parentRegion, childRegion,pageable);
+        Page<BoardEntity> boardEntityList = boardRepository.findAllBoardEntityByParentRegionAndChildRegion(parentRegion, childRegion,PageRequest.of(page,pageLimit,Sort.by(Sort.Direction.DESC,"id")));
         //DTO 에 담기
-        List<BoardDTO> dtoList = boardEntityList.stream()
-                .map(boardEntity -> BoardDTO.toBoardDTO(boardEntity))
-                .collect(Collectors.toList());
-        
+        Page<BoardDTO> dtoList = boardEntityList.map(boardEntity -> BoardDTO.toBoardDTO(boardEntity));
         //Page<BoardDTO> 로 반환
-        return new PageImpl<>(dtoList);
+        return dtoList;
         //class PageImpl<T> extends Object implements Page<T>
         //생성자 : PageImpl(List<T> content)
     }

@@ -83,13 +83,13 @@
               <div id="writeboard">
                   <button th:onclick="|saveReq()|">새글작성</button>
               </div>
-              <div id="paging">
+              <div id="paging" th:if="${!boardList.isEmpty()}" >
                   <!-- 첫번째 페이지로 이동 -->
                   <!-- /board/paging?page=1 -->
-                  <a th:href="@{/board/paging(page=1)}">&lt;&lt;</a>
+                  <a th:href="@{/board/paging/region(parentRegion=${parentRegion},childRegion=${childRegion},page=1)}">&lt;&lt;</a>
                   <!-- 이전 링크 활성화 비활성화 -->
                   <!-- boardList.getNumber() 사용자:2페이지 getNumber()=1 -->
-                  <a th:href="${boardList.first} ? '#' : @{/board/paging(page=${boardList.number})}">&lt;</a>
+                  <a th:href="${boardList.first} ? '#' : @{/board/paging/region(parentRegion=${parentRegion},childRegion=${childRegion},page=${boardList.number})}">&lt;</a>
 
                   <!-- 페이지 번호 링크(현재 페이지는 숫자만)
                           for(int page=startPage; page<=endPage; page++)-->
@@ -98,15 +98,18 @@
                       <span th:if="${page == boardList.number + 1}" th:text="${page}"></span>
                                   <!-- 현재페이지 번호가 아닌 다른 페이지번호에는 링크를 보여줌 -->
                       <span th:unless="${page == boardList.number + 1}">
-                          <a th:href="@{/board/paging(page=${page})}" th:text="${page}"></a>
+                          <a th:href="@{/board/paging/region(parentRegion=${parentRegion},childRegion=${childRegion},page=${page})}" th:text="${page}"></a>
                       </span>
                   </span>
 
                   <!-- 다음 링크 활성화 비활성화
                       사용자: 2페이지, getNumber: 1, 3페이지-->
-                  <a th:href="${boardList.last} ? '#' : @{/board/paging(page=${boardList.number + 2})}">&gt;</a>
+                  <a th:href="${boardList.last} ? '#' : @{/board/paging/region(parentRegion=${parentRegion},childRegion=${childRegion},page=${boardList.number + 2})}">&gt;</a>
                   <!-- 마지막 페이지로 이동 -->
-                  <a th:href="@{/board/paging(page=${boardList.totalPages})}">&gt;&gt;</a>
+                  <a th:href="@{/board/paging/region(parentRegion=${parentRegion},childRegion=${childRegion},page=${boardList.totalPages})}">&gt;&gt;</a>
+              </div>
+              <div id="nonePaging" th:unless="${!boardList.isEmpty()}" style="text-align:center;">
+                  아직 등록된 글이 없습니다 🤔
               </div>
           </div>
       </div>

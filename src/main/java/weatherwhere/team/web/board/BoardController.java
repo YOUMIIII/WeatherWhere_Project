@@ -1,6 +1,7 @@
 package weatherwhere.team.web.board;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import weatherwhere.team.domain.member.Member;
 import weatherwhere.team.repository.board.BoardDTO;
+import weatherwhere.team.repository.board.BoardRepository;
 import weatherwhere.team.repository.board.CommentDTO;
 import weatherwhere.team.service.BoardService;
 import weatherwhere.team.service.CommentService;
@@ -32,6 +34,7 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/board")
+@Slf4j
 public class BoardController {
     private final BoardService boardService;
     private final CommentService commentService;
@@ -222,22 +225,34 @@ public class BoardController {
 
     @GetMapping("/paging/region")
     public String pagingByRegion(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
-                                 @PageableDefault(size=5,sort = {"id"},direction = Sort.Direction.DESC) Pageable pageable,
+                                 @PageableDefault(page = 1) Pageable pageable,
                                  @RequestParam String parentRegion,
                                  @RequestParam String childRegion,
                                  Model model){
-        // @PageableDefault : 컨트롤러에 Pageable 의 기본값을 설정할 때 사용
-        // value 0 , page 0 , size 10 , sort (정렬 기준이 되는 column) 없음 , direction (정렬 방식) ASC
+
         Page<BoardDTO> boardList = boardService.searchRegionAndPaging(parentRegion,childRegion,pageable);
         int blockLimit = 5;
-        int startPage = (pageable.getPageNumber()/blockLimit) * blockLimit + 1;
-        int endPage = Math.max(startPage + blockLimit - 1,boardList.getTotalPages());
+        int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
+        int endPage = ((startPage + blockLimit - 1) < boardList.getTotalPages()) ? startPage + blockLimit - 1 : boardList.getTotalPages();
 
-        //boardList.getNumber() -> 현재 슬라이스의 번호를 구함
+        if(!boardList.isEmpty()){
+            log.info("getTotalPages {}",boardList.getTotalPages());
+            log.info("getTotalElements {}",boardList.getTotalElements());
+            log.info("getNumber {}",boardList.getNumber());
+            log.info("getNumberOfElements {}", boardList.getNumberOfElements());
+            log.info("hasPrevious {}", boardList.hasPrevious());
+            log.info("hasNext {}", boardList.hasNext());
+            log.info("isFirst : {}",boardList.isFirst());
+            log.info("isLast : {}",boardList.isLast());
+        }
+
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
-        model.addAttribute("boardList", boardList);
+
         model.addAttribute("member", loginMember);
+        model.addAttribute("parentRegion",parentRegion);
+        model.addAttribute("childRegion", childRegion);
+        model.addAttribute("boardList", boardList);
         return "main/infoboard";
     }
 

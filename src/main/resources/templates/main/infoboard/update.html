@@ -47,7 +47,7 @@
             </div>
             <div class="button" id="update">
                 <input type="submit" name="update" value="수정">
-                <button type="button" th:onclick="|location.href='@{/board/paging/region(parentRegion=${board.parentRegion},childRegion=${board.childRegion})}'|">목록보기</button>
+                <button type="button" th:onclick="|location.href='@{/board/paging/region(parentRegion=${board.parentRegion},childRegion=${board.childRegion},page=${page})}'|">목록보기</button>
             </div>
         </form>
     </div>

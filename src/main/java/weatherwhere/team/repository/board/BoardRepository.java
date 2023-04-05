@@ -17,9 +17,10 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Long> {
     void updateHits(@Param("id") Long id);
 
     @Query(
-            value="SELECT b FROM BoardEntity b WHERE b.parentRegion =:parentRegion and b.childRegion = :childRegion"
+            value="SELECT b FROM BoardEntity b WHERE b.parentRegion =:parentRegion and b.childRegion = :childRegion",
+            countQuery = "select count(b) FROM BoardEntity b WHERE b.parentRegion =:parentRegion and b.childRegion = :childRegion"
     )
-    List<BoardEntity> findAllBoardEntityByParentRegionAndChildRegion(
+    Page<BoardEntity> findAllBoardEntityByParentRegionAndChildRegion(
             @Param("parentRegion") String parentRegion,
             @Param("childRegion") String childRegion, Pageable pageable);
 }
