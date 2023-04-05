@@ -9,18 +9,17 @@ import org.springframework.web.multipart.MultipartFile;
 import weatherwhere.team.domain.board.BoardEntity;
 import weatherwhere.team.domain.board.BoardFileEntity;
 import weatherwhere.team.domain.board.FavoriteEntity;
+import weatherwhere.team.domain.member.Member;
 import weatherwhere.team.repository.board.BoardDTO;
 import weatherwhere.team.repository.board.BoardFileRepository;
 import weatherwhere.team.repository.board.BoardRepository;
 import weatherwhere.team.repository.board.FavoriteRepository;
 
-import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 // DTO -> Entity (Entity Class)
 // Entity -> DTO (DTO Class)
@@ -97,11 +96,12 @@ public class BoardService {
 
 
     public void favoriateSave(BoardDTO boardDTO, String loginId) throws IOException {
-        System.out.println("Controller에서 넘어온 boardDTO = " + boardDTO);
-        System.out.println("Controller에서 넘어온 loginId = " + loginId);
+        System.out.println("\uD83D\uDC99Controller에서 넘어온 boardDTO = " + boardDTO);
+        System.out.println("\uD83D\uDC99Controller에서 넘어온 loginId = " + loginId);
         BoardEntity boardEntity = BoardEntity.toSaveEntity(boardDTO);
         Long savedId = boardRepository.save(boardEntity).getId(); //이거 아마 글번호?
         BoardEntity favoBoard = boardRepository.findById(savedId).get();
+//        Member memberId = //컨드롤러에서 멤버 넘겨받기
 
         FavoriteEntity favoriteEntity = FavoriteEntity.save(favoBoard, boardDTO, loginId);
         //fileEntity도 거쳐야할까??

@@ -23,14 +23,20 @@
     <div id="boardetailmain">
         <div id="boarddetailbtn">
             <!--            todo(dayi) : 즐겨찾기 추가 버튼 동작하도록 수정 필요-->
-<!--            <button type="submit" id="addfavorite" th:onclick="addfavorite">즐겨찾기 추가</button>-->
+            <!--            <button type="submit" id="addfavorite" th:onclick="addfavorite">즐겨찾기 추가</button>-->
             <input type="submit" id="addfavorite" name="boardetailmain" value="즐겨찾기 추가" th:onclick="addfavorite()">
 
-            <button th:onclick="|location.href='@{/board/paging/region(parentRegion=${board.parentRegion},childRegion=${board.childRegion},page=${page})}'|">목록</button>
+            <button th:onclick="|location.href='@{/board/paging/region(parentRegion=${board.parentRegion},childRegion=${board.childRegion},page=${page})}'|">
+                목록
+            </button>
             <!--            todo(dayi) : 수정할 때 첨부 파일이 날아가는 부분 수정필요-->
-            <button th:if="${#strings.equals(member.userId, board.userId)}" th:onclick="|location.href='@{/board/update/{id}(id=${board?.id})}'|" >수정</button>
+            <button th:if="${#strings.equals(member.userId, board.userId)}"
+                    th:onclick="|location.href='@{/board/update/{id}(id=${board?.id})}'|">수정
+            </button>
             <!--            <button th:onclick="updateReq()">수정</button>-->
-            <button th:if="${#strings.equals(member.userId, board.userId)}" th:onclick="|location.href='@{/board/delete/{id}(id=${board?.id})}'|">삭제</button>
+            <button th:if="${#strings.equals(member.userId, board.userId)}"
+                    th:onclick="|location.href='@{/board/delete/{id}(id=${board?.id})}'|">삭제
+            </button>
 
         </div>
         <table class="boarddetail">
@@ -57,12 +63,20 @@
                 <th>image</th>
                 <td colspan="9"><img th:src="@{|/img/FileAttached/${board.storedFileName}|}" width="500px" alt=""></td>
             </tr>
+            <input type="hidden" id="parentRegion" name="parentRegion" th:value="${board?.parentRegion}">
+            <input type="hidden" id="childRegion" name="childRegion" th:value="${board?.childRegion}">
+            <!--        <input type="hidden" id="region" name="region" th:value="@{region}(region = ${board?.parentRegion} + ${board?.childRegion})">-->
+            <!--        <input type="hidden" id="region" name="region" th:value="${board?.parentRegion} + ${board?.childRegion}">-->
+            <input type="hidden" id="postdate" name="postdate" th:value="${board?.postdateTime}">
+            <input type="hidden" id="userId" name="userId" th:value="${member?.userId}">
         </table>
+
+
     </div>
     <!-- 댓글 작성 부분 -->
     <div id="comment-write">
         <input type="hidden" id="writer" th:value="${member?.userId}">
-<!--        <input type="text" id="writer" th:value="${member?.userId}">-->
+        <!--        <input type="text" id="writer" th:value="${member?.userId}">-->
         <input type="text" id="commentContents" placeholder="내용">
         <button id="comment-write-btn" onclick="commentWrite()">댓글작성</button>
     </div>
@@ -79,7 +93,7 @@
             <tr th:each="comment: ${commentList}">
                 <!--                댓글 -->
                 <td th:text="${comment?.id}"></td>
-<!--                <td th:text="${member?.userId}"></td>-->
+                <!--                <td th:text="${member?.userId}"></td>-->
                 <td th:value="${comment?.userId}"></td>
                 <td th:text="${comment?.commentContents}"></td>
                 <td th:text="${comment?.commentPostdate}"></td>
@@ -93,6 +107,7 @@
         const id = [[${board.id}]];
         location.href = "/board/update/" + id;
     }
+
 </script>
 <!--todo : 즐겨찾기 DB저장 목록에 지역을 추가해야함. 안그러면 작성글에서 지역이 지워짐.-->
 <script th:inline="javascript">
@@ -148,43 +163,54 @@ console.log("요청실패", err);
 }
 
 
+</script>
+
+
+<!--	const region = [[${board.parentRegion}+${board.childRegion}]];-->
+<!--  const postType = [[${board.postType}]];-->
+<!--//요청방식: post, 요청주소: /mypage/favorite, 요청데이터: 글번호, 작성자, 유형, 제목, 내용, 지역, 조회수, 로그인ID-->
+<!--// "변수명" : 위 const 명,-->
+<!--			"parentRegion" : parentRegion,-->
+<!--			"childRegion" : childRegion,-->
+
+<script th:inline="javascript">
 const addfavorite = () => {
 
-<!--//글번호, 작성자, 유형, 제목, 내용, 지역, 조회수, 로그인ID-->
-<!--지역을 추가해야함 안그러면 업데이트 되버려서 글에서 지역이 지워짐.-->
+  const boardId = [[${board.id}]];
+<!--  const writer = [[${board.userId}]];-->
+<!--  const postType = [[${board.postType}]];-->
+<!--  const title = [[${board.title}]];-->
+<!--  const contents = [[${board.contents}]];-->
+<!--  const region = [[${board.parentRegion}+${board.childRegion}]];-->
+<!--  const parentRegion = [[${board.parentRegion}]];-->
+<!--  const childRegion = [[${board.childRegion}]];-->
+<!--  const region = ' '.concat([[${board.parentRegion}]], [[${board.childRegion}]]);-->
 
-	const boardId = [[${board.id}]];
-	const userId = [[${board.userId}]];
-	const postType = [[${board.postType}]];
-	const title = [[${board.title}]];
-	const contents = [[${board.contents}]];
-	const hits = [[${board.hits}]];
-	const loginId = [[${member.userId}]];
+<!--  const postdate = [[${board.postdateTime}]];-->
+  const memberId = [[${member.userId}]];
 
-	$.ajax({
-<!--//요청방식: post, 요청주소: /mypage/favorite, 요청데이터: 글번호, 작성자, 유형, 제목, 내용, 지역, 조회수, 로그인ID-->
-		type: "post",
-<!--		url: "/mypage/favorite",-->
-		url: "/board/addfavorite",
 
-<!--// "변수명" : 위 const 명,-->
-		data: {
-<!--		둘 다 안됨.-->
-<!--			"boardId" : boardId,-->
-<!--			"board.id" : boardId,-->
-			"id" : boardId,
-			"userId" : userId,
-			"postType" : postType,
-			"title" : title,
-			"contents" : contents,
-			"hits" : hits,
-			"member.userId" : loginId
-		},
-		success: function (res) {
-		console.log("요청성공", res);
-		}
-	});
+  $.ajax({
+     type: "post",
+<!--     dataType: "text"-->
+     url: "/board/addfavorite",
+     data: {
+        'id' : boardId,
+<!--        'userId' : writer,-->
+<!--        'postType' : postType,-->
+<!--        'title' : title,-->
+<!--        'contents' : contents,-->
+<!--        'parentRegion' : parentRegion,-->
+<!--        'childRegion' : childRegion.-->
+<!--        'region' : region,-->
+        'member.userId' : memberId
+     },
+     success: function (res) {
+     console.log("요청성공", res);
+     }
+  });
 }
+
 
 </script>
 

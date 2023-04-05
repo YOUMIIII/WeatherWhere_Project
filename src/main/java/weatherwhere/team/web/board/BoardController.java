@@ -1,7 +1,6 @@
 package weatherwhere.team.web.board;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import weatherwhere.team.domain.member.Member;
 import weatherwhere.team.repository.board.BoardDTO;
-import weatherwhere.team.repository.board.BoardRepository;
 import weatherwhere.team.repository.board.CommentDTO;
 import weatherwhere.team.service.BoardService;
 import weatherwhere.team.service.CommentService;
@@ -34,7 +32,6 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/board")
-@Slf4j
 public class BoardController {
     private final BoardService boardService;
     private final CommentService commentService;
@@ -85,13 +82,19 @@ public class BoardController {
                             BoardDTO boardDTO)
             throws IOException {
         model.addAttribute("member", loginMember); // 사이드바
-//        System.out.println("boardDTO 에 저장된 userId : " + boardDTO.getUserId()); //UserId 확인용
+        Long findId = boardDTO.getId();
+        System.out.println("findId = " + findId);
 
+        BoardDTO findBoardDTO = boardService.findById(findId);
+
+        System.out.println("\uD83E\uDDE1boardDTO = " + findBoardDTO);
+        System.out.println("\uD83E\uDDE1boardDTO 에 저장된 writer : " + findBoardDTO.getUserId()); //UserId 확인용
+        System.out.println("loginMember = " + loginMember.getUserId());
         String loginId = loginMember.getUserId();
-        boardService.favoriateSave(boardDTO, loginId);
+        boardService.favoriateSave(findBoardDTO, loginId);
         System.out.println("\uD83E\uDDE1loginId = " + loginId);
-        System.out.println("\uD83E\uDDE1boardDTO = " + boardDTO);
-        System.out.println("\uD83E\uDDE1글번호 = " + boardDTO.getId());
+        System.out.println("\uD83E\uDDE1글번호 = " + findBoardDTO.getId());
+        System.out.println("\uD83E\uDDE1findBoardDTO = " + findBoardDTO);
 //        if (boardDTO.getBoardFile().isEmpty()) { //첨부파일 유무 확인
 //            boardDTO.setFileAttached(0);
 //        } else {
@@ -125,14 +128,14 @@ public class BoardController {
                            @PageableDefault(page = 1) Pageable pageable) {
         model.addAttribute("member", loginMember); // 사이드바 정보 입력부분
         System.out.println("\uD83E\uDDE1 로그인 ID 확인 글 작성자인지 로그인한 사람껀지 확인 = " + loginMember.getUserId());
-        System.out.println("loginMember = " + loginMember);
         /*
             해당 게시글의 조회수를 하나 올리고
             게시글 데이터를 가져와서 detail.html 에 출력
          */
         boardService.updateHits(id);
         BoardDTO boardDTO = boardService.findById(id);
-        System.out.println("\uD83D\uDC9A 반환된 boardDTO = " + boardDTO);
+        System.out.println("\uD83D\uDC9A 상세보기 페이지로 반환된 boardDTO = " + boardDTO);
+
         /* 댓글 목록 가져오기 */
         List<CommentDTO> commentDTOList = commentService.findAll(id);
         System.out.println("\uD83E\uDDE1 commentDTOList = " + commentDTOList);
@@ -229,30 +232,18 @@ public class BoardController {
                                  @RequestParam String parentRegion,
                                  @RequestParam String childRegion,
                                  Model model){
-
+        // @PageableDefault : 컨트롤러에 Pageable 의 기본값을 설정할 때 사용
+        // value 0 , page 0 , size 10 , sort (정렬 기준이 되는 column) 없음 , direction (정렬 방식) ASC
         Page<BoardDTO> boardList = boardService.searchRegionAndPaging(parentRegion,childRegion,pageable);
         int blockLimit = 5;
-        int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
-        int endPage = ((startPage + blockLimit - 1) < boardList.getTotalPages()) ? startPage + blockLimit - 1 : boardList.getTotalPages();
+        int startPage = (pageable.getPageNumber()/blockLimit) * blockLimit + 1;
+        int endPage = Math.max(startPage + blockLimit - 1,boardList.getTotalPages());
 
-        if(!boardList.isEmpty()){
-            log.info("getTotalPages {}",boardList.getTotalPages());
-            log.info("getTotalElements {}",boardList.getTotalElements());
-            log.info("getNumber {}",boardList.getNumber());
-            log.info("getNumberOfElements {}", boardList.getNumberOfElements());
-            log.info("hasPrevious {}", boardList.hasPrevious());
-            log.info("hasNext {}", boardList.hasNext());
-            log.info("isFirst : {}",boardList.isFirst());
-            log.info("isLast : {}",boardList.isLast());
-        }
-
+        //boardList.getNumber() -> 현재 슬라이스의 번호를 구함
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
-
-        model.addAttribute("member", loginMember);
-        model.addAttribute("parentRegion",parentRegion);
-        model.addAttribute("childRegion", childRegion);
         model.addAttribute("boardList", boardList);
+        model.addAttribute("member", loginMember);
         return "main/infoboard";
     }
 

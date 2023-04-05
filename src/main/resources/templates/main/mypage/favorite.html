@@ -19,17 +19,17 @@
           즐겨찾기 목록에 추가하고 싶다면 지역별정보 게시판에서 마음에 드는 게시글에 즐겨찾기 등록 버튼을 클릭하세요!</div>
   </div>
     <div id="mainLayout">
-        <div id="option">
-            <div id="optionselect">
-                <select >
-                    <option value="">시/도 선택</option>
-                    <option>서울특별시</option>
-                </select>
-                <select id="userLocation2">
-                    <option value="">시/군/구 선택</option>
-                    <option>세종특별자치시</option>
-                </select>
-            </div>
+<!--        <div id="option">-->
+<!--            <div id="optionselect">-->
+<!--                <select >-->
+<!--                    <option value="">시/도 선택</option>-->
+<!--                    <option>서울특별시</option>-->
+<!--                </select>-->
+<!--                <select id="userLocation2">-->
+<!--                    <option value="">시/군/구 선택</option>-->
+<!--                    <option>세종특별자치시</option>-->
+<!--                </select>-->
+<!--            </div>-->
             <div>
                 <select id="searchoption">
                     <option value="">옵션선택</option>
@@ -49,27 +49,25 @@
                 <tr>
                     <th>번호</th>
                     <th>유형</th>
-                    <th class="boardtitle">제목</th>
+<!--                    <th class="boardTitle">제목</th>-->
+                    <th>제목</th>
                     <th>작성자</th>
                     <th>작성일</th>
-                    <th>조회수</th>
+                    <th>지역</th>
                 </tr>
 <!--                 마이페이지에서 연결되는 부분 표시-->
 <!--                <button th:onclick="|location.href='@{/mypage/favorite}'|">👍 즐겨찾기 게시글</button>-->
                         <!--board -> bookmark-->
 
                 <tr th:each="bookmark: ${boardList}">
-                    <td th:text="${bookmark.id}"></td>
-                    <td th:text="${bookmark.postType}"></td>
-                    <td class="boardtitle" id="boardtitle"><a th:href="@{|/mypage/favorite/${bookmark.id}|(page=${boardList.number + 1})}" th:text="${bookmark.boardTitle}"></a></td>
-                    <td th:text="${bookmark.boardWriter}"></td>
-                    <td th:text="*{#temporals.format(bookmark.boardCreatedTime, 'yy/MM/dd')}"></td>
-                    <td th:text="${bookmark.boardHits}"></td>
-                    <!--<td th:text="${board.id}">106</td>
-                    <td><a th:href="@{|/board/${board.id}|(page=${boardList.number + 1})}" th:text="${board.boardTitle}"></a></td>
-                    <td th:text="${board.boardWriter}"></td>
-                    <td th:text="*{#temporals.format(board.boardCreatedTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                    <td th:text="${board.boardHits}"></td>-->
+                    <td th:text="${bookmark?.id}"></td>
+                    <td th:text="${bookmark?.postType}"></td>
+<!--                    <td class="boardTitle" id="boardTitle"><a th:href="@{|/mypage/favorite/${bookmark.id}|(page=${boardList.number + 1})}" th:text="${bookmark.boardTitle}"></a></td>-->
+<!--                    <td><a th:href="@{|/mypage/favorite/${bookmark?.id}|(page=${boardList?.number + 1})}" th:text="${bookmark?.title}"></a></td>-->
+                    <td><a th:href="@{|/board/${bookmark?.id}|(page=${boardList.number + 1})}" th:text="${bookmark?.title}"></a></td>
+                    <td th:text="${bookmark?.userId}"></td>
+                    <td th:text="*{#temporals.format(bookmark?.postdateTime, 'yy/MM/dd')}"></td>
+                    <td th:text="${bookmark?.parentRegion} + ${bookmark?.childRegion}"></td>
                 </tr>
             </table>
 <!--            @{/board/paging~}에서 /board/를 /mypage/favorite/로-->
@@ -79,13 +77,13 @@
                 <a th:href="@{/mypage/favorite/paging(page=1)}">&lt;&lt;</a>
                 <!-- 이전 링크 활성화 비활성화 -->
                 <!-- boardList.getNumber() 사용자:2페이지 getNumber()=1 -->
-                <a th:href="${boardList.first} ? '#' : @{/mypage/favorite/paging(page=${boardList.number})}">&lt;</a>
+                <a th:href="${boardList?.first} ? '#' : @{/mypage/favorite/paging(page=${boardList?.number})}">&lt;</a>
 
                 <!-- 페이지 번호 링크(현재 페이지는 숫자만)
                         for(int page=startPage; page<=endPage; page++)-->
                 <span th:each="page: ${#numbers.sequence(startPage, endPage)}">
             <!-- 현재페이지는 링크 없이 숫자만 -->
-                      <span th:if="${page == boardList.number + 1}" th:text="${page}"></span>
+                      <span th:if="${page == boardList?.number + 1}" th:text="${page}"></span>
                     <!-- 현재페이지 번호가 아닌 다른 페이지번호에는 링크를 보여줌 -->
                       <span th:unless="${page == boardList.number + 1}">
                           <a th:href="@{/mypage/favorite/paging(page=${page})}" th:text="${page}"></a>

@@ -1,47 +1,54 @@
 package weatherwhere.team.domain.board;
 
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
+import weatherwhere.team.domain.member.Member;
 import weatherwhere.team.repository.board.BoardDTO;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDateTime;
 
 
 @Entity
 @Getter
 @Setter
 @Table(name = "favorite")
-public class FavoriteEntity extends TimeEntity {
+public class FavoriteEntity {
     @Id //pk 컬럼 지정, 필수
     @GeneratedValue(strategy = GenerationType.IDENTITY) //auto increment
     private Long id;
 
-    @Column
-    private String loginId;
 
-    /*  @Column
-      private String userId;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "userId")
+    private String memberId;
 
-      @Column
-      private String postType;
+//    @Column
+//    private String postdate;
 
-      @Column
-      private String title;
+//    @Column
+//    private String region;
 
-      @Column(length = 500)
-      private String contents;
+//    @Column
+//    private String postType;
 
-      @Column
-      private String region;
+//    @Column
+//    private String title;
 
-      @Column
-      private int hits;
+//    @Column
+//    private String contents;
 
+//    @Column
+//    private String parentRegion;
+
+//    @Column
+//    private String childRegion;
+
+//    @Column
+//    private LocalDateTime dateTime;
+
+    /*
       @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
       private List<BoardFileEntity> boardFileEntityList = new ArrayList<>();
   */
@@ -51,17 +58,18 @@ public class FavoriteEntity extends TimeEntity {
 
     //DTO -> Entity
 
-    public static FavoriteEntity save(BoardEntity boardEntity, BoardDTO boardDTO, String loginId) { //즐겨찾기 저장할때
+    public static FavoriteEntity save(BoardEntity boardEntity, BoardDTO boardDTO, String memberId) { //즐겨찾기 저장할때
         FavoriteEntity favoriteEntity = new FavoriteEntity();
 
-        favoriteEntity.setId(boardDTO.getId());
-        favoriteEntity.setLoginId(loginId); //로그인 ID
+        favoriteEntity.setId(boardDTO.getId());//글번호
+        favoriteEntity.setMemberId(memberId); //로그인 ID
+//        favoriteEntity.setPostdate();
 //        favoriteEntity.setUserId(boardDTO.getUserId());
 //        favoriteEntity.setPostType(boardDTO.getPostType());
 //        favoriteEntity.setTitle(boardDTO.getTitle());
 //        favoriteEntity.setContents(boardDTO.getContents());
 //        favoriteEntity.setHits(boardDTO.getHits());
-//        favoriteEntity.setRegion(boardDTO.getRegion());
+//        favoriteEntity.setRegion();
         favoriteEntity.setBoardEntity(boardEntity);
 
         return favoriteEntity;

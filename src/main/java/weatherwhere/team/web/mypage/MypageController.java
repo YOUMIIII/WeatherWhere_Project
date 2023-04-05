@@ -316,7 +316,8 @@ public class MypageController {
 
     }
 
-    @GetMapping("/favorite")
+    @GetMapping("/favorite/paging") //즐겨찾기 페이지에 들어갈 때
+//    @GetMapping("/favorite") //즐겨찾기 페이지에 들어갈 때
     public String myFavorite(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, @PageableDefault(page = 1) Pageable pageable, Model model){
 //        pageable.getPageNumber();
  /*           Page<BoardDTO> boardList = boardService.paging(pageable);
