@@ -12,6 +12,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import weatherwhere.team.domain.member.Member;
 import weatherwhere.team.repository.board.BoardDTO;
 import weatherwhere.team.repository.board.CommentDTO;
+import weatherwhere.team.repository.board.FavoriteDTO;
+import weatherwhere.team.repository.board.FavoriteRepository;
 import weatherwhere.team.service.BoardService;
 import weatherwhere.team.service.CommentService;
 import weatherwhere.team.web.SessionConst;
@@ -35,6 +37,9 @@ import java.util.List;
 public class BoardController {
     private final BoardService boardService;
     private final CommentService commentService;
+
+
+    private final FavoriteRepository favoriteRepository;
 
     @GetMapping("/save") // 새글작성 버튼 클릭 시 동작하는 부분
     public String saveForm(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
@@ -76,25 +81,30 @@ public class BoardController {
     }
 
     //즐겨찾기
-    @PostMapping("/addfavorite")
+    @PostMapping("/addfavorite") //즐겨찾기 추가 버튼 클릭 시 동작
     public String addfavorite(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model,
                             @ModelAttribute("board")
                             BoardDTO boardDTO)
             throws IOException {
         model.addAttribute("member", loginMember); // 사이드바
-        Long findId = boardDTO.getId();
+
+
+        Long findId = boardDTO.getId(); // 게시글 id 찾기
         System.out.println("findId = " + findId);
 
-        BoardDTO findBoardDTO = boardService.findById(findId);
+        BoardDTO findBoardDTO = boardService.findById(findId); //게시글번호로 글 정보 찾기
 
-        System.out.println("\uD83E\uDDE1boardDTO = " + findBoardDTO);
-        System.out.println("\uD83E\uDDE1boardDTO 에 저장된 writer : " + findBoardDTO.getUserId()); //UserId 확인용
-        System.out.println("loginMember = " + loginMember.getUserId());
+        System.out.println("favoriteRepository = " + favoriteRepository.findAll());
+
+
+        System.out.println("\uD83E\uDDE1게시글 정보 boardDTO = " + findBoardDTO); // 게시글 정보
+        System.out.println("\uD83E\uDDE1boardDTO 에 저장된 writer : " + findBoardDTO.getUserId()); //작성자 확인용
+        System.out.println("로그인 ID loginMember = " + loginMember.getUserId()); // 로그인 ID 확인용
         String loginId = loginMember.getUserId();
-        boardService.favoriateSave(findBoardDTO, loginId);
-        System.out.println("\uD83E\uDDE1loginId = " + loginId);
+        boardService.favoriateSave(findBoardDTO, loginId); //게시글 정보와, 로그인 ID 넘기기
+
         System.out.println("\uD83E\uDDE1글번호 = " + findBoardDTO.getId());
-        System.out.println("\uD83E\uDDE1findBoardDTO = " + findBoardDTO);
+//
 //        if (boardDTO.getBoardFile().isEmpty()) { //첨부파일 유무 확인
 //            boardDTO.setFileAttached(0);
 //        } else {
@@ -142,6 +152,15 @@ public class BoardController {
         model.addAttribute("commentList", commentDTOList); //댓글 목록
         model.addAttribute("board", boardDTO); //게시글 정보
         model.addAttribute("page", pageable.getPageNumber());
+
+//        FavoriteDTO findFavoriteDTO = boardService.favoriteFindById(id);
+//        Long boardId = findFavoriteDTO.getBoardId();
+//
+//        BoardDTO boardDTO = boardService.findById(boardId);
+//        System.out.println("\uD83D\uDC9A 상세보기 페이지로 반환된 boardDTO = " + boardDTO);
+
+
+
         return "main/infoboard/detail";
     }
 
@@ -204,7 +223,8 @@ public class BoardController {
 
     // /board/paging?page=1
     @GetMapping("/paging")
-    public String paging(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, @PageableDefault(page = 1) Pageable pageable, Model model) {
+    public String paging(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
+                         @PageableDefault(page = 1) Pageable pageable, Model model) {
 //        pageable.getPageNumber();
         Page<BoardDTO> boardList = boardService.paging(pageable);
         int blockLimit = 5; // 글 목록 아래의 페이지 넘기는 숫자 개수 ex) 1 2 3 원래 설정은 3개 설정

@@ -10,10 +10,7 @@ import weatherwhere.team.domain.board.BoardEntity;
 import weatherwhere.team.domain.board.BoardFileEntity;
 import weatherwhere.team.domain.board.FavoriteEntity;
 import weatherwhere.team.domain.member.Member;
-import weatherwhere.team.repository.board.BoardDTO;
-import weatherwhere.team.repository.board.BoardFileRepository;
-import weatherwhere.team.repository.board.BoardRepository;
-import weatherwhere.team.repository.board.FavoriteRepository;
+import weatherwhere.team.repository.board.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -42,7 +39,7 @@ public class BoardService {
             // 첨부 파일 없음.
             BoardEntity boardEntity = BoardEntity.toSaveEntity(boardDTO);
             System.out.println("boardEntity = " + boardEntity);
-            Long savedId=boardRepository.save(boardEntity).getId();
+            Long savedId = boardRepository.save(boardEntity).getId();
             return savedId;
         } else {
             // 첨부 파일 있음.
@@ -84,6 +81,7 @@ public class BoardService {
 
     }
 
+    //DB에 저장된 게시글 목록 불러오기
     @Transactional
     public List<BoardDTO> findAll() {
         List<BoardEntity> boardEntityList = boardRepository.findAll();
@@ -94,31 +92,62 @@ public class BoardService {
         return boardDTOList;
     }
 
-
-    public void favoriateSave(BoardDTO boardDTO, String loginId) throws IOException {
-        System.out.println("\uD83D\uDC99Controller에서 넘어온 boardDTO = " + boardDTO);
-        System.out.println("\uD83D\uDC99Controller에서 넘어온 loginId = " + loginId);
-        BoardEntity boardEntity = BoardEntity.toSaveEntity(boardDTO);
-        Long savedId = boardRepository.save(boardEntity).getId(); //이거 아마 글번호?
-        BoardEntity favoBoard = boardRepository.findById(savedId).get();
-//        Member memberId = //컨드롤러에서 멤버 넘겨받기
-
-        FavoriteEntity favoriteEntity = FavoriteEntity.save(favoBoard, boardDTO, loginId);
-        //fileEntity도 거쳐야할까??
-        favoriteRepository.save(favoriteEntity);
+    //DB에 저장된 즐겨찾기 목록 불러오기
+    @Transactional
+    public List<FavoriteDTO> findAll(String memberId) {
+        List<FavoriteEntity> favoriteEntityList = favoriteRepository.findAll();
+        List<FavoriteDTO>favoriteDTOList = new ArrayList<>();
+        for (FavoriteEntity favoriteEntity : favoriteEntityList) {
+            favoriteDTOList.add(FavoriteDTO.toFavoriteDTOList(favoriteEntity));
+//            favoriteDTOList.add(BoardDTO.toBoardDTO(boardEntity));
+        }
+        return favoriteDTOList;
     }
 
+//    public Long favoriteSave(FavoriteDTO favoriteDTO) throws IOException {
+//        //여기에 보드디티오를 넣어야 하는가 페이보디티오를 넣어야 하는가???
+//        FavoriteEntity favoriteEntity = FavoriteEntity.toSaveEntity(favoriteDTO, favoriteDTO.getMemberId() );
+//
+//        Long id = favoriteRepository.save(favoriteEntity).getId();
+////        Long savedId = boardRepository.save(boardEntity).getId();
+//        return id;
+//    }
+
+    //아래 메서드와 합쳐야함.
+
+    public void favoriateSave(BoardDTO boardDTO, String loginId) throws IOException {
+        System.out.println("\uD83D\uDC99Controller에서 넘어온 boardDTO = " + boardDTO); //넘어온 게시글 정보 
+        System.out.println("\uD83D\uDC99Controller에서 넘어온 loginId = " + loginId); // 넘어온 로그인 ID
 
 
+        BoardEntity boardEntity = BoardEntity.toSaveEntity(boardDTO); //게시글 정보 엔티티로 타입 변경
+//        Long savedId = boardRepository.save(boardEntity).getId(); //이거 아마 게시글번호?
+//        BoardEntity favoBoardEntity = boardRepository.findById(savedId).get();
+//        Member memberId = //컨드롤러에서 멤버 넘겨받기
+
+        //타입변경한 엔티티와 로그인 ID를 즐겨찾기 엔티티에 넣기
+        FavoriteEntity favoEntity = FavoriteEntity.toSaveEntity(boardEntity, loginId); //
+//💙
+        //fileEntity도 거쳐야할까??
+
+//        Long favoriteEntityId = favoriteEntity.getId();
+
+
+        favoriteRepository.save(favoEntity); //이 엔티티 저장하기 
+
+//        return favoEntity.getId();
+    }
+
+        //원본
     public Page<BoardDTO> favoritePaging(Pageable pageable) {
         int page = pageable.getPageNumber() - 1;
         int pageLimit = 5; // 한 페이지에 보여줄 글 갯수
         // 한페이지당 3개씩 글을 보여주고 정렬 기준은 id 기준으로 내림차순 정렬
         // page 위치에 있는 값은 0부터 시작
-        Page<BoardEntity> boardEntities =
-                boardRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
-
-
+        Page<FavoriteEntity> boardEntities =
+                favoriteRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
+//        Page<BoardEntity> boardEntities =
+//                boardRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
 
         System.out.println("boardEntities.getContent() = " + boardEntities.getContent()); // 요청 페이지에 해당하는 글
         System.out.println("boardEntities.getTotalElements() = " + boardEntities.getTotalElements()); // 전체 글갯수
@@ -129,12 +158,41 @@ public class BoardService {
         System.out.println("boardEntities.isFirst() = " + boardEntities.isFirst()); // 첫 페이지 여부
         System.out.println("boardEntities.isLast() = " + boardEntities.isLast()); // 마지막 페이지 여부
 
+
         // 목록: id, postType, userid, title, hits, postdateTime
-        Page<BoardDTO> boardDTOS = boardEntities.map(board -> BoardDTO.toBoardDTO(board));
+        Page<BoardDTO> boardDTOS = boardEntities.map(board -> BoardDTO.toBoardDTO(board.getBoardEntity()));
 //        Page<BoardDTO> boardDTOS = boardEntities.map(board -> new BoardDTO(board.getId(), board.getPostType(), board.getUserId(), board.getTitle(), board.getHits(), board.getPostdateTime()));
         return boardDTOS;
     }
-    
+
+//   public Page<FavoriteDTO> favoritePaging(Pageable pageable) {
+//        int page = pageable.getPageNumber() - 1;
+//        int pageLimit = 5; // 한 페이지에 보여줄 글 갯수
+//        // 한페이지당 3개씩 글을 보여주고 정렬 기준은 id 기준으로 내림차순 정렬
+//        // page 위치에 있는 값은 0부터 시작
+//
+//
+//        Page<FavoriteEntity> favoBoardEntities =
+//                favoriteRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
+////        Page<BoardEntity> boardEntities =
+////                boardRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
+//
+//        System.out.println("boardEntities.getContent() = " + favoBoardEntities.getContent()); // 요청 페이지에 해당하는 글
+//        System.out.println("boardEntities.getTotalElements() = " + favoBoardEntities.getTotalElements()); // 전체 글갯수
+//        System.out.println("boardEntities.getNumber() = " + favoBoardEntities.getNumber()); // DB로 요청한 페이지 번호
+//        System.out.println("boardEntities.getTotalPages() = " + favoBoardEntities.getTotalPages()); // 전체 페이지 갯수
+//        System.out.println("boardEntities.getSize() = " + favoBoardEntities.getSize()); // 한 페이지에 보여지는 글 갯수
+//        System.out.println("boardEntities.hasPrevious() = " + favoBoardEntities.hasPrevious()); // 이전 페이지 존재 여부
+//        System.out.println("boardEntities.isFirst() = " + favoBoardEntities.isFirst()); // 첫 페이지 여부
+//        System.out.println("boardEntities.isLast() = " + favoBoardEntities.isLast()); // 마지막 페이지 여부
+//
+//
+//        // 목록: id, postType, userid, title, hits, postdateTime
+//        Page<FavoriteDTO> faveboardDTOS = favoBoardEntities.map(board -> FavoriteDTO.toFavoriteDTO(favoriteRepository.getReferenceById(board.getId()), board.getId()));
+////        Page<BoardDTO> boardDTOS = boardEntities.map(board -> BoardDTO.toBoardDTO(board.getBoardEntity()));
+////        Page<BoardDTO> boardDTOS = boardEntities.map(board -> new BoardDTO(board.getId(), board.getPostType(), board.getUserId(), board.getTitle(), board.getHits(), board.getPostdateTime()));
+//        return faveboardDTOS;
+//    }
 
 
     //게시글 수 확인
@@ -161,6 +219,27 @@ public class BoardService {
         } else {
             return null;
         }
+    }
+
+    public FavoriteDTO favoriteFindById(Long id) {
+        Optional<FavoriteEntity> byId = favoriteRepository.findById(id);
+
+        System.out.println("byId = " + byId);
+        FavoriteEntity favoriteEntity = byId.get();
+        FavoriteDTO favoriteDTO = FavoriteDTO.toFavoriteDTOList(favoriteEntity);
+
+        return favoriteDTO;
+
+//        Optional<BoardEntity> optionalBoardEntity = boardRepository.findById(id);
+//        if (optionalBoardEntity.isPresent()) {
+//            BoardEntity boardEntity = optionalBoardEntity.get();
+//            BoardDTO boardDTO = BoardDTO.toBoardDTO(boardEntity);
+//            System.out.println("\uD83D\uDC9A 글번호로 게시글 찾기");
+//            System.out.println("조회해서 반환할 boardDTO = " + boardDTO);
+//            return boardDTO;
+//        } else {
+//            return null;
+//        }
     }
 
     public BoardDTO update(BoardDTO boardDTO) { //위의 save와 비슷하게 수정해야할듯???
@@ -199,11 +278,11 @@ public class BoardService {
 
 
     @Transactional
-    public Page<BoardDTO> searchRegionAndPaging(String parentRegion,String childRegion,Pageable pageable){
+    public Page<BoardDTO> searchRegionAndPaging(String parentRegion, String childRegion, Pageable pageable) {
         int page = pageable.getPageNumber() - 1;
         int pageLimit = 5;
         // 지역1, 지역2, Pageable 로 DB 에서 조건 검색
-        Page<BoardEntity> boardEntityList = boardRepository.findAllBoardEntityByParentRegionAndChildRegion(parentRegion, childRegion,PageRequest.of(page,pageLimit,Sort.by(Sort.Direction.DESC,"id")));
+        Page<BoardEntity> boardEntityList = boardRepository.findAllBoardEntityByParentRegionAndChildRegion(parentRegion, childRegion, PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
         //DTO 에 담기
         Page<BoardDTO> dtoList = boardEntityList.map(boardEntity -> BoardDTO.toBoardDTO(boardEntity));
         //Page<BoardDTO> 로 반환

@@ -19,7 +19,7 @@
           즐겨찾기 목록에 추가하고 싶다면 지역별정보 게시판에서 마음에 드는 게시글에 즐겨찾기 등록 버튼을 클릭하세요!</div>
   </div>
     <div id="mainLayout">
-<!--        <div id="option">-->
+        <div id="option">
 <!--            <div id="optionselect">-->
 <!--                <select >-->
 <!--                    <option value="">시/도 선택</option>-->
@@ -47,19 +47,27 @@
         <div id="board">
             <table>
                 <tr>
-                    <th>번호</th>
+<!--                    <th>번호</th>-->
+                    <th>글번호</th>
                     <th>유형</th>
 <!--                    <th class="boardTitle">제목</th>-->
                     <th>제목</th>
                     <th>작성자</th>
                     <th>작성일</th>
                     <th>지역</th>
+
                 </tr>
 <!--                 마이페이지에서 연결되는 부분 표시-->
 <!--                <button th:onclick="|location.href='@{/mypage/favorite}'|">👍 즐겨찾기 게시글</button>-->
                         <!--board -> bookmark-->
 
-                <tr th:each="bookmark: ${boardList}">
+<!--                <tr th:each="favo: ${favoList.boardDTO}" >-->
+<!--                    <td th:text="${favoList?.id}"></td>-->
+<!--                    <td th:text="${favo?.userId}"></td>-->
+<!--                </tr>-->
+
+                <tr th:each="bookmark: ${boardList}" >
+<!--                    <td th:each="favo: ${favoList}" th:text="${favo?.id}"></td>-->
                     <td th:text="${bookmark?.id}"></td>
                     <td th:text="${bookmark?.postType}"></td>
 <!--                    <td class="boardTitle" id="boardTitle"><a th:href="@{|/mypage/favorite/${bookmark.id}|(page=${boardList.number + 1})}" th:text="${bookmark.boardTitle}"></a></td>-->
@@ -68,6 +76,7 @@
                     <td th:text="${bookmark?.userId}"></td>
                     <td th:text="*{#temporals.format(bookmark?.postdateTime, 'yy/MM/dd')}"></td>
                     <td th:text="${bookmark?.parentRegion} + ${bookmark?.childRegion}"></td>
+<!--                    <td th:text="${bookmark?.boardId}"></td>-->
                 </tr>
             </table>
 <!--            @{/board/paging~}에서 /board/를 /mypage/favorite/로-->

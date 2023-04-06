@@ -13,12 +13,15 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import weatherwhere.team.domain.board.FavoriteEntity;
 import weatherwhere.team.domain.closet.Cloth;
 import weatherwhere.team.domain.closet.Diary;
 import weatherwhere.team.domain.closet.DiaryContents;
 import weatherwhere.team.domain.closet.DiaryInfo;
 import weatherwhere.team.domain.member.Member;
 import weatherwhere.team.repository.board.BoardDTO;
+import weatherwhere.team.repository.board.CommentDTO;
+import weatherwhere.team.repository.board.FavoriteDTO;
 import weatherwhere.team.service.BoardService;
 import weatherwhere.team.service.ClothService;
 import weatherwhere.team.service.MemberService;
@@ -317,17 +320,40 @@ public class MypageController {
     }
 
     @GetMapping("/favorite") //즐겨찾기 페이지에 들어갈 때
-    public String myFavorite(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, @PageableDefault(page = 1) Pageable pageable, Model model){
+    public String myFavorite(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
+                             @PageableDefault(page = 1) Pageable pageable, Model model){
+        System.out.println("💙"+"🧡"+"💚");
+
+        // DB 에서 전체 게시글 데이터를 가져와서 list.html 에 보여준다.
+//        List<BoardDTO> boardDTOList = boardService.findAll();
+//        model.addAttribute("boardList", boardDTOList);
+
+        // DB 에서 전체 게시글 데이터를 가져와서 list.html 에 보여준다.
+        List<FavoriteDTO> favoriteDTOList = boardService.findAll(loginMember.getUserId());
+        model.addAttribute("favoList", favoriteDTOList);
+        System.out.println("🧡favoriteDTOList = " + favoriteDTOList);
+
+
+
+
 //        pageable.getPageNumber();
  /*           Page<BoardDTO> boardList = boardService.paging(pageable);
             int blockLimit = 3;
             int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1; // 1 4 7 10 ~~
             int endPage = ((startPage + blockLimit - 1) < boardList.getTotalPages()) ? startPage + blockLimit - 1 : boardList.getTotalPages();*/
 
-           Page<BoardDTO> favoriteList = boardService.favoritePaging(pageable);
+
+//            FavoriteEntity favoriteEntity의 getId()를 하면 되는데
+
+//           Page<FavoriteDTO> favoriteList = boardService.favoritePaging(pageable); //DB에서 꺼내오기 게시글DB에서 꺼내거는건데 기준에
+            
+        //  원래 아래 코드
+           Page<BoardDTO> favoriteList = boardService.favoritePaging(pageable); //DB에서 꺼내오기 게시글DB에서 꺼내거는건데 기준에
             int blockLimit = 3;
             int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1; // 1 4 7 10 ~~
             int endPage = ((startPage + blockLimit - 1) < favoriteList.getTotalPages()) ? startPage + blockLimit - 1 : favoriteList.getTotalPages();
+
+        System.out.println("\uD83D\uDC9AfavoriteList.get() = " + favoriteList.get());
 
             // page 갯수 20개
             // 현재 사용자가 3페이지
@@ -337,6 +363,8 @@ public class MypageController {
             // 보여지는 페이지 갯수 3개
             // 총 페이지 갯수 8개
 
+
+//            model.addAttribute("favoId", FavoriteEntity);
             model.addAttribute("boardList", favoriteList);
             model.addAttribute("startPage", startPage);
             model.addAttribute("endPage", endPage);
@@ -344,7 +372,37 @@ public class MypageController {
         return "main/mypage/favorite";
     }
 
+//    @GetMapping("/favorite/{id}") //detail.html 화면에 넘겨줄 정보들
+    @GetMapping("/{id}") //detail.html 화면에 넘겨줄 정보들
+    public String findById(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
+                           @PathVariable Long id, Model model,
+                           @PageableDefault(page = 1) Pageable pageable) {
+        model.addAttribute("member", loginMember); // 사이드바 정보 입력부분
+        System.out.println("\uD83E\uDDE1 로그인 ID 확인 글 작성자인지 로그인한 사람껀지 확인 = " + loginMember.getUserId());
+        /*
+            해당 게시글의 조회수를 하나 올리고
+            게시글 데이터를 가져와서 detail.html 에 출력
+         */
+//        boardService.updateHits(id);
 
+        //id가 아마 즐겨찾기 게시판 id 일 때
+        //-> BoardService.favoriteFindById로  favoriteDTO.boardId를 찾고 이걸로 ->  boardDTO.getId(id)를 하고
+       //return Long id 하기
+        //아래 코드 실행
+//        BoardDTO boardDTO = boardService.findById(id);
+        FavoriteDTO findFavoriteDTO = boardService.favoriteFindById(id);
+        Long boardId = findFavoriteDTO.getBoardId();
+
+        BoardDTO boardDTO = boardService.findById(boardId);
+        System.out.println("\uD83D\uDC9A 상세보기 페이지로 반환된 boardDTO = " + boardDTO);
+//        /* 댓글 목록 가져오기 */
+//        List<CommentDTO> commentDTOList = commentService.findAll(id);
+//        System.out.println("\uD83E\uDDE1 commentDTOList = " + commentDTOList);
+//        model.addAttribute("commentList", commentDTOList); //댓글 목록
+//        model.addAttribute("board", boardDTO); //게시글 정보
+//        model.addAttribute("page", pageable.getPageNumber());
+        return "main/infoboard/detail";
+    }
 
 
 

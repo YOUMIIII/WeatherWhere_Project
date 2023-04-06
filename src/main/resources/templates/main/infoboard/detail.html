@@ -63,12 +63,12 @@
                 <th>image</th>
                 <td colspan="9"><img th:src="@{|/img/FileAttached/${board.storedFileName}|}" width="500px" alt=""></td>
             </tr>
-            <input type="hidden" id="parentRegion" name="parentRegion" th:value="${board?.parentRegion}">
-            <input type="hidden" id="childRegion" name="childRegion" th:value="${board?.childRegion}">
+<!--            <input type="hidden" id="parentRegion" name="parentRegion" th:value="${board?.parentRegion}">-->
+<!--            <input type="hidden" id="childRegion" name="childRegion" th:value="${board?.childRegion}">-->
             <!--        <input type="hidden" id="region" name="region" th:value="@{region}(region = ${board?.parentRegion} + ${board?.childRegion})">-->
             <!--        <input type="hidden" id="region" name="region" th:value="${board?.parentRegion} + ${board?.childRegion}">-->
-            <input type="hidden" id="postdate" name="postdate" th:value="${board?.postdateTime}">
-            <input type="hidden" id="userId" name="userId" th:value="${member?.userId}">
+<!--            <input type="hidden" id="postdate" name="postdate" th:value="${board?.postdateTime}">-->
+<!--            <input type="hidden" id="userId" name="userId" th:value="${member?.userId}">-->
         </table>
 
 
@@ -172,21 +172,12 @@ console.log("요청실패", err);
 <!--// "변수명" : 위 const 명,-->
 <!--			"parentRegion" : parentRegion,-->
 <!--			"childRegion" : childRegion,-->
+<!--  const boardId = [[${board.id}]];-->
 
 <script th:inline="javascript">
 const addfavorite = () => {
 
   const boardId = [[${board.id}]];
-<!--  const writer = [[${board.userId}]];-->
-<!--  const postType = [[${board.postType}]];-->
-<!--  const title = [[${board.title}]];-->
-<!--  const contents = [[${board.contents}]];-->
-<!--  const region = [[${board.parentRegion}+${board.childRegion}]];-->
-<!--  const parentRegion = [[${board.parentRegion}]];-->
-<!--  const childRegion = [[${board.childRegion}]];-->
-<!--  const region = ' '.concat([[${board.parentRegion}]], [[${board.childRegion}]]);-->
-
-<!--  const postdate = [[${board.postdateTime}]];-->
   const memberId = [[${member.userId}]];
 
 
@@ -196,13 +187,6 @@ const addfavorite = () => {
      url: "/board/addfavorite",
      data: {
         'id' : boardId,
-<!--        'userId' : writer,-->
-<!--        'postType' : postType,-->
-<!--        'title' : title,-->
-<!--        'contents' : contents,-->
-<!--        'parentRegion' : parentRegion,-->
-<!--        'childRegion' : childRegion.-->
-<!--        'region' : region,-->
         'member.userId' : memberId
      },
      success: function (res) {
