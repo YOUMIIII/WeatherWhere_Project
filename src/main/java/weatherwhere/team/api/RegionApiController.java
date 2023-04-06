@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import weatherwhere.team.domain.Region;
 import weatherwhere.team.domain.Weather;
+import weatherwhere.team.repository.region.RegionDto;
 import weatherwhere.team.repository.region.RegionNameDto;
 import weatherwhere.team.service.RegionService;
 import weatherwhere.team.service.WeatherService;
@@ -28,7 +29,7 @@ public class RegionApiController {
 
     @GetMapping("/weather")
     public String regionWeatherRequest(@RequestParam("parentRegion") String parentRegion, @RequestParam("childRegion") String childRegion){
-        Region region = weatherService.createWeatherList(parentRegion,childRegion);
+//        Region region = weatherService.createWeatherList(parentRegion,childRegion);
         return "ok";
     }
 
@@ -38,6 +39,25 @@ public class RegionApiController {
                 .map(region -> new RegionNameDto(region))
                 .collect(Collectors.toList());
         return regionList;
+    }
+
+
+    @GetMapping("/api/currentWeather")
+    public RegionDto sendCurrentWeather(@RequestParam String parentRegion, @RequestParam String childRegion){
+
+        String baseDateTime = weatherService.createWeatherList(parentRegion, childRegion);
+        Region region = regionService.findSpecificRegion(parentRegion, childRegion);
+        RegionDto regionDto = new RegionDto(region, baseDateTime);
+
+        return regionDto;
+    }
+
+    @GetMapping("/api/pastWeather")
+    public RegionDto sendPastWeather(@RequestParam String parentRegion,@RequestParam String childRegion){
+        String baseDateTime = weatherService.createPastWeatherList(parentRegion,childRegion,"2023-04-05");
+        Region region = regionService.findSpecificRegion(parentRegion, childRegion);
+        RegionDto regionDto = new RegionDto(region, baseDateTime);
+        return regionDto;
     }
 
 

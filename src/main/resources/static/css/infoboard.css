@@ -6,38 +6,70 @@
     display:flex;
 }
 
-#temperature{
-    margin:70px 100px 30px 20px;
+#weatherWidget{
+    margin:3rem 6rem 2rem 1rem;
     width:20%;
     border-radius:15px;
-    border:1px solid black;
+    border:1px solid rgba(255, 152, 56,0.5);
+    display:grid;
+    height:100%
+}
+.widgetElementContainer{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin-top: 1rem;
+
 }
 
-#temperature div{
-    display:inline-block;
-    vertical-align:middle;
+.widgetElementContainer:nth-child(1){
+    margin-left:0.5rem;
+}
+.widgetElementContainer:nth-child(2){
+    margin-right:1rem;
+    display:flex;
+    flex-direction:column;
 }
 
-.temperatureInfo p{
-    text-align:left;
-    margin:10px;
+.widgetElementContainer:nth-child(3):last-child{
+    grid-column:span 2;
 }
 
-#temLocation{
-    font-size:15px;
+#currentSky{
+    width:5rem;
 }
 
-#temNumber{
-    font-size:20px;
+#currentLocation1{
+    font-size:0.8rem;
+    text-align:center;
+}
+#currentLocation2{
+    font-size:0.8rem;
+    text-align:center;
+    line-height:1.2rem;
 }
 
-#temMaxMin{
-    font-size:15px;
+#currentTemp{
+    font-weight:bold;
+    color:#FF9838;
+    grid-row:span2;
+    font-size:3rem;
+}
+
+.widgetElement span{
+    font-size:0.7rem;
+    vertical-align:top;
+}
+
+#option{
+    margin: 0 5rem 0 0rem;
+    display:flex;
+    justify-content:space-between;
 }
 
 #optionselect{
-    margin-left:20px;
-    margin-right:280px;
+    margin-left:1rem;
+    margin-right:17rem;
 }
 
 #option div{
@@ -45,13 +77,12 @@
 }
 
 select{
-    width:120px;
-    height:30px;
+    width:7rem;
+    height:1.9rem;
 }
 
-#searchbox{
-    width:230px;
-    height:25px;
+#selectBox{
+
 }
 
 #board{

@@ -50,13 +50,13 @@ public class RegionRepository {
      * @param childRegion
      * @return
      */
-    public Region findByParentChild(String parentRegion, String childRegion){
+    public Long findByParentChild(String parentRegion, String childRegion){
         List<Region> resultList = em.createQuery("select r from Region r where r.parentRegion = :parentRegion and r.childRegion = :childRegion", Region.class)
                 .setParameter("parentRegion", parentRegion)
                 .setParameter("childRegion", childRegion)
                 .getResultList();
         log.info("resultList 사이즈 : {}",resultList.size());
-        return resultList.isEmpty()? null: resultList.get(0);
+        return resultList.isEmpty()? null: resultList.get(0).getId();
     }
 
     public Region findByNamesAndCo(String parentRegion,String childRegion,Integer nx,Integer ny){

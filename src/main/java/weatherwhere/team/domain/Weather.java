@@ -32,7 +32,7 @@ public class Weather {
     @ManyToOne(fetch = FetchType.LAZY)
     private Region region;
 
-    public static Weather createWeather(String baseDateTime,String weatherDateTime,Integer temp,Integer sky,Integer pty,Integer pop,Integer nx,Integer ny,Region region){
+    public static Weather createWeather(String baseDateTime,String weatherDateTime,Integer temp,Integer sky,Integer pty,Integer pop,Integer nx,Integer ny){
         Weather weather=new Weather();
         weather.setBaseDateTime(baseDateTime);
         weather.setWeatherDateTime(weatherDateTime);
@@ -42,7 +42,6 @@ public class Weather {
         weather.setPop(pop);
         weather.setNx(nx);
         weather.setNy(ny);
-        weather.setRegion(region);
         return weather;
     }
 

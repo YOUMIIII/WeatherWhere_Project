@@ -22,6 +22,7 @@ public class HomeController {
 
     private final MemberService memberService;
     private final WeatherService weatherService;
+    private final RegionService regionService;
 
 
     @GetMapping("/")
@@ -34,9 +35,12 @@ public class HomeController {
 
         //세션이 유지되면 로그인으로 이동
         model.addAttribute("member", loginMember);
-        RegionDto regionDto=new RegionDto(weatherService.createWeatherList(loginMember.getParentRegion(),loginMember.getChildRegion()));
-//        Region region=weatherService.createWeatherList(loginMember.getParentRegion(),loginMember.getChildRegion());
-//        model.addAttribute("region", region);
+        String baseDateTime=weatherService.createWeatherList(loginMember.getParentRegion(),loginMember.getChildRegion());
+        Region region = regionService.findSpecificRegion(loginMember.getParentRegion(), loginMember.getChildRegion());
+        RegionDto regionDto = new RegionDto(region, baseDateTime);
+
+
+        model.addAttribute("region", region);
         log.info("regionDto 체크 부모지역 : {} ",regionDto.getParentRegion());
         log.info("regionDto 의 첫번째 weather 값 체크 : {} ",regionDto.getWeathers().get(0).getTime());
         model.addAttribute("region",regionDto);

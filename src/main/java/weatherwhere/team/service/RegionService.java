@@ -36,8 +36,9 @@ public class RegionService {
         return region;
     }
 
-    public Region findSpecificRegion(String parentRegion,String childRegion,Integer nx,Integer ny){
-        return regionRepository.findByNamesAndCo(parentRegion, childRegion, nx, ny);
+    public Region findSpecificRegion(String parentRegion,String childRegion){
+        Long id = regionRepository.findByParentChild(parentRegion, childRegion);
+        return regionRepository.findOne(id);
     }
 
     @EventListener(ApplicationReadyEvent.class)

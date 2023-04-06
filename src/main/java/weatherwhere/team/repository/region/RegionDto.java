@@ -30,18 +30,21 @@ public class RegionDto {
     private Integer minTemp;
 
 
-    public RegionDto(Region region){
+    public RegionDto(Region region,String baseDateTime){
         parentRegion=region.getParentRegion();
         childRegion=region.getChildRegion();
         nx=region.getNx();
         ny=region.getNy();
         weathers=region.getWeathers().stream()
+                .filter(weather -> weather.getBaseDateTime().equals(baseDateTime))
                 .map(weather->new WeatherDto(weather))
                 .collect(Collectors.toList());
         maxTemp=region.getWeathers().stream()
+                .filter(weather -> weather.getBaseDateTime().equals(baseDateTime))
                 .mapToInt(weather -> weather.getTemp())
                 .max().getAsInt();
         minTemp=region.getWeathers().stream()
+                .filter(weather -> weather.getBaseDateTime().equals(baseDateTime))
                 .mapToInt(weather->weather.getTemp())
                 .min().getAsInt();
     }

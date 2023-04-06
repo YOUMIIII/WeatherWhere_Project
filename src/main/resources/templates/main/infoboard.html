@@ -18,16 +18,24 @@
           <h2 id="subT">지역을 선택하고 그 지역의 궁금한 정보를 질문하고 답하며 소통해요!<br>
             또한 만약 우리동네 자랑거리가 있다면 자랑해주세요! (맛집소개, 갈만한 곳 추천 등) </h2>
         </div>
-        <div id="temperature">
-           <div class="temperatureInfo" id="temperatureInfoText">
-              <p id="temLocation">성남시 분당구</p><p id="temNumber">15</p><p id="temMaxMin">최고 15 / 최저 0</p>
-           </div>
-           <div class="temperatureInfo">
-              <img src="../../static/img/home/weather_sun.png" th:src="@{/img/home/weather_sun.png}" width="60px">
-           </div>
+        <div id="weatherWidget">
+          <div class="widgetElementContainer">
+              <img class="widgetElement" id="currentSky" src="https://basmilius.github.io/weather-icons/production/line/all/star.svg">
+          </div>
+          <div class="widgetElementContainer">
+              <p class="widgetElement" id="currentLocation1"></p>
+              <p class="widgetElement" id="currentLocation2">Loading...</p>
+              <p class="widgetElement" id="currentTemp"></p>
+          </div>
+          <div class="widgetElementContainer">
+              <p class="widgetElement">
+                  <span id="currentMax">🔥</span>
+                  <span>/</span>
+                  <span id="currentMin">💧</span>
+              </p>
+          </div>
         </div>
       </div>
-
       <div id="mainLayout">
           <div id="option">
               <div id="optionselect">
@@ -49,12 +57,7 @@
                       <option>제목</option>
                       <option>작성자</option>
                   </select>
-              </div>
-              <div>
-                  <input type="text" id="searchbox">
-              </div>
-              <div>
-                  <button>검색</button>
+                  <button id="searchbox">검색</button>
               </div>
           </div>
           <div id="board">
@@ -121,24 +124,76 @@
 </body>
 
 <script>
-    const saveReq = () => {
-        var location1=document.getElementById("userLocation").value;
-        var location2=document.getElementById("userLocation2").value;
-        location.href = "/board/save?parentRegion="+location1+"&childRegion="+location2;
-    }
 
-    function goToBoard(){
-        var location1=document.getElementById("userLocation").value;
-        var location2=document.getElementById("userLocation2").value;
-        location.href="/board/paging/region?parentRegion="+location1+"&childRegion="+location2;
-    }
 </script>
 
 <script type="text/javascript" src="../../static/js/jquery-3.4.1.min.js" th:src="@{/js/jquery-3.4.1.min.js}"></script>
 <script>
-        $(document).ready(function(){
+         window.addEventListener('DOMContentLoaded', function(){
             loadArea('loadParent',$(this));
+            var params = (new URL(document.location)).searchParams;
+            var pRegion=params.get('parentRegion');
+            var cRegion=params.get('childRegion');
+            loadWeather(pRegion,cRegion);
         });
+
+        const saveReq = () => {
+            var location1=document.getElementById("userLocation").value;
+            var location2=document.getElementById("userLocation2").value;
+            location.href = "/board/save?parentRegion="+location1+"&childRegion="+location2;
+        }
+
+        function goToBoard(){
+            var location1=document.getElementById("userLocation").value;
+            var location2=document.getElementById("userLocation2").value;
+            location.href="/board/paging/region?parentRegion="+location1+"&childRegion="+location2;
+        }
+
+        function loadWeather(location1,location2){
+            $.ajax({
+                    url: "/region/api/currentWeather",
+                    data:{parentRegion:location1,childRegion:location2},
+                    dataType: "JSON",
+                    method: "GET",
+            }).done(function(res){
+                $('#currentLocation1').text(res.parentRegion);
+                $('#currentLocation2').text(res.childRegion);
+                $('#currentMax').text("최고".concat(res.maxTemp));
+                $('#currentMin').text("최저".concat(res.minTemp));
+                var skyImage="";
+                switch(res.weathers[0].sky){
+                    case "맑음":
+                        skyImage="https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/clear-day.svg";
+                        break;
+                    case "구름 많음":
+                        skyImage="https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/partly-cloudy-day.svg";
+                        break;
+                    case "흐림":
+                        skyImage="https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/cloudy.svg";
+                        break;
+                    case "비":
+                        skyImage="https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/drizzle.svg";
+                        break;
+                    case "비/눈":
+                        skyImage="https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/sleet.svg";
+                        break;
+                    case "눈":
+                        skyImage="https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/snow.svg";
+                        break;
+                    case "소나기":
+                        skyImage="https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/drizzle.svg";
+                        break;
+                    default:
+                        skyImage="https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/clear-day.svg";
+                }
+
+                $('#currentSky').attr("src",skyImage);
+            });
+        }
+
+</script>
+<script>
+
         $('#userLocation').on("change",function(){
             loadArea('loadChild',$(this));
         });
