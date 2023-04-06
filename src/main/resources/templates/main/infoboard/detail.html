@@ -94,7 +94,7 @@
                 <!--                댓글 -->
                 <td th:text="${comment?.id}"></td>
                 <!--                <td th:text="${member?.userId}"></td>-->
-                <td th:value="${comment?.userId}"></td>
+                <td th:text="${comment?.userId}"></td>
                 <td th:text="${comment?.commentContents}"></td>
                 <td th:text="${comment?.commentPostdate}"></td>
             </tr>
@@ -109,11 +109,11 @@
     }
 
 </script>
-<!--todo : 즐겨찾기 DB저장 목록에 지역을 추가해야함. 안그러면 작성글에서 지역이 지워짐.-->
+<!--const writer = document.getElementById("writer").value;-->
+<!--const writer = document.getElementById("userId").value;-->
 <script th:inline="javascript">
 
 const commentWrite = () => {
-<!--const writer = document.getElementById("userId").value;-->
 const writer = document.getElementById("writer").value;
 const contents = document.getElementById("commentContents").value;
 const id = [[${board.id}]];

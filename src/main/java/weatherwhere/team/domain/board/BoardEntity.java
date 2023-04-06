@@ -66,7 +66,7 @@ public class BoardEntity extends TimeEntity {
         boardEntity.setTitle(boardDTO.getTitle());
         boardEntity.setUserId(boardDTO.getUserId());
         boardEntity.setContents(boardDTO.getContents());
-        boardEntity.setHits(0); //조회수 시작은 0
+        boardEntity.setHits(-1); //조회수 시작은 0
         boardEntity.setFileAttached(0); // 파일 없음.
         //지역 추가
         boardEntity.setParentRegion(boardDTO.getParentRegion());

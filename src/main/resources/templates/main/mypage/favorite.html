@@ -37,17 +37,20 @@
                     <option>작성자</option>
                 </select>
             </div>
+
             <div>
                 <input type="text" id="searchbox">
             </div>
             <div>
                 <button class="favBtn">검색</button>
+                <button th:onclick="|location.href=''|">삭제</button>
             </div>
         </div>
         <div id="board">
             <table>
                 <tr>
 <!--                    <th>번호</th>-->
+                    <th><input type="checkbox" /></th>
                     <th>글번호</th>
                     <th>유형</th>
 <!--                    <th class="boardTitle">제목</th>-->
@@ -67,6 +70,8 @@
 <!--                </tr>-->
 
                 <tr th:each="bookmark: ${boardList}" >
+                    <th><input type="checkbox" id="checkall" /></th>
+
 <!--                    <td th:each="favo: ${favoList}" th:text="${favo?.id}"></td>-->
                     <td th:text="${bookmark?.id}"></td>
                     <td th:text="${bookmark?.postType}"></td>
