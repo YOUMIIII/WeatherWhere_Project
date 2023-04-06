@@ -106,7 +106,6 @@ select{
     font-size:15px;
     border-radius:10px;
     font-family:'IM_Hyemin-Bold';
-
 }
 
 .modal_body div{
@@ -147,9 +146,8 @@ select{
     margin-top:30px;
 }
 
-#optionselect{
+#option{
     margin-left:20px;
-    margin-right:230px;
 }
 
 #option div{
@@ -186,7 +184,7 @@ th, td{
 }
 
 th{
-    background-color:#A3ABBB;
+    background-color:#EEEEEE;
 }
 
 .boardtitle{

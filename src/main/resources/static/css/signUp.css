@@ -91,6 +91,7 @@ input[type="submit"], input[type="button"], input[type="reset"]{
     font-size:15px;
     margin-left:5px;
     margin-right:5px;
+    cursor:pointer;
 }
 
 input[type="checkbox"]{
@@ -134,12 +135,13 @@ input[type="checkbox"]{
 /* 회원가입완료 css */
 
 #background{
-    background-color:#494F5B;
+    background-color:#FFC289;
 
 }
 
 #successbackground{
-    margin-top:100px;
+    margin-top:200px;
+    margin-left:150px;
     padding-top:100%;
     width:400px;
     background-size:contain;
@@ -151,7 +153,7 @@ input[type="checkbox"]{
 
 #set{
     position:absolute;
-    top:43%;
+    top:29%;
     left:50%; /* 왜인지 모르겠지만 div는 이걸 넣어야 가운데로 옴 */
     transform: translate( -50%, -50%);
 }
@@ -161,16 +163,19 @@ input[type="checkbox"]{
     font-size:20px;
     width:500px;
     margin-bottom:30px;
+    color:#353535;
 }
 
 button{
     width:100px;
     height:40px;
-    background-color:#2D3037;
+    background-color:#FF9838;
     border:none;
     border-radius:5px;
     color:white;
     cursor:pointer;
+    font-family:'IM_Hyemin-Bold';
+    font-size:15px;
 }
 
 .olmessagef {

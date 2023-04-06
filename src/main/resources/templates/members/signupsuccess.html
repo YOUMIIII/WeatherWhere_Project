@@ -7,13 +7,13 @@
     <link rel="stylesheet" type="text/css" href="../../static/css/signUp.css" th:href="@{/css/signUp.css}">
 </head>
 <body id="background">
-    <div id="successbackground" style="background-img: url('../img/signup/signupsuccessbackground.png')" th:style="|background-image: url('@{/img/signup/signupsuccessbackground.png}')|">
+    <div id="successbackground" th:style="|background-image: url('@{/img/signup/signupsuccessbackground.png}')|">
         <div id="set">
-            <div><img id="signuplogo" src="../../static/img/signup/logosignup.png" th:src="@{/img/signup/logosignup.png}" width="200px"></div>
+            <div><img id="signuplogo" src="../../static/img/logonew.png" th:src="@{/img/logonew.png}" width="100px"></div>
             <!--<div><img id="smile" src="../../static/img/signup/smile.png" width="60px"></div>-->
             <div id="sucesstext">
                 <span th:text="${joinId}">jojo39</span> 님<br>회원가입이 완료되었습니다<br>
-                <span class="subT">버튼을 클릭하시면 로그인 페이지로 이동합니다</span>
+<!--                <span class="subT">버튼을 클릭하시면 로그인 페이지로 이동합니다</span>-->
             </div>
             <div id="btnlogin">
                 <button type="button" th:onclick="|location.href='@{/login}'|">로그인</button>

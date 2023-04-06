@@ -106,7 +106,7 @@ th, td{
 }
 
 th{
-    background-color:#A3ABBB;
+    background-color:#eeeeee;
 }
 
 .boardTitle{
@@ -133,6 +133,8 @@ th{
     margin-top:15px;
 }
 
+
+
 /* write.html */
 
 
@@ -141,7 +143,7 @@ th{
     margin-left:20px;
     margin-right:20px;
     border-radius:15px;
-    background-color:#EBEBEB;
+    background-color:#F6F6F6;
     width:90%;
 }
 
@@ -181,14 +183,15 @@ th{
 input[type="submit"], button{
     width:80px;
     height:30px;
-    font-size:13px;
+    font-size:14px;
     border-radius:5px;
     margin-right:10px;
     margin-bottom:20px;
-    background-color:#494F5B;
+    background-color:#FF9838;
     color:white;
     cursor:pointer;
     border:none;
+    font-family:'IM_Hyemin-Bold';
     /* 버튼 스타일 나중에 수정하기*/
 }
 
@@ -198,7 +201,7 @@ a{
 
 /*  */
 
-.boardetail{
+.boarddetail{
     width:90%;
     border-top:0.3px solid #2D3037;
     border-right:0.3px solid #2D3037;
@@ -244,7 +247,7 @@ a{
 }
 
 #commentContents{
-    width:68%;
+    width:80%;
 }
 
 #comment-list{

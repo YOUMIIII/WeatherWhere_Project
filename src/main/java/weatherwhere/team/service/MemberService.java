@@ -28,7 +28,6 @@ public class MemberService {
 
 
     public String join(Member member){
-        validatedDuplicatedMember(member);
         memberJpaRepository.save(member);
         member.getId();
         return member.getUserId();
@@ -48,14 +47,6 @@ public class MemberService {
 
     public Member findMember(String userId){
         return memberJpaRepository.findByUserId(userId);
-    }
-
-    private void validatedDuplicatedMember(Member member) {
-        Member findMember=memberJpaRepository.findByUserId(member.getUserId());
-
-        if(findMember==null){
-            throw new IllegalStateException("이미 존재하는 회원입니다.");
-        }
     }
 
 

@@ -6,27 +6,7 @@
     <title>회원가입</title>
     <link rel="stylesheet" type="text/css" href="../../static/css/signUp.css" th:href="@{/css/signUp.css}">
     <script type="text/javascript" src="../../static/js/checkbox.js" th:src="@{/js/checkbox.js}"></script>
-    <script>
-        function fn_idcheck() {
-            $.ajax({
-                url : "/members/memberIdChk",
-                type : "POST",
-                dataType : "JSON",
-                data : {"userId" : $("#userId").val()},
-                success : function (data) {
-                    if(data == 1){
-                        $("#olmessage").text("이미 사용중인 ID 입니다.");
-                        $("#olmessage").addClass("olmessagef");
-                        $("#olmessage").removeClass("olmessaget");
-                    } else {
-                        $("#olmessage").text("사용 가능한 ID 입니다.");
-                        $("#olmessage").addClass("olmessaget");
-                        $("#olmessage").removeClass("olmessagef");
-                    }
-                }
-            });
-        }
-    </script>
+
     <style>
         .field-error {
             border-color: #dc3545;
@@ -36,7 +16,7 @@
 </head>
 <body class="signup">
     <div class="logoWrap">
-        <img th:src="@{/img/logo_dark.png}" width="200px">
+<!--        <img th:src="@{/img/logo_dark.png}" src="../../static/img/logonew.png" width="100px">-->
     </div>
     <form class="formBox" th:action th:object="${memberJoinForm}" method="POST" enctype="multipart/form-data">
         <h1 class="mainT">회원가입</h1>
@@ -135,6 +115,28 @@
                         });
                    }
                 });
+        }
+    </script>
+
+    <script>
+        function fn_idcheck() {
+            $.ajax({
+                url : "/members/memberIdChk",
+                type : "POST",
+                dataType : "JSON",
+                data : {"userId" : $("#userId").val()},
+                success : function (data) {
+                    if(data == 1){
+                        $("#olmessage").text("이미 사용중인 ID 입니다.");
+                        $("#olmessage").addClass("olmessagef");
+                        $("#olmessage").removeClass("olmessaget");
+                    } else {
+                        $("#olmessage").text("사용 가능한 ID 입니다.");
+                        $("#olmessage").addClass("olmessaget");
+                        $("#olmessage").removeClass("olmessagef");
+                    }
+                }
+            });
         }
     </script>
 </body>

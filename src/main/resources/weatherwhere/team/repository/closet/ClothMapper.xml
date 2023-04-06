@@ -7,7 +7,7 @@
             select clothIdNum.nextval from dual
         </selectKey>
         insert into cloth_info (user_id, c_id, c_name, c_kind1, c_kind2, c_kind3, c_where_to_buy, c_color, c_photo, c_photo_path)
-        values (#{userId}, #{cId}, #{cName}, #{cKind1}, #{cKind2}, #{cKind3}, #{cWhereToBuy}, #{cColor}, #{cPhoto}, #{cPhotdoPath})
+        values (#{userId}, #{cId}, #{cName}, #{cKind1}, #{cKind2}, #{cKind3}, #{cWhereToBuy}, #{cColor}, #{cPhoto}, #{cPhotoPath})
     </insert>
 
     <select id="findById" resultType="weatherwhere.team.domain.closet.Cloth">
@@ -73,6 +73,7 @@
         LEFT JOIN CLOTH_INFO ci ON di.D_CODY1 = ci.C_ID
         LEFT JOIN CLOTH_INFO ci2 ON di.D_CODY2 = ci2.C_ID
         LEFT JOIN CLOTH_INFO ci3 ON di.D_CODY3 = ci3.C_ID
+        where dc.user_id = #{userId}
         order by d_date desc
     </select>
 </mapper>
