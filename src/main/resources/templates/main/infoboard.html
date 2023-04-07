@@ -158,6 +158,7 @@
             }).done(function(res){
                 $('#currentLocation1').text(res.parentRegion);
                 $('#currentLocation2').text(res.childRegion);
+                $('#currentTemp').text(res.weathers[0].temp);
                 $('#currentMax').text("최고".concat(res.maxTemp));
                 $('#currentMin').text("최저".concat(res.minTemp));
                 var skyImage="";
