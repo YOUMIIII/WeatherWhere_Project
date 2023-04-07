@@ -7,9 +7,12 @@ import weatherwhere.team.domain.Region;
 import weatherwhere.team.domain.Weather;
 import weatherwhere.team.repository.region.RegionDto;
 import weatherwhere.team.repository.region.RegionNameDto;
+import weatherwhere.team.repository.region.RegionSimpleDto;
 import weatherwhere.team.service.RegionService;
 import weatherwhere.team.service.WeatherService;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -53,10 +56,10 @@ public class RegionApiController {
     }
 
     @GetMapping("/api/pastWeather")
-    public RegionDto sendPastWeather(@RequestParam String parentRegion,@RequestParam String childRegion){
-        String baseDateTime = weatherService.createPastWeatherList(parentRegion,childRegion,"2023-04-05");
+    public RegionSimpleDto sendPastWeather(@RequestParam String parentRegion,@RequestParam String childRegion){
+        String baseDateTime = weatherService.createPastWeatherList(parentRegion,childRegion, LocalDateTime.now().minusDays(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         Region region = regionService.findSpecificRegion(parentRegion, childRegion);
-        RegionDto regionDto = new RegionDto(region, baseDateTime);
+        RegionSimpleDto regionDto = new RegionSimpleDto(region, baseDateTime);
         return regionDto;
     }
 
