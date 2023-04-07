@@ -217,6 +217,8 @@ a{
     font-size:15px;
     border-radius:5px;
     margin-bottom:10px;
+    font-family:'IM_Hyemin-Bold';
+    font-size:14px;
 }
 
 
@@ -617,4 +619,8 @@ input[type="checkbox"] {
 
 #dcontent{
     font-size:14px;
+}
+
+#favsearch{
+    margin-right:400px;
 }
