@@ -6,6 +6,7 @@ import weatherwhere.team.domain.Region;
 import weatherwhere.team.domain.Weather;
 import weatherwhere.team.repository.weather.WeatherDto;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +38,7 @@ public class RegionDto {
         ny=region.getNy();
         weathers=region.getWeathers().stream()
                 .filter(weather -> weather.getBaseDateTime().equals(baseDateTime))
+                .filter(weather -> Integer.parseInt(weather.getWeatherDateTime().substring(6,8))> LocalDateTime.now().getDayOfMonth() ||Integer.parseInt(weather.getWeatherDateTime().substring(8,10))>= LocalTime.now().getHour())
                 .map(weather->new WeatherDto(weather))
                 .collect(Collectors.toList());
         maxTemp=region.getWeathers().stream()

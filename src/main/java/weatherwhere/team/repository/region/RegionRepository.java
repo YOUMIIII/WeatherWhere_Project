@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import weatherwhere.team.domain.Region;
+import weatherwhere.team.domain.Weather;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

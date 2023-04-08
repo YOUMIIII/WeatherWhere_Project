@@ -22,7 +22,7 @@ body{ /* 모든 서브페이지 최대한 통일하기 */
     margin:25px;
 }
 
-#schedule{
+/* #schedule{
     width: 45%;
 }
 
@@ -37,9 +37,9 @@ body{ /* 모든 서브페이지 최대한 통일하기 */
     margin-left:25px;
     margin-top:10px;
     margin-bottom:10px;
-}
+} */
 
-#scheduleFirst{
+/* #scheduleFirst{
     background-color: #58C5C5;
 }
 
@@ -71,7 +71,214 @@ body{ /* 모든 서브페이지 최대한 통일하기 */
 
 .mainLayout table td{
     border:1px solid black;
-    width:200px; /*값 조정 필요*/
+    width:200px; 
     text-align:center;
     font-size:18px;
+} 
+
+*/
+
+#calendar-side-area>*{
+    border:1px solid rgba(255, 152, 56,0.5);
+    border-radius:1rem;
+    padding:1rem 1rem 1rem 1rem;
+}
+
+#calendar-form-container{
+    display:inline-block;
+    width:80%;
+}
+#reminder-container{
+    display:inline-block;
+    width: 80%;
+    padding:1rem 1rem 1rem 1rem;
+}
+
+#weather-check-container{
+    display:inline-block;
+    width: 80%;
+    padding:1rem 1rem 1rem 1rem;
+}
+
+/* 캘린더 폼 컨테이너 하위 설정 */
+
+#calendar-form-container>*{
+    display:inline-block;
+}
+
+#calendar-form-title{
+    
+    display:flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+#calendar-form-title>span{
+    flex:0 1 auto;
+    background-color:#FFE9D5;
+    border-radius:0.7rem;
+    padding: 0 0.5rem 0 0.5rem;
+    margin-bottom: 0.2rem;
+    font-size:1rem;
+    line-height:1.5rem;
+    vertical-align:center;
+    text-align: center;
+    color:#FF9838;
+}
+
+#calendar-form-title>div{
+    flex: 0 1 3rem;
+    display: flex;
+    flex-direction: row;
+}
+
+#calendar-form-title>div>button{
+    border:none;
+    background: transparent;
+}
+
+#calendar-form{
+    height:90%;
+    width:100%;
+    display:flex;
+    flex-direction: column;
+}
+
+.formItem{
+    display:inline-flex;
+    justify-content: start;
+    width:100%;
+    padding-top:0.5rem;
+}
+
+.formItem>div>input{
+    border: none;
+    background: transparent;
+}
+
+#timeslotBox{
+    display: inline-block;
+}
+
+#timeslotBox>input{
+    width:10%;
+}
+
+#timeslotBox>span{
+    text-align: center;
+}
+
+#locationBox{
+    display: inline-block;
+}
+
+#locationBox>input{
+    width:30%;
+}
+
+#colorBox{
+    display: flex;
+    justify-content: center;
+
+}
+#colorBox > *{
+    flex: 1 1 20%;
+}
+
+.formItem:last-child{
+    justify-content: center;
+}
+
+.formItem>button{
+    width:85%;
+    height:100%;
+    background-color:#FFEDDD;
+    border-radius:0.5rem;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 0.5rem;
+    margin-top:2%;
+}
+
+.orange-title{
+    display:flex;
+    justify-content: flex-start;
+    align-items: baseline;
+}
+
+.orange-title-text{
+    flex:0 1 auto;
+    background-color:#FFE9D5;
+    border-radius:0.7rem;
+    padding: 0 0.5rem 0 0.5rem;
+    margin-bottom: 0.5rem;
+    font-size:1rem;
+    line-height:1.5rem;
+    vertical-align:center;
+    text-align: center;
+    color:#FF9838;
+}
+
+
+#reminder{
+    height:100%;
+    width:100%;
+}
+
+/* #reminder>div{
+    display:flex;
+    justify-content: center;
+    grid-row:span 1;
+    grid-column:span 1;
+    width:100%;
+    padding-top:0.5rem;
+} */
+
+#reminder>div>label{
+    width:15%;
+}
+
+#reminder>div>input{
+    width:70%;
+    border: none;
+    background: transparent;
+    line-height: 1.5rem;
+}
+
+
+#reminder>button{
+    width:85%;
+    height:20%;
+    background-color:#FFEDDD;
+    border-radius:0.5rem;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 0.5rem;
+    margin-top:2%;
+}
+
+
+
+#weather-check{
+    height:100%;
+    width:100%;
+}
+
+.weather-check-list>div{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.weather-check-list>div>label{
+    text-align: center;
+    color:#FF9838;
+}
+
+.weather-check-list>div>img{
+
+    width:4rem;
+    height:4rem;
 }

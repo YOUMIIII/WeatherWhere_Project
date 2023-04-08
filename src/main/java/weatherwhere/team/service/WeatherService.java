@@ -88,7 +88,7 @@ public class WeatherService {
         try {
             urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8")+ "=" +  serviceKey);
             urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호*/
-            urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("336", "UTF-8")); /*한 페이지 결과 수*/
+            urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("290", "UTF-8")); /*한 페이지 결과 수*/
             urlBuilder.append("&" + URLEncoder.encode("dataType","UTF-8") + "=" + URLEncoder.encode("JSON", "UTF-8")); /*요청자료형식(XML/JSON) Default: XML*/
             urlBuilder.append("&" + URLEncoder.encode("base_date","UTF-8") + "=" + URLEncoder.encode(baseDate, "UTF-8"));
             urlBuilder.append("&" + URLEncoder.encode("base_time","UTF-8") + "=" + URLEncoder.encode(baseTime, "UTF-8"));
@@ -147,8 +147,13 @@ public class WeatherService {
             if(!time.equals(fcstTime)){//fcstTime 이 변했을 경우
                 String weatherDateTime = date.concat(time);// fcstDate , fcstTime (X) date , time (O)
                 LocalDateTime compareDateTime = LocalDateTime.parse(weatherDateTime, DateTimeFormatter.ofPattern("yyyyMMddHHmm"));
-                if(now.minusHours(1).isBefore(compareDateTime)){
-                    Weather weather = Weather.createWeather(//현재시간 기준 예보만 저장 - Weather 객체를 밖에서 생성해도 저장됨
+                //break 조건 B : 현재 시간 기준 (적용중, 서버 오래 지속되면 DTO 에서 반복문 돌면서 지난 시간 제거)
+                if(now.plusHours(24).isBefore(compareDateTime)){
+                    break;
+                }
+                //시간 필터 조건 A : 요청 시간 기준
+//                if(now.minusHours(1).isBefore(compareDateTime)){
+                    Weather weather = Weather.createWeather(
                             baseDateTime,
                             weatherDateTime,
                             Integer.parseInt(temp),
@@ -166,15 +171,16 @@ public class WeatherService {
                     log.info("지역 날씨 tmp : {}", weather.getTemp());
                     log.info("지역 날씨 sky : {}", weather.getSky());
                     log.info("지역 날씨 pop : {}", weather.getPop());
-                }else{
-                    log.info("현재시간 {} , fcstTime {} 은 건너뛰고 저장합니다(지난 시간)",now, compareDateTime);
-                }
+//                }else{
+//                    log.info("현재시간 {} , fcstTime {} 은 건너뛰고 저장합니다(지난 시간)",now, compareDateTime);
+//                }
 
             }
 
-            if(count==24){
-                break;
-            }
+            //break 조건 A : 요청 시간 기준
+//            if(count==24){
+//                break;
+//            }
 
             String category = obj.getString("category");
             String fcstValue = (String)obj.get("fcstValue");

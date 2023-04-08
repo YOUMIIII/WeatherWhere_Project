@@ -13,12 +13,21 @@
         }
         input[type='checkbox']{
           font-family: 'IM_Hyemin-Regular';
+        }    
+        input[type="date"]{
+            font-family: 'IM_Hyemin-Regular';
+        }
+        input[type="select"]{
+            font-family: 'IM_Hyemin-Regular';
         }
         button{
             font-family: 'IM_Hyemin-Regular';
         }
         .checkbox-container{
             font-family: 'IM_Hyemin-Regular';
+        }
+        #colorBox input{
+            accent-color: #FFCA99;
         }
 
         :root{
@@ -34,153 +43,32 @@
         }
 
         .container{
-            width:100%;
+            width:65rem;
             margin-left:20px;
-            display: grid;
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+            /* display: grid;
             grid-template-columns: 1fr 1fr 1fr;
-            grid-template-rows: 1fr 1fr;
+            grid-template-rows: 1fr 1fr; */
         }
+
         .container>#calendar{
-            grid-column-start:1;
-            grid-column-end:3;
+            flex:0 1 40rem;
+            /* grid-column: span 2; */
         }
-        .container>#calendar-side{
-            margin:5rem 2rem 0rem 2rem;
-            display:grid;
+        
+        .container>#calendar-side-area{
+            /* grid-column: span 1; */
+            flex:1 1 20rem;
+            margin:5rem 1rem 0rem 1rem;
+            display:flex;
+            flex-direction: column;
             row-gap:0.5rem;
         }
 
-        #calendar-side>div{
-            border:1px solid rgba(255, 152, 56,0.5);
-            border-radius:1rem;
-        }
-
-        #calendar-form-container{
-            grid-row:span 3;
-            padding:1rem 1rem 1rem 1rem;
-        }
-
-        #calendar-form-container>div{
-            height:10%;
-            width:50%;
-            background-color:#FFE9D5;
-            border-radius:0.5rem;
-            font-size:1rem;
-            line-height:2rem;
-            vertical-align:center;
-            text-align: center;
-            color:#FF9838;
-        }
-
-        #calendar-form{
-            height:90%;
-            width:100%;
-            background-color:#FFCA99;
-            display:grid;
-        }
-
-        #calendar-form>div{
-            display:flex;
-            justify-content: center;
-            grid-row:span 1;
-            grid-column:span 1;
-            width:100%;
-            padding-top:0.5rem;
-        }
-
-        #calendar-form>div>label{
-            width:15%;
-        }
-
-        #calendar-form>div>input{
-            width:70%;
-            border: 1px solid;
-            background: transparent;
-        }
-
-        #calendar-form>button{
-            grid-row:span 2;
-            grid-column:span 1;
-            width:85%;
-            height:100%;
-            justify-self: center;
-            align-self: center;
-            background-color:#FFEDDD;
-            border-radius:0.5rem;
-        }
-
-
-        .grey-title{
-            color:rgba(255, 152, 56,0.5);
-            font-size:1rem;
-            line-height:2rem;
-            vertical-align:center;
-        }
-
-        #reminder-container{
-            display:grid;
-            grid-row:span 2;
-            padding:1rem 1rem 1rem 1rem;
-        }
-
-        #reminder{
-            height:100%;
-            width:100%;
-        }
-
-        #reminder>div{
-            display:flex;
-            justify-content: center;
-            grid-row:span 1;
-            grid-column:span 1;
-            width:100%;
-            padding-top:0.5rem;
-        }
-
-        #reminder>div>label{
-            width:15%;
-        }
-
-        #reminder>div>input{
-            width:70%;
-            border: 1px solid;
-            background: transparent;
-        }
-
-
-        #reminder>button{
-            width:85%;
-            height:20%;
-            background-color:#FFEDDD;
-            border-radius:0.5rem;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            margin-top:2%;
-        }
-
-
-        #todo-check-container{
-            display:grid;
-            grid-row:span 2;
-            padding:1rem 1rem 1rem 1rem;
-        }
-
-        #todo-check{
-            height:100%;
-            width:100%;
-        }
-
-        #todo-check>div{
-            display:flex;
-            justify-content: center;
-            grid-row:span 1;
-            grid-column:span 1;
-            width:100%;
-            padding-top:0.5rem;
-        }
-
-
+        
+        /* fullcalendar 설정 */
 
         .fc-header-toolbar{
             width: 40%;
@@ -302,8 +190,6 @@
         }
 
 
-
-
     </style>
 </head>
 <body>
@@ -321,76 +207,137 @@
        </div>-->
         <div class="container">
             <div id="calendar"></div>
-            <div id="calendar-side">
+            <div id="calendar-side-area">
                 <div id="calendar-form-container">
-                    <div>schedule maker</div>
+                    <div id="calendar-form-title">
+                        <span>schedule maker</span>
+                        <div>
+                            <button id="modifyButton" name="modify" type="button" onclick="onModify(this)">✏️</button>
+                            <button id="addButton" name="add" type="button" onclick="">➕</button>
+                        </div>
+                    </div>
                     <form id="calendar-form">
-                        <div>
-                            <label for="sDate">😶</label>
-                            <input type="text" id="sDate" name="sDate" value="2023-04-07" readonly>
+                        <div class="formItem">
+                            <label for="datepicker-box">😶</label>
+                            <div id="datepicker-box">
+                                <input class="formElement" type="date" id="datepicker" name="datepicker" value="2023-04-07" readonly>
+                            </div>
                         </div>
-                        <div>
-                            <label for="timeslot">😶</label>
-                           <input type="text" id="timeslot" name="timeslot" value="11:00 - 13:00" readonly>
+                        <div class="formItem">
+                            <label for="timeslotBox">😶</label>
+                            <div id="timeslotBox">
+                                <input class="formElement" type="select" id="timeslot1" name="timeslot" value="11" readonly>
+                                <input class="formElement" type="select" id="timeslot2" name="timeslot" value="00" readonly>
+                                <span>:</span>
+                                <input class="formElement" type="select" id="timeslot3" name="timeslot" value="13" readonly>
+                                <input class="formElement" type="select" id="timeslot4" name="timeslot" value="00" readonly>
+                            </div>
                         </div>
-                        <div>
-                            <label for="sTitle">😶</label>
-                           <input type="text" id="sTitle" name="sLocation" value="제목제목제목" readonly>
+                        <div class="formItem">
+                            <label for="sTitleBox">😶</label>
+                            <div id="sTitleBox">
+                               <input class="formElement" type="text" id="sTitle" name="sLocation" value="제목제목제목" readonly>
+                            </div>
                         </div>
-                        <div>
-                            <label for="sContent">😶</label>
-                           <input type="text" id="sContent" name="sContent" value="!@#$%내용" readonly>
+                       <div class="formItem">
+                            <label for="sContentBox">😶</label>
+                            <div id="sContentBox">
+                            <input class="formElement" type="text" id="sContent" name="sContent" value="!@#$%내용" readonly>
+                            </div>
+                       </div>
+                        <div class="formItem">
+                            <label for="locationBox">😶</label>
+                            <div id="locationBox">
+                               <input class="formElement" type="select" id="sLoc1" name="sLocation" value="세종특별자치시" readonly>
+                               <input class="formElement" type="select" id="sLoc2" name="sLocation" value="세종특별자치시" readonly>
+                            </div>
                         </div>
-                        <div>
-                            <label for="sLoc">😶</label>
-                           <input type="text" id="sLoc" name="sLocation" value="ABCDE시 ABCDEF구" readonly>
+                        <div class="formItem">
+                            <label id="changeColor" for="changeColor">👩‍🎨</label>
+                            <div id="colorBox">
+                                <div>
+                                    <label for="red">❤️</label>
+                                    <input class="formElement" type="radio" id="red"  name="sColor" readonly>
+                                </div>
+                               <div>
+                                    <label for="orange">🧡</label>
+                                    <input class="formElement" type="radio" id="orange"  name="sColor" readonly>
+                               </div>
+                                <div>
+                                    <label for="yellow">💛</label>
+                                    <input class="formElement" type="radio" id="yellow"  name="sColor" readonly>
+                                </div>
+                                <div>
+                                    <label for="blue-green">💚</label>
+                                    <input class="formElement" type="radio" id="blue-green"  name="sColor" readonly>
+                                </div>
+                                <div>
+                                    <label for="sky-blue">💙</label>
+                                    <input class="formElement" type="radio" id="sky-blue"  name="sColor" readonly>
+                                </div>
+                                <div>                          
+                                    <label for="purple">💜</label>
+                                    <input class="formElement" type="radio" id="purple"  name="sColor" readonly>
+                                </div>
+                            </div>
                         </div>
-                        <div>
-                            <label for="sColor">😶</label>
-                           <input type="color" id="sColor" name="sColor" value="" readonly>
+                        
+                        <div id="form-bottom-box" class="formItem">
+                            <button id="submitButton" name="rollbackButton" type="submit" >저장</button>
+                            <button id="rollbackButton" name="rollbackButton" type="button" onclick="rollbackForm()">취소</button>
                         </div>
-                        <button type="submit">변경하기</button>
+
                     </form>
                 </div>
                 <div id="reminder-container">
                     <div id="reminder">
-                        <div class="grey-title">reminder</div>
+                        <div class="orange-title">
+                            <div class="orange-title-text">reminder</div>
+                        </div>
                         <div>
                             <label for="stimeslot">😶</label>
-                            <input type="text" id="stimeslot" name="stimeslot" value="11:00 - 13:00" readonly>
+                            <input type="text" id="stimeslot" name="stimeslot" value="11:00 - 22:00" readonly>
                         </div>
                         <div>
                             <label for="ssLoc">😶</label>
                             <input type="text" id="ssLoc" name="ssLocation" value="ABCDE시 ABCDEF구" readonly>
                         </div>
                         <div>
+                            <label for="ssTitle">😶</label>
+                            <input type="text" id="ssTitle" name="ssTitle" value="일정제목" readonly>
+                        </div>
+                        <div>
                             <label for="ssContent">😶</label>
-                            <input type="text" id="ssContent" name="ssContent" value="!@#$%내용" readonly>
+                            <input type="text" id="ssContent" name="ssContent" value="일이삼사오육칠팔구십일이삼사오육" readonly>
+                        </div>
+                        <div>
+                            <label for="ssWeather">😶</label>
+                            <input type="text" id="ssWeather" name="ssContent" value="구름많음" readonly>
                         </div>
                         <button type="button">finish</button>
                     </div>
 
                 </div>
-                <div id="todo-check-container">
-                    <div id="todo-check">
-                        <div class="grey-title">to do list</div>
-                        <div class="checkbox-container">
-                            <input type="checkbox" id="open"  name="open" class="form-check-input">
-                            <label for="open" class="form-check-label">판매 오픈</label>
+                <div id="weather-check-container">
+                    <div id="weather-check">
+                        <div class="orange-title">
+                            <div class="orange-title-text">weathers!</div>
                         </div>
-                        <div class="checkbox-container">
-                            <input type="checkbox" id="schedule2"  name="schedule2" class="form-check-input">
-                            <label for="schedule2" class="form-check-label">만두 산책</label>
+                        <div class="weather-check-list">
+                            <div>
+                                <label for="cSky1">9시</label>
+                                <label for="cSky2">12시</label>
+                                <label for="cSky3">14시</label>
+                                <label for="cSky4">20시</label>
+                            </div>
+                            <div>
+                                <img class="cWeatherImg" id="cSky1" src="https://basmilius.github.io/weather-icons/production/line/all/star.svg">
+                                <img class="cWeatherImg" id="cSky2" src="https://basmilius.github.io/weather-icons/production/line/all/star.svg">
+                                <img class="cWeatherImg" id="cSky3" src="https://basmilius.github.io/weather-icons/production/line/all/star.svg">
+                                <img class="cWeatherImg" id="cSky4" src="https://basmilius.github.io/weather-icons/production/line/all/star.svg">
+                            </div>
                         </div>
-                        <div class="checkbox-container">
-                            <input type="checkbox" id="schedule3"  name="schedule3" class="form-check-input">
-                            <label for="schedule3" class="form-check-label">장보기</label>
-                        </div>
-                        <div class="checkbox-container">
-                            <input type="checkbox" id="schedule4"  name="schedule4" class="form-check-input">
-                            <label for="schedule4" class="form-check-label">화장실 청소</label>
-                        </div>
-
+                      
                     </div>
 
                 </div>
@@ -399,17 +346,17 @@
         </div>
     </div>
     <!-- 사이드바html에 페이지별 버튼 활성화 추가하고 싶었는데 타임리프 fragment는 메인화면으로 js를 못 가져와서 모든 페이지 하단에 추가함 -->
-    <script type="text/javascript" th:src="@{/js/menuactive.js}"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.5/index.global.min.js'></script>
-    <script>
 
+    <script>
       document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
           initialView: 'dayGridMonth',
           height: '80vh',
           selectable: false,
+          allDaySlot:false,
           headerToolbar: {
             left: 'dayGridMonth,timeGridWeek,timeGridDay,title,prev,next',
             right: ''
@@ -419,10 +366,18 @@
                   id: 'a',
                   title: 'my event',
                   start: '2023-03-11 00:00',
-                  end: '2023-03-12 00:00',
+                  end: '2023-03-11 17:00',
                   classNames: 'event1',
                   backgroundColor: 'lavender',
                   borderColor: 'lavender',
+                },
+                {
+                  id: 'c',
+                  title: 'my event3',
+                  start: '2023-04-25 00:00',
+                  end: '2023-04-26 23:00',
+                  backgroundColor: 'red',
+                  borderColor: 'red',
                 },
                 {
                   id: 'b',
@@ -430,16 +385,85 @@
                   start: '2023-03-11 16:00',
                   end: '2023-03-12 00:00',
                   classNames: 'event2',
-                  backgroundColor: 'blue',
-                  borderColor: 'blue',
+                  backgroundColor: 'hsl(120, 100%, 80%)',
+                  textColor: 'hsl(120, 90%, 30%)',
+                  borderColor: 'hsl(120, 100%, 80%)',
                   display: 'auto',
+                  extendedProps:{
+                    location1:'세종특별자치시',
+                    location2:'세종특별자치시',
+                    description:'에그타르트조지기',
+                    completed:true,
+                  },
                 },
           ],
+
+          eventClick: function(info) {
+                var eventId=info.event.id;
+                var eventDate=info.event.start;
+                var eventTitle=info.event.title;
+                var eventStart=info.event.start;
+                var eventEnd=info.event.end;
+                var classNames=info.event.classNames;
+                var back=info.event.backgroundColor;
+                var border=info.event.borderColor;
+                var loc1=info.event.extendedProps.location1;
+                var loc2=info.event.extendedProps.location2;
+                var des=info.event.extendedProps.description;
+                var allDay=info.event.allDay;
+                console.log(eventId);
+                console.log(eventDate);
+                console.log(eventTitle);
+                console.log(eventStart);
+                console.log(eventEnd);
+                console.log(back);
+                console.log(border);
+                console.log(loc1);
+                console.log(loc2);
+                console.log(des);
+                console.log(allDay);
+                $('#sTitle').val(eventTitle);
+                var eDate = new Date(eventDate);
+                var y=eDate.getFullYear();
+                var m=("0" + (eDate.getMonth() + 1)).slice(-2);
+                var d = ("0" + eDate.getDate()).slice(-2);
+                $('#datepicker').val(y+"-"+m+"-"+d);
+                $('#sContent').val(des);
+                $('#sLoc1').val(loc1);
+                $('#sLoc2').val(loc2);
+                var formattedStartTime=new Date(eventStart);
+                var startHour=formattedStartTime.getHours();
+                var startMin=(formattedStartTime.getMinutes()<10?'0':'') + formattedStartTime.getMinutes();
+                var formattedEndTime=new Date(eventEnd);
+                var endHour=formattedEndTime.getHours();
+                var endMin=(formattedEndTime.getMinutes()<10?'0':'') + formattedEndTime.getMinutes();
+                $('#timeslot').val(startHour+":"+startMin+" - "+endHour+":"+endMin);
+            },
         });
         calendar.render();
+
     });
+    </script>
+
+    <script type=text/javascript>
+        function onModify(modifyButton){
+            var formElements=document.getElementsByClassName("formElement");
+            for(let i=0;i<formElements.length;i++){
+                formElements[i].toggleAttribute('readonly');
+            }
+            var rightButton=document.getElementsById("rightButton");
+        }
+
+        modifyButton=document.getElementById('modifyButton');
+        modifyButton.addEventListener('click',function(){
+            var status=document.getElementById('').getAttribute('');
+        });
     </script>
     <script type="text/javascript" th:src="@{/js/menuactive.js}"></script>
 
+    <script>
+
+
+    </script>
 </body>
 </html>
