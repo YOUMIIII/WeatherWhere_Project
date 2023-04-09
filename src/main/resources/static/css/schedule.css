@@ -137,6 +137,10 @@ body{ /* 모든 서브페이지 최대한 통일하기 */
     background: transparent;
 }
 
+#calendar-form-title>div>button[disabled=disabled], #calendar-form-title>div>button:disabled {
+    opacity:0.2;
+}
+
 #calendar-form{
     height:90%;
     width:100%;
@@ -160,8 +164,14 @@ body{ /* 모든 서브페이지 최대한 통일하기 */
     display: inline-block;
 }
 
-#timeslotBox>input{
-    width:10%;
+#timeslotBox>div{
+    display: inline-block;
+}
+
+#timeslotBox>div>select{
+    display: inline-block;
+    border:none;
+    background-color: transparent;
 }
 
 #timeslotBox>span{
@@ -172,8 +182,13 @@ body{ /* 모든 서브페이지 최대한 통일하기 */
     display: inline-block;
 }
 
-#locationBox>input{
-    width:30%;
+#locationBox>div{
+    display: inline-block;
+}
+#locationBox>div>select{
+    display: inline-block;
+    border:none;
+    background-color: transparent;
 }
 
 #colorBox{
@@ -199,6 +214,10 @@ body{ /* 모든 서브페이지 최대한 통일하기 */
     margin-right: auto;
     margin-bottom: 0.5rem;
     margin-top:2%;
+}
+
+#form-bottom-box>button[disabled=disabled], #form-bottom-box>button:disabled {
+    opacity:0.2;
 }
 
 .orange-title{

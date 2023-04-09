@@ -219,10 +219,13 @@
 
                             }
                             if(value.parentRegion===loc1){
-                                if(value.childRegion===loc2){
-                                    $('#userLocation2').append('<option value="'+value.childRegion+'" selected>'+value.childRegion+'</option>');
-                                }else{
-                                    $('#userLocation2').append('<option value="'+value.childRegion+'">'+value.childRegion+'</option>');
+                                var hasOption2=$('#userLocation2 option[value="'+value.parentRegion+'"]').length;
+                                if(hasOption2==0){
+                                    if(value.childRegion===loc2){
+                                        $('#userLocation2').append('<option value="'+value.childRegion+'" selected>'+value.childRegion+'</option>');
+                                    }else{
+                                        $('#userLocation2').append('<option value="'+value.childRegion+'">'+value.childRegion+'</option>');
+                                    }
                                 }
                             }
                         });
