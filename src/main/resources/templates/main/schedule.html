@@ -65,7 +65,7 @@
         .container>#calendar-side-area{
             /* grid-column: span 1; */
             flex:1 1 20rem;
-            margin:5rem 1rem 0rem 1rem;
+            margin:3rem 1rem 0rem 1rem;
             display:flex;
             flex-direction: column;
             row-gap:0.5rem;
@@ -193,6 +193,11 @@
             font-size:1rem;
         }
 
+        .field-error {
+                border-color: #dc3545;
+                color: #dc3545;
+                font-size: 0.7rem;
+        }
 
     </style>
 </head>
@@ -209,67 +214,71 @@
         <div class="container">
             <div id="calendar"></div>
             <div id="calendar-side-area">
+                <div id="addButton-container">
+                    <button id="addButton" name="addButton" type="button" onclick="location.href='schedule/add'">add</button>
+                </div>
                 <div id="calendar-form-container">
                     <div id="calendar-form-title">
-                        <span>schedule maker</span>
+                        <span>schedule info</span>
                         <div>
-                            <button id="modifyButton" name="modify" type="button" onclick="onModify(this)">✏️</button>
-                            <button id="addButton" name="add" type="button" onclick="onAdd()">➕</button>
+                            <!-- <button id="modifyButton" name="modify" type="button">✏️</button> -->
+                            <!-- <button id="addButton" name="add" type="button" onclick="onAdd()">➕</button> -->
                         </div>
                     </div>
                     <form id="calendar-form">
                         <div class="formItem">
                             <label for="datepicker-box">😶</label>
                             <div id="datepicker-box">
-                                <input class="formElement" type="date" id="datepicker" name="datepicker" value="" readonly>
+                                <input class="formElement" type="date" id="datepicker" name="date" value="" readonly>
                             </div>
                         </div>
                         <div class="formItem">
                             <label for="timeslotBox">😶</label>
                             <div id="timeslotBox">
                                 <div>
-                                    <select id="timeslot1" name="timeslot" readonly>
+                                    <select id="timeslot1" name="startHour" readonly>
                                         <option value="">--</option>
                                     </select>
                                     <span>:</span>
-                                    <select id="timeslot2" name="timeslot" readonly>
+                                    <select id="timeslot2" name="startMin" readonly>
                                         <option value="">--</option>
                                     </select>
                                 </div>
                                 <div>
-                                    <select id="timeslot3" name="timeslot" readonly>
+                                    <select id="timeslot3" name="endHour" readonly>
                                         <option value="">--</option>
                                     </select>
                                     <span>:</span>
-                                    <select id="timeslot4" name="timeslot" readonly>
+                                    <select id="timeslot4" name="endMin" readonly>
                                         <option value="">--</option>
                                     </select>
                                 </div>
-                                <input type="hidden" id="sId">
+                            
+                                <input type="hidden" id="id" value="">
                             </div>
                         </div>
                         <div class="formItem">
                             <label for="sTitleBox">😶</label>
                             <div id="sTitleBox">
-                               <input class="formElement" type="text" id="sTitle" name="sLocation" value="" readonly>
+                                <input class="formElement" type="text" id="sTitle" name="title" value="" readonly>
                             </div>
                         </div>
                        <div class="formItem">
                             <label for="sContentBox">😶</label>
                             <div id="sContentBox">
-                            <input class="formElement" type="text" id="sContent" name="sContent" value="" readonly>
+                                <input class="formElement" type="text" id="sContent" name="discription"  value="" readonly>
                             </div>
                        </div>
                         <div class="formItem">
                             <label for="locationBox">😶</label>
                             <div id="locationBox">
                                 <div>
-                                    <select id="userLocation">
+                                    <select id="userLocation" name="userLocation" readonly>
                                         <option value="">시/도 선택</option>
                                     </select>
                                 </div>
                                 <div>
-                                    <select id="userLocation2">
+                                    <select id="userLocation2" name="userLocation2" readonly>
                                         <option value="">시/군/구 선택</option>
                                     </select>
                                 </div>
@@ -284,11 +293,11 @@
                                 </div>
                                <div>
                                     <label for="orange">🧡</label>
-                                    <input class="formElement" type="radio" id="orange"  name="sColor" value="orange" readonly>
+                                    <input class="formElement" type="radio" id="orange" name="sColor" value="orange" readonly>
                                </div>
                                 <div>
                                     <label for="yellow">💛</label>
-                                    <input class="formElement" type="radio" id="yellow"  name="sColor" value="yellow" readonly>
+                                    <input class="formElement" type="radio" id="yellow" name="sColor" value="yellow" readonly>
                                 </div>
                                 <div>
                                     <label for="green">💚</label>
@@ -296,23 +305,27 @@
                                 </div>
                                 <div>
                                     <label for="sky blue">💙</label>
-                                    <input class="formElement" type="radio" id="sky blue"  name="sColor" value="sky blue" readonly>
+                                    <input class="formElement" type="radio" id="sky blue" name="sColor" value="sky blue" readonly> 
                                 </div>
-                                <div>                          
+                                <div>
                                     <label for="purple">💜</label>
-                                    <input class="formElement" type="radio" id="purple"  name="sColor" value="purple" readonly>
+                                    <input class="formElement" type="radio" id="purple" name="sColor" value="purple" readonly>
                                 </div>
                             </div>
                         </div>
                         
                         <div id="form-bottom-box" class="formItem">
-                            <button id="submitButton" name="submitButton" type="submit" disabled>🔒</button>
-                            <button id="rollbackButton" name="rollbackButton" type="button">취소</button>
+                            <button id="editButton" name="editButton" type="button" onclick="toEditForm()">변경하기</button>
+                            <button id="deleteButton" name="deleteButton" type="button" onclick="toDelete()">삭제하기</button>
+                            <!-- <button class="" id="submitButton" name="submitButton" type="submit" disabled>🔒</button> -->
+                            <!-- <button id="rollbackButton" name="rollbackButton" type="button" onclick="">취소</button> -->
                         </div>
 
                     </form>
                 </div>
-                <div id="reminder-container">
+
+                
+                <!-- <div id="reminder-container">
                     <div id="reminder">
                         <div class="orange-title">
                             <div class="orange-title-text">reminder</div>
@@ -333,37 +346,10 @@
                             <label for="ssContent">😶</label>
                             <input type="text" id="ssContent" name="ssContent" value="일이삼사오육칠팔구십일이삼사오육" readonly>
                         </div>
-                        <div>
-                            <label for="ssWeather">😶</label>
-                            <input type="text" id="ssWeather" name="ssContent" value="구름많음" readonly>
-                        </div>
-                        <button type="button">finish</button>
                     </div>
 
-                </div>
-                <div id="weather-check-container">
-                    <div id="weather-check">
-                        <div class="orange-title">
-                            <div class="orange-title-text">weathers!</div>
-                        </div>
-                        <div class="weather-check-list">
-                            <div>
-                                <label for="cSky1">9시</label>
-                                <label for="cSky2">12시</label>
-                                <label for="cSky3">14시</label>
-                                <label for="cSky4">20시</label>
-                            </div>
-                            <div>
-                                <img class="cWeatherImg" id="cSky1" src="https://basmilius.github.io/weather-icons/production/line/all/star.svg">
-                                <img class="cWeatherImg" id="cSky2" src="https://basmilius.github.io/weather-icons/production/line/all/star.svg">
-                                <img class="cWeatherImg" id="cSky3" src="https://basmilius.github.io/weather-icons/production/line/all/star.svg">
-                                <img class="cWeatherImg" id="cSky4" src="https://basmilius.github.io/weather-icons/production/line/all/star.svg">
-                            </div>
-                        </div>
-                      
-                    </div>
-
-                </div>
+                </div> -->
+            
             </div>
         </div>
     </div>
@@ -374,228 +360,219 @@
 
     <script>
       document.addEventListener('DOMContentLoaded', function() {
-        loadArea('loadParent',$(this));
-        loadTime('init');
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-          initialView: 'dayGridMonth',
-          height: '80vh',
-          selectable: false,
-          allDaySlot:false,
-          headerToolbar: {
-            left: 'dayGridMonth,timeGridWeek,timeGridDay,title,prev,next',
-            right: ''
-          },
-          events: [
-                {
-                  id: 'a',
-                  title: 'my event',
-                  start: '2023-03-11 00:00',
-                  end: '2023-03-11 17:00',
-                  backgroundColor: 'hsl(210, 100%, 80%)',
-                  textColor: 'hsl(210, 90%, 30%)',
-                  borderColor: 'hsl(210, 100%, 80%)',
-                },
-                {
-                  id: 'c',
-                  title: 'my event3',
-                  start: '2023-04-25 00:00',
-                  end: '2023-04-25 23:00',
-                  backgroundColor: 'red',
-                  borderColor: 'red',
-                },
-                {
-                  id: 'b',
-                  title: 'my event2',
-                  start: '2023-03-11 16:00',
-                  end: '2023-03-12 00:00',
-                  backgroundColor: 'hsl(120, 100%, 80%)',
-                  textColor: 'hsl(120, 90%, 30%)',
-                  borderColor: 'hsl(120, 100%, 80%)',
-                  display: 'auto',
-                  extendedProps:{
-                    location1:'세종특별자치시',
-                    location2:'세종특별자치시',
-                    description:'카페에서 에그타르트 세트 먹기',
-                    completed:true,
-                  },
-                },
-          ],
+        // loadArea('loadParent',$(this));
+        // loadTime('init');
+        var request=$.ajax({
+            url:"/schedule/api/find/member",
+            method:"GET",
+            dataType:"json",
+        }).done(function(data){
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            height: '80vh',
+            selectable: false,
+            allDaySlot:false,
+            headerToolbar: {
+                left: 'dayGridMonth,timeGridWeek,timeGridDay,title,prev,next',
+                right: ''
+            },
+            events:data,
 
-          eventClick: function(info) {
-                // eventSaveTemp(info);
-                var eventId=info.event.id;
-                var eventDate=info.event.start;
-                var eventTitle=info.event.title;
-                var eventStart=info.event.start;
-                var eventEnd=info.event.end;
-                var back=info.event.backgroundColor;
-                var border=info.event.borderColor;
-                var loc1=info.event.extendedProps.location1;
-                var loc2=info.event.extendedProps.location2;
-                var des=info.event.extendedProps.description;
-                // console.log(eventId);
-                // console.log(eventDate);
-                // console.log(eventTitle);
-                // console.log(eventStart);
-                // console.log(eventEnd);
-                // console.log(back);
-                // console.log(border);
-                // console.log(loc1);
-                // console.log(loc2);
-                // console.log(des);
-                
-                //타이틀 ,id , date, 내용을 폼에 전달
-                $('#sTitle').val(eventTitle);
-                $('#sId').val(eventId);
-                var eDate = new Date(eventDate);
-                var y=eDate.getFullYear();
-                var m=("0" + (eDate.getMonth() + 1)).slice(-2);
-                var d = ("0" + eDate.getDate()).slice(-2);
-                $('#datepicker').val(y+"-"+m+"-"+d);
-                $('#sContent').val(des);
 
-                //지역값을 폼의 select에 전달
-                loadArea('event',loc1,loc2);
+            eventClick: function(info) {
+                    // eventSaveTemp(info);
+                    var eventId=info.event.id;
+                    var eventDate=info.event.start;
+                    var eventTitle=info.event.title;
+                    var eventStart=info.event.start;
+                    var eventEnd=info.event.end;
+                    var back=info.event.backgroundColor;
+                    var border=info.event.borderColor;
+                    var loc1=info.event.extendedProps.parentRegion;
+                    var loc2=info.event.extendedProps.childRegion;
+                    var des=info.event.extendedProps.description;
+                    // console.log(eventId);
+                    // console.log(eventDate);
+                    // console.log(eventTitle);
+                    // console.log(eventStart);
+                    // console.log(eventEnd);
+                    // console.log(back);
+                    // console.log(border);
+                    // console.log(loc1);
+                    // console.log(loc2);
+                    // console.log(des);
+                    
+                    //타이틀 ,id , date, 내용을 폼에 전달
+                    $('#sTitle').val(eventTitle);
+                    $('#id').val(eventId);
+                    var eDate = new Date(eventDate);
+                    var y=eDate.getFullYear();
+                    var m=("0" + (eDate.getMonth() + 1)).slice(-2);
+                    var d = ("0" + eDate.getDate()).slice(-2);
+                    $('#datepicker').val(y+"-"+m+"-"+d);
+                    $('#sContent').val(des);
 
-                //시간값을 폼의 select에 전달
-                loadTime("");
-                var formattedStartTime=new Date(eventStart);
-                console.log(formattedStartTime+'날씨 포맷 변경 테스트');
-                var startHour=formattedStartTime.getHours();
-                console.log(startHour+'날씨 포맷 변경 테스트 hour');
-                var startMin=(formattedStartTime.getMinutes()<10?'0':'') + formattedStartTime.getMinutes();
-                console.log(startMin+'날씨 포맷 변경 테스트 min');
-                var formattedEndTime=new Date(eventEnd);
-                var endHour=formattedEndTime.getHours();
-                var endMin=(formattedEndTime.getMinutes()<10?'0':'') + formattedEndTime.getMinutes();
-                $('#timeslot1').val(startHour);
-                $('#timeslot2').val(startMin);
-                $('#timeslot3').val(endHour);
-                $('#timeslot4').val(endMin);
+                    //지역값을 폼의 select에 전달
+                    $('#userLocation').append('<option value="'+loc1+'" selected>'+loc1+'</option>');
+                    $('#userLocation2').append('<option value="'+loc2+'" selected>'+loc2+'</option>');
 
-                // 색상 값이 hsl인 경우
-                var selectedColor=info.event.backgroundColor;
-                if(selectedColor.includes('hsl')){
-                    console.log('작동함');
-                    if(selectedColor.slice(4,5)=='0'){
-                        console.log('hsl red');
-                        selectedColor='red';
-                    }else if(selectedColor.slice(4,6)=='30'){
-                        console.log('hsl orange');
-                        selectedColor='orange';
-                    }else if(selectedColor.slice(4,6)=='60'){
-                        console.log('hsl yellow');
-                        selectedColor='yellow';
-                    }else if(selectedColor.slice(4,6)=='90'){
-                        selectedColor='lime green';
-                    }else{
-                        switch(selectedColor.slice(4,7)){
-                            case '120':
-                            console.log('hsl green');
-                            selectedColor='green';
-                            break;
-                            case '210':
-                            console.log('hsl sky blue');
-                            selectedColor='sky blue';
-                            break;
-                            case '270':
-                            console.log('hsl purple');
-                            selectedColor='purple';
-                            break;
+                    var formattedStartTime=new Date(eventStart);
+                    console.log(formattedStartTime+'날씨 포맷 변경 테스트');
+                    var startHour=(formattedStartTime.getHours()<10?'0':'') + formattedStartTime.getHours();
+                    console.log(startHour+'날씨 포맷 변경 테스트 hour');
+                    var startMin=(formattedStartTime.getMinutes()<10?'0':'') + formattedStartTime.getMinutes();
+                    console.log(startMin+'날씨 포맷 변경 테스트 min');
+                    var formattedEndTime=new Date(eventEnd);
+                    var endHour=(formattedEndTime.getHours()<10?'0':'') + formattedEndTime.getHours();
+                    var endMin=(formattedEndTime.getMinutes()<10?'0':'') + formattedEndTime.getMinutes();
+                    //시간값을 폼의 select에 전달
+                    $('#timeslot1').append('<option value="'+startHour+'" selected>'+startHour+'</option>');
+                    $('#timeslot2').append('<option value="'+startMin+'" selected>'+startMin+'</option>');
+                    $('#timeslot3').append('<option value="'+endHour+'" selected>'+endHour+'</option>');
+                    $('#timeslot4').append('<option value="'+endMin+'" selected>'+endMin+'</option>');
+
+                    // 색상 값이 hsl인 경우
+                    var selectedColor=info.event.backgroundColor;
+                    if(selectedColor.includes('hsl')){
+                        console.log('작동함');
+                        if(selectedColor.slice(4,5)=='0'){
+                            console.log('hsl red');
+                            selectedColor='red';
+                        }else if(selectedColor.slice(4,6)=='30'){
+                            console.log('hsl orange');
+                            selectedColor='orange';
+                        }else if(selectedColor.slice(4,6)=='60'){
+                            console.log('hsl yellow');
+                            selectedColor='yellow';
+                        }else if(selectedColor.slice(4,6)=='90'){
+                            selectedColor='lime green';
+                        }else{
+                            switch(selectedColor.slice(4,7)){
+                                case '120':
+                                console.log('hsl green');
+                                selectedColor='green';
+                                break;
+                                case '210':
+                                console.log('hsl sky blue');
+                                selectedColor='sky blue';
+                                break;
+                                case '270':
+                                console.log('hsl purple');
+                                selectedColor='purple';
+                                break;
+                            }
                         }
                     }
-                }
-                console.log("색 선택 : "+selectedColor);
-                document.forms['calendar-form'][selectedColor].checked=true;
-
-                $('#rollbackButton').on("click",function(){
-                    $('#sTitle').val(eventTitle);
-                    $('#sId').val(eventId);
-                    $('#datepicker').val(y+"-"+m+"-"+d);
-                    loadTime("init");
-                    $('#timeslot1').val(startHour);
-                    $('#timeslot2').val(startMin);
-                    $('#timeslot3').val(endHour);
-                    $('#timeslot4').val(endMin);
-                    $('#sContent').val(des);
-                    loadArea('event',loc1,loc2);
+                    console.log("색 선택 : "+selectedColor);
                     document.forms['calendar-form'][selectedColor].checked=true;
 
-                    var formElements=document.getElementsByClassName("formElement");
-                    for(let i=0;i<formElements.length;i++){
-                        formElements[i].setAttribute('readOnly','readonly');
-                    }
-                    
-                    if(document.getElementById('addButton').disabled){
-                        document.getElementById('addButton').disabled=false;
-                    }
+                    // $('#rollbackButton').on("click",function(){
+                    //     $('#sTitle').val(eventTitle);
+                    //     $('#id').val(eventId);
+                    //     $('#datepicker').val(y+"-"+m+"-"+d);
+                    //     loadTime("init");
+                    //     $('#timeslot1').val(startHour);
+                    //     $('#timeslot2').val(startMin);
+                    //     $('#timeslot3').val(endHour);
+                    //     $('#timeslot4').val(endMin);
+                    //     $('#sContent').val(des);
+                    //     loadArea('event',loc1,loc2);
+                    //     document.forms['calendar-form'][selectedColor].checked=true;
 
-                    if(document.getElementById('modifyButton').disabled){
-                        document.getElementById('modifyButton').disabled=false;
-                    }
-                    
-                    $('#submitButton').text('🔒');
-                    document.getElementById('submitButton').disabled=true;
-                });
+                    //     var formElements=document.getElementsByClassName("formElement");
+                    //     for(let i=0;i<formElements.length;i++){
+                    //         formElements[i].setAttribute('readOnly','readonly');
+                    //     }
+                        
+                    //     $('#submitButton').text('🔒');
+                    //     document.getElementById('submitButton').disabled=true;
+                    // });
+
+                    // $('#modifyButton').on("click",function(){
+                    //     loadArea('loadParent',$('#userLocation').val(),$('#userLocation2').val());
+                    //     loadTime("");
+                    //     $('#timeslot1 option').filter('[value='+startHour+']').attr('selected',true);
+                    //     $('#timeslot2 option').filter('[value='+startMin+']').attr('selected',true);
+                    //     $('#timeslot3 option').filter('[value='+endHour+']').attr('selected',true);
+                    //     $('#timeslot4 option').filter('[value='+endMin+']').attr('selected',true);
+                    //     var formElements=document.getElementsByClassName("formElement");
+                    //     for(let i=0;i<formElements.length;i++){
+                    //         formElements[i].readOnly = false;
+                    //     }
+                    //     // var addButton=document.getElementById('addButton');
+                    //     // addButton.setAttribute("disabled", "");
+
+                    //     document.getElementById('submitButton').disabled=false;
+                    //     $('#submitButton').text('변경사항 저장');
+
+                    //     var idValue=$('#id').val();
+                    //     console.log('변경 폼 : 스케줄 id'+idValue);
+
+                    //     $('#calendar-form').attr('action','/schedule/edit/'+idValue);
+                    // });
+
             },
+            });
+            calendar.render();
         });
-        calendar.render();
+
     });
 
-    function loadTime(loadType,inputData){
-        console.log('시간 설정 함수');
-        $('#timeslot1').empty();
-        $('#timeslot2').empty();
-        $('#timeslot3').empty();
-        $('#timeslot4').empty();
-        $('#timeslot1').append('<option value=-->--</option>');
-        $('#timeslot2').append('<option value=-->--</option>');
-        $('#timeslot3').append('<option value=-->--</option>');
-        $('#timeslot4').append('<option value=-->--</option>');
+    // function loadTime(loadType,inputData){
+    //     console.log('시간 설정 함수');
+    //     $('#timeslot1').empty();
+    //     $('#timeslot2').empty();
+    //     $('#timeslot3').empty();
+    //     $('#timeslot4').empty();
+    //     $('#timeslot1').append('<option value=-->--</option>');
+    //     $('#timeslot2').append('<option value=-->--</option>');
+    //     $('#timeslot3').append('<option value=-->--</option>');
+    //     $('#timeslot4').append('<option value=-->--</option>');
 
-        for(let i=0;i<=24;i++){
-            $('#timeslot1').append('<option value="'+i+'">'+i+'</option>');
-            $('#timeslot3').append('<option value="'+i+'">'+i+'</option>');
-        }
-        for(let i=0;i<=5;i++){
-            var min=i+'0';
-            $('#timeslot2').append('<option value="'+min+'">'+min+'</option>');
-            $('#timeslot4').append('<option value="'+min+'">'+min+'</option>');
-        }
+    //     for(let i=0;i<=24;i++){
+    //         var hour=(i<10)?'0'+i:i;
+    //         $('#timeslot1').append('<option value="'+hour+'">'+hour+'</option>');
+    //         $('#timeslot3').append('<option value="'+hour+'">'+hour+'</option>');
+    //     }
+    //     for(let i=0;i<=5;i++){
+    //         var min=i+'0';
+    //         $('#timeslot2').append('<option value="'+min+'">'+min+'</option>');
+    //         $('#timeslot4').append('<option value="'+min+'">'+min+'</option>');
+    //     }
 
-        if(loadType=='init'){
-            //이벤트를 받아올 경우 empty()로 값이 사라지지 않게 코드 실행 순서에 주의
-            $('#timeslot1').attr('disabled',true);
-            $('#timeslot2').attr('disabled',true);
-            $('#timeslot3').attr('disabled',true);
-            $('#timeslot4').attr('disabled',true);
-        }else{
-            $('#timeslot1').removeAttr('disabled');
-            $('#timeslot2').removeAttr('disabled');
-            $('#timeslot3').removeAttr('disabled');
-            $('#timeslot4').removeAttr('disabled');
-        }
+    //     if(loadType=='init'){
+    //         //이벤트를 받아올 경우 empty()로 값이 사라지지 않게 코드 실행 순서에 주의
+    //         $('#timeslot1').attr('disabled',true);
+    //         $('#timeslot2').attr('disabled',true);
+    //         $('#timeslot3').attr('disabled',true);
+    //         $('#timeslot4').attr('disabled',true);
+    //     }else{
+    //         $('#timeslot1').removeAttr('disabled');
+    //         $('#timeslot2').removeAttr('disabled');
+    //         $('#timeslot3').removeAttr('disabled');
+    //         $('#timeslot4').removeAttr('disabled');
+    //     }
 
+    // }
+    
+    function toEditForm(){
+        var idValue=$('#id').val();
+        location.href='/schedule/edit/'+idValue;
+    }
+
+    function toDelete(){
+        var idValue=$('#id').val();
+        location.href='/schedule/delete/'+idValue;
     }
 
     </script>
 
-    <script type=text/javascript>
-        function onModify(modifyButton){
-            loadArea('loadParent',$('#userLocation').val(),$('#userLocation2').val());
-            var formElements=document.getElementsByClassName("formElement");
-            for(let i=0;i<formElements.length;i++){
-                formElements[i].readOnly = false;
-            }
-            var addButton=document.getElementById('addButton');
-            addButton.setAttribute("disabled", "");
+    <!-- <script type=text/javascript>
 
-            document.getElementById('submitButton').disabled=false;
-            $('#submitButton').text('변경사항 저장');
-        }
-    </script>
-    <script type=text/javascript>
+    </script> -->
+
+    <!-- <script type=text/javascript>
         function onAdd(){
             //지역,시간 셀렉트박스 세팅
             $('#userLocation').val('');
@@ -610,29 +587,33 @@
             }
             //칼라 radio박스 초기값 - red
             document.forms['calendar-form']['red'].checked=true; 
-            //히든필드 이벤트 아이디값도 초기화
-            $('#sId').val('');
+            //히든필드 이벤트 아이디값도 초기화하고 disabled (여기에서 지정하지 않음)
+            $('#id').val('');
+            document.getElementById('id').disabled=true;
             
             var modifyButton=document.getElementById('modifyButton');
             modifyButton.setAttribute("disabled", "");
 
             document.getElementById('submitButton').disabled=false;
             $('#submitButton').text('생성하기');
+            $('#calendar-form').attr('action','/schedule/add');
         }
-    </script>
+    </script>  -->
 
     
 
-<script>//시간 셀렉트박스 함수
+<!-- <script>//시간 셀렉트박스 함수
 
     $('#timeslot1').on("change",function(){
         var value=$(this).val();
         $('#timeslot3').empty();
+        var valueSliced=(value<10)?parseInt(value.slice(1),10):value;
         if(value=='--'){
             loadTime("");
         }else{
-            for(let i=value;i<=24;i++){
-                $('#timeslot3').append('<option value="'+i+'">'+i+'</option>');
+            for(let i=valueSliced;i<=24;i++){
+                var hour=(i<10)?'0'+i:i;
+                $('#timeslot3').append('<option value="'+hour+'">'+hour+'</option>');
             }
         }   
     });
@@ -721,7 +702,7 @@
     }
 </script>
 
-
+</script> -->
 
     <script type="text/javascript" th:src="@{/js/menuactive.js}"></script>
 

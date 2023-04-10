@@ -84,6 +84,48 @@ body{ /* 모든 서브페이지 최대한 통일하기 */
     padding:1rem 1rem 1rem 1rem;
 }
 
+#addButton-container{
+    display:inline-block;
+    width:80%;
+    border:none;
+}
+
+#addButton{
+    display:inline-block;
+    width:100%;
+    line-height: 1.5rem;
+    background-color:#FFE9D5;
+    border-radius:0.5rem;
+}
+
+#editButton-container{
+    display:inline-block;
+    width:80%;
+    border:none;
+}
+
+#editButton{
+    display:inline-block;
+    width:100%;
+    line-height: 1.5rem;
+    background-color:#FFE9D5;
+    border-radius:0.5rem;
+}
+
+#deleteButton-container{
+    display:inline-block;
+    width:80%;
+    border:none;
+}
+
+#deleteButton{
+    display:inline-block;
+    width:100%;
+    line-height: 1.5rem;
+    background-color:#FFE9D5;
+    border-radius:0.5rem;
+}
+
 #calendar-form-container{
     display:inline-block;
     width:80%;
