@@ -19,6 +19,8 @@ import weatherwhere.team.service.BoardService;
 import weatherwhere.team.service.CommentService;
 import weatherwhere.team.web.SessionConst;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -63,7 +65,7 @@ public class BoardController {
     public String save(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
                        Model model,
                        @ModelAttribute("board") BoardDTO boardDTO)
-                                                                    throws IOException {
+            throws IOException {
         model.addAttribute("member", loginMember); // 사이드바
 //        System.out.println("boardDTO 에 저장된 userId : " + boardDTO.getUserId()); //UserId 확인용
         Long savedId = boardService.save(boardDTO);
@@ -79,14 +81,14 @@ public class BoardController {
         System.out.println("DB에 저장되는 boardDTO = " + boardDTO);
 
 
-        return "redirect:/board/"+savedId;
+        return "redirect:/board/" + savedId;
     }
 
     //즐겨찾기
     @PostMapping("/addfavorite") //즐겨찾기 추가 버튼 클릭 시 동작
     public String addfavorite(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model,
-                            @ModelAttribute("board")
-                            BoardDTO boardDTO)
+                              @ModelAttribute("board")
+                              BoardDTO boardDTO)
             throws IOException {
         model.addAttribute("member", loginMember); // 사이드바
 
@@ -119,10 +121,6 @@ public class BoardController {
 
         return "main/infoboard/detail";
     }
-
-
-
-
 
 
     @GetMapping("/board")
@@ -162,7 +160,6 @@ public class BoardController {
 //        System.out.println("\uD83D\uDC9A 상세보기 페이지로 반환된 boardDTO = " + boardDTO);
 
 
-
         return "main/infoboard/detail";
     }
 
@@ -199,16 +196,22 @@ public class BoardController {
     }
 
     //삭제 코드 작성 완료
+    //todo :  삭제버튼 수정 예정 -> boardId로 즐겨찾기 id를 어떻게 찾았는지 확인하기
+    //삭제 버튼 클릭 -> boardId를 가지고 즐겨찾기 목록의 id를 찾아서 즐겨찾기 목록에서 삭제 -> 게시판 목록에서 삭제
     @GetMapping("/delete/{id}")
     public String delete(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
                          @PathVariable("id") Long id,
                          RedirectAttributes redirectAttributes) { // 삭제 버튼 클릭 시 동작하는 부분
         System.out.println("삭제 버튼 클릭");
 //        boardService. // userId 가져오기
+
+//        boardService.deleteFavorite(id); //즐겨찾기 목록 삭제
         BoardDTO boardDTO = boardService.findById(id);
-        redirectAttributes.addAttribute("parentRegion",boardDTO.getParentRegion());
+
+//        FavoriteDTO favoriteDTO = favoriteRepository.findOne()
+        redirectAttributes.addAttribute("parentRegion", boardDTO.getParentRegion());
         redirectAttributes.addAttribute("childRegion", boardDTO.getChildRegion());
-        String userId= boardDTO.getUserId();
+        String userId = boardDTO.getUserId();
 //        System.out.println("로그인 ID = " + loginMember.getUserId()); //로그인 userId 확인용
 //        System.out.println("글작성 ID = " + userId); // 글 작성자
 //        System.out.println("게시글 번호 : id = " + id); //글 번호
@@ -223,7 +226,6 @@ public class BoardController {
 
     }
 
-    // /board/paging?page=1
     @GetMapping("/paging")
     public String paging(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
                          @PageableDefault(page = 1) Pageable pageable, Model model) {
@@ -253,29 +255,29 @@ public class BoardController {
                                  @PageableDefault(page = 1) Pageable pageable,
                                  @RequestParam String parentRegion,
                                  @RequestParam String childRegion,
-                                 Model model){
+                                 Model model) {
 
-        Page<BoardDTO> boardList = boardService.searchRegionAndPaging(parentRegion,childRegion,pageable);
+        Page<BoardDTO> boardList = boardService.searchRegionAndPaging(parentRegion, childRegion, pageable);
         int blockLimit = 5;
         int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
         int endPage = ((startPage + blockLimit - 1) < boardList.getTotalPages()) ? startPage + blockLimit - 1 : boardList.getTotalPages();
 
-        if(!boardList.isEmpty()){
-            log.info("getTotalPages {}",boardList.getTotalPages());
-            log.info("getTotalElements {}",boardList.getTotalElements());
-            log.info("getNumber {}",boardList.getNumber());
+        if (!boardList.isEmpty()) {
+            log.info("getTotalPages {}", boardList.getTotalPages());
+            log.info("getTotalElements {}", boardList.getTotalElements());
+            log.info("getNumber {}", boardList.getNumber());
             log.info("getNumberOfElements {}", boardList.getNumberOfElements());
             log.info("hasPrevious {}", boardList.hasPrevious());
             log.info("hasNext {}", boardList.hasNext());
-            log.info("isFirst : {}",boardList.isFirst());
-            log.info("isLast : {}",boardList.isLast());
+            log.info("isFirst : {}", boardList.isFirst());
+            log.info("isLast : {}", boardList.isLast());
         }
 
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
 
         model.addAttribute("member", loginMember);
-        model.addAttribute("parentRegion",parentRegion);
+        model.addAttribute("parentRegion", parentRegion);
         model.addAttribute("childRegion", childRegion);
         model.addAttribute("boardList", boardList);
         return "main/infoboard";

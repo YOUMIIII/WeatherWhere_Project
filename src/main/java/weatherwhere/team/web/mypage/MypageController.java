@@ -2,6 +2,9 @@ package weatherwhere.team.web.mypage;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.json.JSONParser;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -29,7 +32,9 @@ import weatherwhere.team.web.SessionConst;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.List;
+import java.util.*;
+
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @Slf4j
 @Controller
@@ -45,7 +50,7 @@ public class MypageController {
 
 
     @GetMapping("")
-    public String mypage(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){
+    public String mypage(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model) {
 
         //세션이 유지되면 스케줄으로 이동
         model.addAttribute("member", loginMember);
@@ -54,15 +59,15 @@ public class MypageController {
 
 
     @GetMapping("/update-information-checkpw")
-    public String checkPw(HttpServletRequest request, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){
+    public String checkPw(HttpServletRequest request, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model) {
         model.addAttribute("member", loginMember);
         model.addAttribute("memberCheckPwForm", new MemberCheckPwForm());
         return "main/mypage/updatemyinfo-checkpw";
     }
 
     @PostMapping("/update-information-checkpw")
-    public String checkPwSuccess(@Validated @ModelAttribute("memberCheckPwForm") MemberCheckPwForm form, BindingResult bindingResult, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){
-        if(!(form.getUserPw().equals(loginMember.getUserPw()))){
+    public String checkPwSuccess(@Validated @ModelAttribute("memberCheckPwForm") MemberCheckPwForm form, BindingResult bindingResult, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model) {
+        if (!(form.getUserPw().equals(loginMember.getUserPw()))) {
             bindingResult.addError(
                     new FieldError("memberCheckPwForm", "userPw", form.getUserPw(), false, null, null, "기존 비밀번호와 일치하지 않습니다.")
             );
@@ -76,17 +81,17 @@ public class MypageController {
         return "redirect:/mypage/update-information-select";
     }
 
-    public void setBringPw(String pw){
+    public void setBringPw(String pw) {
         this.pw = pw;
     }
 
-    public String bringPw(){
+    public String bringPw() {
         return pw;
     }
 
     @GetMapping("/update-information-select")
-    public String updateInfoSelect(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){
-        if(bringPw().equals("")){
+    public String updateInfoSelect(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model) {
+        if (bringPw().equals("")) {
             model.addAttribute("member", loginMember);
             model.addAttribute("memberCheckPwForm", new MemberCheckPwForm());
             return "redirect:/mypage/update-information-checkpw";
@@ -96,8 +101,8 @@ public class MypageController {
     }
 
     @GetMapping("/update-information-pw")
-    public String updateInfoPw(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){
-        if(bringPw().equals("")){
+    public String updateInfoPw(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model) {
+        if (bringPw().equals("")) {
             model.addAttribute("member", loginMember);
             model.addAttribute("memberCheckPwForm", new MemberCheckPwForm());
             return "redirect:/mypage/update-information-checkpw";
@@ -108,13 +113,13 @@ public class MypageController {
     }
 
     @PostMapping("/update-information-pw")
-    public String updateInfoPwSuccess(@Validated @ModelAttribute("memberEditPwForm") MemberEditPwForm form, BindingResult bindingResult, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model, RedirectAttributes redirectAttributes, HttpServletRequest request){
-        if(!(form.getUserPw().equals(form.getUserPwCheck()))){
+    public String updateInfoPwSuccess(@Validated @ModelAttribute("memberEditPwForm") MemberEditPwForm form, BindingResult bindingResult, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model, RedirectAttributes redirectAttributes, HttpServletRequest request) {
+        if (!(form.getUserPw().equals(form.getUserPwCheck()))) {
             model.addAttribute("member", loginMember);
-            bindingResult.reject("pwError","작성하신 비밀번호가 일치하지 않습니다.");
+            bindingResult.reject("pwError", "작성하신 비밀번호가 일치하지 않습니다.");
         }
 
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             model.addAttribute("member", loginMember);
             //에러있으면 다시 수정페이지로.
             return "main/mypage/updatemypw";
@@ -125,7 +130,7 @@ public class MypageController {
         HttpSession session = request.getSession();
         session.setAttribute(SessionConst.LOGIN_MEMBER, updateMember);
 
-        log.info("회원 {} 정보 변경 : 지역 {} , {}",updateMember.getUserId(),updateMember.getParentRegion(),updateMember.getChildRegion());
+        log.info("회원 {} 정보 변경 : 지역 {} , {}", updateMember.getUserId(), updateMember.getParentRegion(), updateMember.getChildRegion());
 
         //정상적으로 수정되면 모달창 띄우기 위해 status값 전달
         redirectAttributes.addAttribute("status", true);
@@ -136,8 +141,8 @@ public class MypageController {
     //비밀번호 외의 정보수정
 
     @GetMapping("/update-information")
-    public String updateInfo(HttpServletRequest request, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){
-        if(bringPw().equals("")){
+    public String updateInfo(HttpServletRequest request, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model) {
+        if (bringPw().equals("")) {
             model.addAttribute("member", loginMember);
             model.addAttribute("memberCheckPwForm", new MemberCheckPwForm());
             return "redirect:/mypage/update-information-checkpw";
@@ -151,7 +156,7 @@ public class MypageController {
     @PostMapping("/update-information")
     public String successUpdateInfo(@Validated @ModelAttribute("memberEditForm") MemberEditForm form, BindingResult bindingResult, MultipartFile file, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model, RedirectAttributes redirectAttributes, HttpServletRequest request) throws Exception {
 
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             model.addAttribute("member", loginMember);
             //에러있으면 다시 수정페이지로.
             return "main/mypage/updatemyinfo";
@@ -159,10 +164,10 @@ public class MypageController {
 
         //수정 폼이 정상일 경우
         String essentialPhotoPath = "/img/home/profile/profile.png";
-        if(file.isEmpty()){
-            if(loginMember.getUserPhoto().equals(essentialPhotoPath)){
+        if (file.isEmpty()) {
+            if (loginMember.getUserPhoto().equals(essentialPhotoPath)) {
                 form.setUserPhoto(essentialPhotoPath); // 사진 등록 안하면 기본사진
-            }else {
+            } else {
                 form.setUserPhoto(loginMember.getUserPhoto());
             }
         } else {
@@ -173,9 +178,9 @@ public class MypageController {
         Member updateMember = memberService.updateMember(loginMember.getId(), form);
         //SessionAttribute 도 함께 수정
         HttpSession session = request.getSession();
-        session.setAttribute(SessionConst.LOGIN_MEMBER,updateMember);
+        session.setAttribute(SessionConst.LOGIN_MEMBER, updateMember);
 
-        log.info("회원 {} 정보 변경 : 지역 {} , {}",updateMember.getUserId(),updateMember.getParentRegion(),updateMember.getChildRegion());
+        log.info("회원 {} 정보 변경 : 지역 {} , {}", updateMember.getUserId(), updateMember.getParentRegion(), updateMember.getChildRegion());
 
         //정상적으로 수정되면 모달창 띄우기 위해 status값 전달
         redirectAttributes.addAttribute("status", true);
@@ -184,7 +189,7 @@ public class MypageController {
     }
 
     @GetMapping("/mycloset")
-    public String mycloset(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){
+    public String mycloset(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model) {
         List<Cloth> clothes = clothService.findAll(loginMember.getUserId());
         List<Cloth> favorites = clothService.findFavorites(loginMember.getUserId());
         List<Cloth> tops = clothService.findTops(loginMember.getUserId());
@@ -198,15 +203,15 @@ public class MypageController {
     }
 
     @GetMapping("/mycloset/addcloth")
-    public String addClothForm(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){
+    public String addClothForm(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model) {
         model.addAttribute("member", loginMember);
         model.addAttribute("cloth", new Cloth());
         return "main/mypage/addcloth";
     }
 
     @PostMapping("/mycloset/addcloth")
-    public String addCloth(@Validated @ModelAttribute("cloth") ClothAddForm form, BindingResult bindingResult, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, MultipartFile file, RedirectAttributes redirectAttributes, Model model) throws Exception{
-        if(bindingResult.hasErrors()){
+    public String addCloth(@Validated @ModelAttribute("cloth") ClothAddForm form, BindingResult bindingResult, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, MultipartFile file, RedirectAttributes redirectAttributes, Model model) throws Exception {
+        if (bindingResult.hasErrors()) {
             model.addAttribute("member", loginMember);
             return "main/mypage/addcloth";
         }
@@ -228,7 +233,7 @@ public class MypageController {
     }
 
     @GetMapping("/mycloset/{cId}")
-    public String cloth(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, @PathVariable Long cId, Model model){
+    public String cloth(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, @PathVariable Long cId, Model model) {
         Cloth cloth = clothService.findById(cId, loginMember.getUserId());
         model.addAttribute("cloth", cloth);
         model.addAttribute("member", loginMember);
@@ -236,7 +241,7 @@ public class MypageController {
     }
 
     @GetMapping("/mycloset/{cId}/edit")
-    public String editClothForm(@PathVariable Long cId, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){
+    public String editClothForm(@PathVariable Long cId, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model) {
         Cloth cloth = clothService.findById(cId, loginMember.getUserId());
         model.addAttribute("cloth", cloth);
         model.addAttribute("member", loginMember);
@@ -244,14 +249,14 @@ public class MypageController {
     }
 
     @PostMapping("/mycloset/{cId}/edit")
-    public String edit(@PathVariable Long cId, @ModelAttribute ClothUpdateForm updateParam, BindingResult bindingResult, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, MultipartFile file, Model model) throws Exception{
+    public String edit(@PathVariable Long cId, @ModelAttribute ClothUpdateForm updateParam, BindingResult bindingResult, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, MultipartFile file, Model model) throws Exception {
         clothService.update(cId, updateParam, file);
         model.addAttribute("member", loginMember);
         return "redirect:/mypage/mycloset/{cId}";
     }
 
     @PostMapping("/mycloset/{cId}")
-    public String delete(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, @PathVariable Long cId, Model model){
+    public String delete(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, @PathVariable Long cId, Model model) {
         clothService.delete(cId, loginMember.getUserId());
         List<Cloth> clothes = clothService.findAll(loginMember.getUserId());
         model.addAttribute("member", loginMember);
@@ -261,7 +266,7 @@ public class MypageController {
 
 
     @GetMapping("/diary")
-    public String diary(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){
+    public String diary(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model) {
         List<Diary> diaries = clothService.findAllDiary(loginMember.getUserId());
         model.addAttribute("diaries", diaries);
         model.addAttribute("member", loginMember);
@@ -269,7 +274,7 @@ public class MypageController {
     }
 
     @GetMapping("/diary/add")
-    public String addDiary(@ModelAttribute("diaryForm") DiaryAddForm form, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){
+    public String addDiary(@ModelAttribute("diaryForm") DiaryAddForm form, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model) {
         List<Cloth> clothes = clothService.findAll(loginMember.getUserId());
         model.addAttribute("member", loginMember);
         model.addAttribute("clothes", clothes);
@@ -277,8 +282,8 @@ public class MypageController {
     }
 
     @PostMapping("/diary/add")
-    public String addDiaryForm(@ModelAttribute("diaryForm") DiaryAddForm form, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, BindingResult bindingResult, MultipartFile file, RedirectAttributes redirectAttributes, Model model ) throws Exception{
-        if(bindingResult.hasErrors()){
+    public String addDiaryForm(@ModelAttribute("diaryForm") DiaryAddForm form, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, BindingResult bindingResult, MultipartFile file, RedirectAttributes redirectAttributes, Model model) throws Exception {
+        if (bindingResult.hasErrors()) {
             model.addAttribute("member", loginMember);
             return "main/mypage/adddiary";
         }
@@ -321,8 +326,8 @@ public class MypageController {
 
     @GetMapping("/favorite") //즐겨찾기 페이지에 들어갈 때
     public String myFavorite(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
-                             @PageableDefault(page = 1) Pageable pageable, Model model){
-        System.out.println("💙"+"🧡"+"💚");
+                             @PageableDefault(page = 1) Pageable pageable, Model model) {
+        System.out.println("💙" + "🧡" + "💚");
 
         // DB 에서 전체 게시글 데이터를 가져와서 list.html 에 보여준다.
 //        List<BoardDTO> boardDTOList = boardService.findAll();
@@ -332,8 +337,6 @@ public class MypageController {
         List<FavoriteDTO> favoriteDTOList = boardService.findAll(loginMember.getUserId());
         model.addAttribute("favoList", favoriteDTOList);
         System.out.println("🧡favoriteDTOList = " + favoriteDTOList);
-
-
 
 
 //        pageable.getPageNumber();
@@ -346,33 +349,33 @@ public class MypageController {
 //            FavoriteEntity favoriteEntity의 getId()를 하면 되는데
 
 //           Page<FavoriteDTO> favoriteList = boardService.favoritePaging(pageable); //DB에서 꺼내오기 게시글DB에서 꺼내거는건데 기준에
-            
+
         //  원래 아래 코드
-           Page<BoardDTO> favoriteList = boardService.favoritePaging(pageable); //DB에서 꺼내오기 게시글DB에서 꺼내거는건데 기준에
-            int blockLimit = 3;
-            int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1; // 1 4 7 10 ~~
-            int endPage = ((startPage + blockLimit - 1) < favoriteList.getTotalPages()) ? startPage + blockLimit - 1 : favoriteList.getTotalPages();
+        Page<BoardDTO> favoriteList = boardService.favoritePaging(pageable); //DB에서 꺼내오기 게시글DB에서 꺼내거는건데 기준에
+        int blockLimit = 3;
+        int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1; // 1 4 7 10 ~~
+        int endPage = ((startPage + blockLimit - 1) < favoriteList.getTotalPages()) ? startPage + blockLimit - 1 : favoriteList.getTotalPages();
 
         System.out.println("\uD83D\uDC9AfavoriteList.get() = " + favoriteList.get());
 
-            // page 갯수 20개
-            // 현재 사용자가 3페이지
-            // 1 2 3
-            // 현재 사용자가 7페이지
-            // 7 8 9
-            // 보여지는 페이지 갯수 3개
-            // 총 페이지 갯수 8개
+        // page 갯수 20개
+        // 현재 사용자가 3페이지
+        // 1 2 3
+        // 현재 사용자가 7페이지
+        // 7 8 9
+        // 보여지는 페이지 갯수 3개
+        // 총 페이지 갯수 8개
 
 
 //            model.addAttribute("favoId", FavoriteEntity);
-            model.addAttribute("boardList", favoriteList);
-            model.addAttribute("startPage", startPage);
-            model.addAttribute("endPage", endPage);
-            model.addAttribute("member", loginMember);
+        model.addAttribute("boardList", favoriteList);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("member", loginMember);
         return "main/mypage/favorite";
     }
 
-//    @GetMapping("/favorite/{id}") //detail.html 화면에 넘겨줄 정보들
+    //    @GetMapping("/favorite/{id}") //detail.html 화면에 넘겨줄 정보들
     @GetMapping("/{id}") //detail.html 화면에 넘겨줄 정보들
     public String findById(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
                            @PathVariable Long id, Model model,
@@ -387,23 +390,36 @@ public class MypageController {
 
         //id가 아마 즐겨찾기 게시판 id 일 때
         //-> BoardService.favoriteFindById로  favoriteDTO.boardId를 찾고 이걸로 ->  boardDTO.getId(id)를 하고
-       //return Long id 하기
+        //return Long id 하기
         //아래 코드 실행
 //        BoardDTO boardDTO = boardService.findById(id);
         FavoriteDTO findFavoriteDTO = boardService.favoriteFindById(id);
         Long boardId = findFavoriteDTO.getBoardId();
 
+        //fav.Id가 있을떄
+        model.addAttribute("fav", findFavoriteDTO);
+
         BoardDTO boardDTO = boardService.findById(boardId);
         System.out.println("\uD83D\uDC9A 상세보기 페이지로 반환된 boardDTO = " + boardDTO);
-//        /* 댓글 목록 가져오기 */
-//        List<CommentDTO> commentDTOList = commentService.findAll(id);
-//        System.out.println("\uD83E\uDDE1 commentDTOList = " + commentDTOList);
-//        model.addAttribute("commentList", commentDTOList); //댓글 목록
-//        model.addAttribute("board", boardDTO); //게시글 정보
-//        model.addAttribute("page", pageable.getPageNumber());
         return "main/infoboard/detail";
     }
 
 
+//    @ResponseBody
+    @PostMapping("/favdelete")
+    public String favDelete(@RequestParam(value = "id") String[] id) throws Exception { //여기 id를 object로 받기
+
+        System.out.println("id = " + id.toString());
+        for (String s : id) {
+            Long boardId = Long.parseLong(s);
+            System.out.println("💙s = " + s);
+            boardService.deleteFavorite(boardId);
+            System.out.println("💙boardId = " + boardId);
+        }
+
+            System.out.println("💙💚");
+        return "redirect:/mypage/favorite?page=1";
+//        return "redirect:/mypage/favorite";
+    }
 
 }

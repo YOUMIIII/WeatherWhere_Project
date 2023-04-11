@@ -9,7 +9,6 @@ import org.springframework.web.multipart.MultipartFile;
 import weatherwhere.team.domain.board.BoardEntity;
 import weatherwhere.team.domain.board.BoardFileEntity;
 import weatherwhere.team.domain.board.FavoriteEntity;
-import weatherwhere.team.domain.member.Member;
 import weatherwhere.team.repository.board.*;
 
 import java.io.File;
@@ -96,7 +95,7 @@ public class BoardService {
     @Transactional
     public List<FavoriteDTO> findAll(String memberId) {
         List<FavoriteEntity> favoriteEntityList = favoriteRepository.findAll();
-        List<FavoriteDTO>favoriteDTOList = new ArrayList<>();
+        List<FavoriteDTO> favoriteDTOList = new ArrayList<>();
         for (FavoriteEntity favoriteEntity : favoriteEntityList) {
             favoriteDTOList.add(FavoriteDTO.toFavoriteDTOList(favoriteEntity));
 //            favoriteDTOList.add(BoardDTO.toBoardDTO(boardEntity));
@@ -138,7 +137,7 @@ public class BoardService {
 //        return favoEntity.getId();
     }
 
-        //원본
+    //원본
     public Page<BoardDTO> favoritePaging(Pageable pageable) {
         int page = pageable.getPageNumber() - 1;
         int pageLimit = 5; // 한 페이지에 보여줄 글 갯수
@@ -251,7 +250,18 @@ public class BoardService {
     }
 
     public void delete(Long id) {
+        deleteFavorite(id);
         boardRepository.deleteById(id);
+    }
+
+
+    //즐겨찾기 목록 삭제
+    public void deleteFavorite(Long id) {
+
+        Optional<BoardEntity> boardRepositoryById = boardRepository.findById(id);
+        Long favId = favoriteRepository.findByBoardEntity(boardRepositoryById).get().getId();
+        System.out.println("💙favId = " + favId);
+        favoriteRepository.deleteById(favId);
     }
 
     public Page<BoardDTO> paging(Pageable pageable) {

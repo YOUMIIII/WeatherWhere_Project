@@ -22,18 +22,24 @@
     </div>
     <div id="boarddetailmain">
         <div id="boarddetailbtn">
-            <!--            todo(dayi) : 즐겨찾기 추가 버튼 동작하도록 수정 필요-->
-            <!--            <button type="submit" id="addfavorite" th:onclick="addfavorite">즐겨찾기 추가</button>-->
-            <input type="submit" id="addfavorite" name="boardetailmain" value="즐겨찾기 추가" th:onclick="addfavorite()">
+            <input
+                    type="submit" id="addfavorite" name="boardetailmain" value="즐겨찾기 추가" th:onclick="addfavorite()">
+<!--                    th:?????????="${#strings.equals(fav?.id)}"-->
 
             <button th:onclick="|location.href='@{/board/paging/region(parentRegion=${board.parentRegion},childRegion=${board.childRegion},page=${page})}'|">
                 목록
             </button>
+
+            <button
+                    th:if="${#strings.equals(fav?.id)}"
+                    th:onclick="|location.href='@{/mypage/favorite}'|">
+                목록
+            </button>
+
             <!--            todo(dayi) : 수정할 때 첨부 파일이 날아가는 부분 수정필요-->
             <button th:if="${#strings.equals(member.userId, board.userId)}"
                     th:onclick="|location.href='@{/board/update/{id}(id=${board?.id})}'|">수정
             </button>
-            <!--            <button th:onclick="updateReq()">수정</button>-->
             <button th:if="${#strings.equals(member.userId, board.userId)}"
                     th:onclick="|location.href='@{/board/delete/{id}(id=${board?.id})}'|">삭제
             </button>
@@ -193,6 +199,9 @@ const addfavorite = () => {
      console.log("요청성공", res);
      }
   });
+    let text = "즐겨찾기 추가되었습니다.";
+    alert(text);
+
 }
 
 

@@ -5,32 +5,27 @@
     <meta charset="UTF-8">
     <title>즐겨찾기 게시글</title>
     <link rel="stylesheet" type="text/css" href="../../../static/css/mypage.css" th:href="@{/css/mypage.css}">
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+            integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <script type="text/javascript" th:src="@{/js/menuactive.js}"></script>
 </head>
 <body>
 <div>
-  <div class="leftBar" th:insert="~{main/sidebar :: sidebar}">
-  </div>
+    <div class="leftBar" th:insert="~{main/sidebar :: sidebar}">
+    </div>
 </div>
 <div class="maincontent">
-  <div class="introduce">
-      <div id="topT">마이페이지</div>
-      <div>즐겨찾기 게시글</div>
-      <!-- 멘트는 뺄까 고민중 입니다
-      <div id="subT">내가 다시 보고싶은 게시글들이 모여있어요👍 <br>
-          즐겨찾기 목록에 추가하고 싶다면 지역별정보 게시판에서 마음에 드는 게시글에 즐겨찾기 등록 버튼을 클릭하세요!</div>-->
-  </div>
+    <div class="introduce">
+        <div id="topT">마이페이지</div>
+        <div>즐겨찾기 게시글</div>
+        <!-- 멘트는 뺄까 고민중 입니다
+        <div id="subT">내가 다시 보고싶은 게시글들이 모여있어요👍 <br>
+            즐겨찾기 목록에 추가하고 싶다면 지역별정보 게시판에서 마음에 드는 게시글에 즐겨찾기 등록 버튼을 클릭하세요!</div>-->
+    </div>
     <div id="mainLayout">
         <div id="option">
-<!--            <div id="optionselect">-->
-<!--                <select >-->
-<!--                    <option value="">시/도 선택</option>-->
-<!--                    <option>서울특별시</option>-->
-<!--                </select>-->
-<!--                <select id="userLocation2">-->
-<!--                    <option value="">시/군/구 선택</option>-->
-<!--                    <option>세종특별자치시</option>-->
-<!--                </select>-->
-<!--            </div>-->
+
             <div>
                 <select id="searchoption">
                     <option value="">옵션선택</option>
@@ -44,56 +39,51 @@
             </div>
             <div>
                 <button class="favBtn" id="favsearch">검색</button>
-                <button class="favBtn" th:onclick="|location.href=''|">삭제</button>
+            </div>
+            <div id="delete">
+                <!--                <button class="favBtn" th:onclick="getCheck();">삭제</button>-->
+                <!--                <button class="favBtn" id="deleteBtn" th:onclick="doDelete();">삭제</button>-->
+                <button class="favBtn" id="deleteBtn">삭제</button>
             </div>
         </div>
         <div id="board">
             <table>
                 <tr>
-<!--                    <th>번호</th>-->
-                    <th><input type="checkbox" /></th>
-                    <th>글번호</th>
+                    <th><input type="checkbox" id="checkAll" onclick="checkAll();"/></th>
+                    <th>게시글번호</th>
                     <th>유형</th>
-<!--                    <th class="boardTitle">제목</th>-->
                     <th>제목</th>
                     <th>작성자</th>
                     <th>작성일</th>
                     <th>지역</th>
 
                 </tr>
-<!--                 마이페이지에서 연결되는 부분 표시-->
-<!--                <button th:onclick="|location.href='@{/mypage/favorite}'|">👍 즐겨찾기 게시글</button>-->
-                        <!--board -> bookmark-->
-
-<!--                <tr th:each="favo: ${favoList.boardDTO}" >-->
-<!--                    <td th:text="${favoList?.id}"></td>-->
-<!--                    <td th:text="${favo?.userId}"></td>-->
-<!--                </tr>-->
-
-                <tr th:each="bookmark: ${boardList}" >
-                    <th><input type="checkbox" id="checkall" /></th>
-
-<!--                    <td th:each="favo: ${favoList}" th:text="${favo?.id}"></td>-->
-                    <td th:text="${bookmark?.id}"></td>
+                <tr th:each="bookmark: ${boardList}">
+                    <!--                    <th><input type="checkbox" id="checks" name="favcheck"/></th>-->
+                    <td><input type="checkbox" id="checks" name="favcheck"/></td>
+                    <td th:id="boardId" th:name="boardId" th:text="${bookmark?.id}"></td>
                     <td th:text="${bookmark?.postType}"></td>
-<!--                    <td class="boardTitle" id="boardTitle"><a th:href="@{|/mypage/favorite/${bookmark.id}|(page=${boardList.number + 1})}" th:text="${bookmark.boardTitle}"></a></td>-->
-<!--                    <td><a th:href="@{|/mypage/favorite/${bookmark?.id}|(page=${boardList?.number + 1})}" th:text="${bookmark?.title}"></a></td>-->
-                    <td><a th:href="@{|/board/${bookmark?.id}|(page=${boardList.number + 1})}" th:text="${bookmark?.title}"></a></td>
+                    <td><a th:href="@{|/board/${bookmark?.id}|(page=${boardList.number + 1})}"
+                           th:text="${bookmark?.title}"></a></td>
                     <td th:text="${bookmark?.userId}"></td>
                     <td th:text="*{#temporals.format(bookmark?.postdateTime, 'yy/MM/dd')}"></td>
                     <td th:text="${bookmark?.parentRegion} + ${bookmark?.childRegion}"></td>
-<!--                    <td th:text="${bookmark?.boardId}"></td>-->
                 </tr>
             </table>
-<!--            @{/board/paging~}에서 /board/를 /mypage/favorite/로-->
+            <!--                체크박스 선택한 id 보여줌-->
+<!--            <div class="col-lg-12" id="ex3_Result1"></div>-->
+<!--            <div class="col-lg-12" id="ex3_Result2"></div>-->
+
+
+            <!--            @{/board/paging~}에서 /board/를 /mypage/favorite/로-->
             <div id="paging">
                 <!-- 첫번째 페이지로 이동 -->
                 <!-- /board/paging?page=1 -->
-<!--                <a th:href="@{/mypage/favorite/paging(page=1)}">&lt;&lt;</a>-->
+                <!--                <a th:href="@{/mypage/favorite/paging(page=1)}">&lt;&lt;</a>-->
                 <a th:href="@{/mypage/favorite/(page=1)}">&lt;&lt;</a>
                 <!-- 이전 링크 활성화 비활성화 -->
                 <!-- boardList.getNumber() 사용자:2페이지 getNumber()=1 -->
-<!--                <a th:href="${boardList?.first} ? '#' : @{/mypage/favorite/paging(page=${boardList?.number})}">&lt;</a>-->
+                <!--                <a th:href="${boardList?.first} ? '#' : @{/mypage/favorite/paging(page=${boardList?.number})}">&lt;</a>-->
                 <a th:href="${boardList?.first} ? '#' : @{/mypage/favorite/(page=${boardList?.number})}">&lt;</a>
 
                 <!-- 페이지 번호 링크(현재 페이지는 숫자만)
@@ -110,17 +100,106 @@
 
                 <!-- 다음 링크 활성화 비활성화
                     사용자: 2페이지, getNumber: 1, 3페이지-->
-<!--                <a th:href="${boardList.last} ? '#' : @{/mypage/favorite/paging(page=${boardList.number + 2})}">&gt;</a>-->
+                <!--                <a th:href="${boardList.last} ? '#' : @{/mypage/favorite/paging(page=${boardList.number + 2})}">&gt;</a>-->
                 <a th:href="${boardList.last} ? '#' : @{/mypage/favorite/(page=${boardList.number + 2})}">&gt;</a>
                 <!-- 마지막 페이지로 이동 -->
-<!--                <a th:href="@{/mypage/favorite/paging(page=${boardList.totalPages})}">&gt;&gt;</a>-->
+                <!--                <a th:href="@{/mypage/favorite/paging(page=${boardList.totalPages})}">&gt;&gt;</a>-->
                 <a th:href="@{/mypage/favorite/(page=${boardList.totalPages})}">&gt;&gt;</a>
             </div>
         </div>
     </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
-<script type="text/javascript" th:src="@{/js/menuactive.js}"></script>
+<!--체크박스 선택된 게시글 번호 추출-->
+<script>
+// 상단 선택버튼 클릭시 체크된 Row의 값을 가져온다.
+	$("#deleteBtn").click(function(){
+
+		var rowData = new Array();
+		var tdArr = new Array();
+		var checkbox = $("input[name=favcheck]:checked");
+
+
+		// 체크된 체크박스 값을 가져온다
+		checkbox.each(function(i) {
+
+			// checkbox.parent() : checkbox의 부모는 <td>이다.
+			// checkbox.parent().parent() : <td>의 부모이므로 <tr>이다.
+			var tr = checkbox.parent().parent().eq(i);
+			var td = tr.children();
+
+			// 체크된 row의 모든 값을 배열에 담는다.
+			//rowData.push(tr.text());
+
+			// td.eq(0)은 체크박스 이므로  td.eq(1)의 값부터 가져온다.
+			//var no = td.eq(1).text()+", ";
+			var no = td.eq(1).text();
+			//var userid = td.eq(2).text()+", ";
+			//var name = td.eq(3).text()+", ";
+			//var email = td.eq(4).text()+", ";
+
+			// 가져온 값을 배열에 담는다.
+			tdArr.push(no);
+
+			//id.push(no);
+
+			//tdArr.push(userid);
+			//tdArr.push(name);
+			//tdArr.push(email);
+
+			console.log("no : " + no);
+			//console.log("id : " + id);
+			//console.log("userid : " + userid);
+			//console.log("name : " + name);
+			//console.log("email : " + email);
+		});
+
+    	//$("#ex3_Result1").html(" * 체크된 Row의 모든 데이터 = "+rowData);
+    	$("#ex3_Result2").html(tdArr);
+    	//$("#ex3_Result2").html(id);
+
+		//var id = JSON.stringify(tdArr);
+
+        $.ajax({
+            url : "/mypage/favdelete",
+            type : "POST",
+            dataType : "JSON",
+            traditional : true,
+            data : {"id" : tdArr},
+
+        });
+
+        let text = "삭제되었습니다.";
+        alert(text);
+	});
+</script>
+
+
+<!--error : function(request,status,error){-->
+<!--alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);-->
+<!--// 실패했을 때 처리-->
+<!--console.log(status, error);-->
+<!--},-->
+<!--success : function(data){-->
+<!--// 성공했을 때 처리-->
+<!--console.log("성공");-->
+<!--}-->
+
+
+<!--체크박스 All-->
+<script>
+   function checkAll(){
+       let isChecked = document.getElementById("checkAll").checked;
+       let chks = document.getElementsByName("favcheck");
+       for(let i = 0 ; i<chks.length; i++){
+           chks[i].checked = isChecked;
+       }
+      // var text = "전체 선택/해제.";
+        //   alert(text);
+   }
+
+
+
+</script>
 
 </body>
 </html>
