@@ -76,7 +76,7 @@
 
 
             <!--            @{/board/paging~}에서 /board/를 /mypage/favorite/로-->
-            <div id="paging">
+            <div id="paging" th:if="${!boardList.isEmpty()}">
                 <!-- 첫번째 페이지로 이동 -->
                 <!-- /board/paging?page=1 -->
                 <!--                <a th:href="@{/mypage/favorite/paging(page=1)}">&lt;&lt;</a>-->
@@ -106,9 +106,11 @@
                 <!--                <a th:href="@{/mypage/favorite/paging(page=${boardList.totalPages})}">&gt;&gt;</a>-->
                 <a th:href="@{/mypage/favorite/(page=${boardList.totalPages})}">&gt;&gt;</a>
             </div>
+            <div id="nonePaging" th:unless="${!boardList.isEmpty()}" style="text-align:center;">
+                아직 등록된 글이 없습니다 🤔
+            </div>
         </div>
     </div>
-</div>
 <!--체크박스 선택된 게시글 번호 추출-->
 <script>
 // 상단 선택버튼 클릭시 체크된 Row의 값을 가져온다.
@@ -165,13 +167,18 @@
             dataType : "JSON",
             traditional : true,
             data : {"id" : tdArr},
+        })
 
-        });
 
-        let text = "삭제되었습니다.";
-        alert(text);
 	});
+    $(document).ajaxSuccess(function(){
+        alert('삭제되었습니다.');
+    });
+    $(document).ajaxStop(function(){
+        window.location.reload();
+    });
 </script>
+
 
 
 <!--error : function(request,status,error){-->

@@ -22,8 +22,7 @@
     </div>
     <div id="boarddetailmain">
         <div id="boarddetailbtn">
-            <input
-                    type="submit" id="addfavorite" name="boardetailmain" value="즐겨찾기 추가" th:onclick="addfavorite()">
+            <input type="submit" id="addfavorite" name="boardetailmain" value="즐겨찾기 추가" th:onclick="addfavorite()">
 <!--                    th:?????????="${#strings.equals(fav?.id)}"-->
 
             <button th:onclick="|location.href='@{/board/paging/region(parentRegion=${board.parentRegion},childRegion=${board.childRegion},page=${page})}'|">

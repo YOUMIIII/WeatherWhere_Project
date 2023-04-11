@@ -335,7 +335,7 @@ public class MypageController {
 
         // DB 에서 전체 게시글 데이터를 가져와서 list.html 에 보여준다.
         List<FavoriteDTO> favoriteDTOList = boardService.findAll(loginMember.getUserId());
-        model.addAttribute("favoList", favoriteDTOList);
+        model.addAttribute("boardList", favoriteDTOList);
         System.out.println("🧡favoriteDTOList = " + favoriteDTOList);
 
 
@@ -407,7 +407,7 @@ public class MypageController {
 
 //    @ResponseBody
     @PostMapping("/favdelete")
-    public String favDelete(@RequestParam(value = "id") String[] id) throws Exception { //여기 id를 object로 받기
+    public void favDelete(@RequestParam(value = "id") String[] id) throws Exception { //여기 id를 object로 받기
 
         System.out.println("id = " + id.toString());
         for (String s : id) {
@@ -418,7 +418,6 @@ public class MypageController {
         }
 
             System.out.println("💙💚");
-        return "redirect:/mypage/favorite?page=1";
 //        return "redirect:/mypage/favorite";
     }
 

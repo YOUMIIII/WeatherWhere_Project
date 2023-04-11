@@ -130,9 +130,9 @@ public class BoardService {
         //fileEntity도 거쳐야할까??
 
 //        Long favoriteEntityId = favoriteEntity.getId();
-
-
-        favoriteRepository.save(favoEntity); //이 엔티티 저장하기 
+        if(!favoriteRepository.findByMemberIdAndBoardEntity(loginId, Optional.of(boardEntity)).isPresent()){
+            favoriteRepository.save(favoEntity); //이 엔티티 저장하기
+        }
 
 //        return favoEntity.getId();
     }
