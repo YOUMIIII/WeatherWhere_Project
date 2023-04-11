@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>스케줄관리</title>
+    <link rel="stylesheet" type="text/css" href="../../static/css/addSchedule.css" th:href="@{/css/schedule.css}">
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.css' rel='stylesheet' />
+    <style>
+        
+        .field-error {
+                border-color: #dc3545;
+                color: #dc3545;
+                font-size: 1rem;
+        }
+    </style>
+  </head>
+  <body>
+    <div>
+      <div class="leftBar" th:insert="~{main/sidebar :: sidebar}">
+      </div>
+  </div>
+  <div class="maincontent">
+      <div class="introduce">
+          <h1>스케줄 관리</h1>
+          <h2 id="subT"><span th:text="${member.userId}">jojo39</span>님의 외출 스케줄 입니다!</h2>
+      </div>
+      <div class="container">
+        <div id="calendar-form-container">
+          <div id="calendar-form-title">
+              <span>schedule info</span>
+              <div>
+                  <!-- <button id="modifyButton" name="modify" type="button" onclick="onModify(this)">✏️</button> -->
+                  <!-- <button id="addButton" name="add" type="button" onclick="onAdd()">➕</button> -->
+              </div>
+          </div>
+          <form id="calendar-form" method="post" action="/schedule/add"  th:object="${form}">
+              <div class="formItem">
+                  <label for="datepicker-box">😶</label>
+                  <div id="datepicker-box">
+                      <input class="formElement" type="date" id="datepicker" th:field="*{date}" th:errorclass="field-error"  value="">
+                      <p id="dateErr" class="field-error" th:errors="*{date}">날짜에러</p>
+                  </div>
+              </div>
+              <div class="formItem">
+                  <label for="timeslotBox">😶</label>
+                  <div id="timeslotBox">
+                      <div>
+                          <select id="timeslot1" th:field="*{startHour}" th:errorclass="field-error">
+                              <option value="">--</option>
+                          </select>
+                          <span>:</span>
+                          <select id="timeslot2" th:field="*{startMin}" th:errorclass="field-error">
+                              <option value="">--</option>
+                          </select>
+                      </div>
+                      <div>
+                          <select id="timeslot3" th:field="*{endHour}" th:errorclass="field-error">
+                              <option value="">--</option>
+                          </select>
+                          <span>:</span>
+                          <select id="timeslot4" th:field="*{endMin}" th:errorclass="field-error">
+                              <option value="">--</option>
+                          </select>
+                      </div>
+                      <p th:if="${#fields.hasGlobalErrors()}">
+                          <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}"> 전체 오류 메세지 </p>
+                      </p>
+                  </div>
+              </div>
+              <div class="formItem">
+                  <label for="sTitleBox">😶</label>
+                  <div id="sTitleBox">
+                    <input class="formElement" type="text" id="sTitle" th:field="*{title}" th:errorclass="field-error" placeholder="1~16자" value="">
+                    <p id="titleErr" class="field-error" th:errors="*{title}">제목에러</p>
+                  </div>
+              </div>
+             <div class="formItem">
+                  <label for="sContentBox">😶</label>
+                  <div id="sContentBox">
+                    <input class="formElement" type="text" id="sContent" th:field="*{description}" th:errorclass="field-error" placeholder="~16자"  value="">
+                    <p id="descriptionErr" class="field-error" th:errors="*{description}">내용에러</p>
+                  </div>
+             </div>
+              <div class="formItem">
+                  <label for="locationBox">😶</label>
+                  <div id="locationBox">
+                      <div>
+                          <select id="userLocation" th:field="*{userLocation}" th:errorclass="field-error">
+                              <option value="">시/도 선택</option>
+                          </select>
+                      </div>
+                      <div>
+                          <select id="userLocation2" th:field="*{userLocation2}" th:errorclass="field-error">
+                              <option value="">시/군/구 선택</option>
+                          </select>
+                      </div>
+                      <p id="locErr" class="field-error" th:errors="*{userLocation}">지역1에러</p>
+<!--                      <p id="loc2Err" class="field-error" th:errors="*{userLocation2}">지역2에러</p>-->
+                  </div>
+              </div>
+              <div class="formItem">
+                  <label id="changeColor" for="changeColor">👩‍🎨</label>
+                  <div id="colorBox">
+                      <div>
+                          <label for="red">❤️</label>
+                          <input class="formElement" type="radio" id="red"  th:field="*{sColor}" value="red" th:errorclass="field-error">
+                      </div>
+                     <div>
+                          <label for="orange">🧡</label>
+                          <input class="formElement" type="radio" id="orange" th:field="*{sColor}" value="orange" th:errorclass="field-error">
+                     </div>
+                      <div>
+                          <label for="yellow">💛</label>
+                          <input class="formElement" type="radio" id="yellow" th:field="*{sColor}" value="yellow" th:errorclass="field-error">
+                      </div>
+                      <div>
+                          <label for="green">💚</label>
+                          <input class="formElement" type="radio" id="green"  th:field="*{sColor}" value="green" th:errorclass="field-error">
+                      </div>
+                      <div>
+                          <label for="sky blue">💙</label>
+                          <input class="formElement" type="radio" id="sky blue" th:field="*{sColor}" value="sky blue" th:errorclass="field-error">
+                      </div>
+                      <div>
+                          <label for="purple">💜</label>
+                          <input class="formElement" type="radio" id="purple" th:field="*{sColor}" value="purple" th:errorclass="field-error">
+                      </div>
+                  </div>
+              </div>
+              <div class="formItem">
+                <p id="radioErr" class="field-error" th:errors="*{sColor}" style="margin-left:1.5rem;">에러메세지</p>
+              </div>
+
+              <div id="form-bottom-box" class="formItem">
+                  <button class="" id="saveButton" name="saveButton" type="submit">저장하기</button>
+                  <!-- <button class="" id="submitButton" name="submitButton" type="submit" disabled>🔒</button> -->
+                  <!-- <button id="rollbackButton" name="rollbackButton" type="button">취소</button> -->
+              </div>
+
+              <div th:if="${#fields.hasErrors()}">
+                  <input type="hidden" id="dateRe" th:value="${dateValue}">
+                  <input type="hidden" id="loc1Re" th:value="${loc1Value}">
+                  <input type="hidden" id="loc2Re" th:value="${loc2Value}">
+                  <input type="hidden" id="sHourRe" th:value="${startHourValue}">
+                  <input type="hidden" id="sMinRe" th:value="${startMinValue}">
+                  <input type="hidden" id="eHourRe" th:value="${endHourValue}">
+                  <input type="hidden" id="eMinRe" th:value="${endMinValue}">
+              </div>
+
+
+          </form>
+      
+  </div>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+  <script type="text/javascript" th:src="@{/js/menuactive.js}"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        checkRejectedValue();
+    });
+
+    $('#userLocation').one("click",function(){
+        loadArea('loadParent',$(this),$('#userLocation2').val());
+    });
+    $('#timeslot1').one("click",function(){
+        loadTime();
+    });
+   
+
+    
+    function loadTime(){
+        console.log('시간 설정 함수');
+        $('#timeslot1').empty();
+        $('#timeslot2').empty();
+        $('#timeslot3').empty();
+        $('#timeslot4').empty();
+
+        for(let i=0;i<=24;i++){
+            var hour=(i<10)?'0'+i:i;
+            $('#timeslot1').append('<option value="'+hour+'">'+hour+'</option>');
+            $('#timeslot3').append('<option value="'+hour+'">'+hour+'</option>');
+        }
+        for(let i=0;i<=5;i++){
+            var min=i+'0';
+            $('#timeslot2').append('<option value="'+min+'">'+min+'</option>');
+            $('#timeslot4').append('<option value="'+min+'">'+min+'</option>');
+        }
+        
+    }
+  </script>
+
+<script>
+  $('#timeslot1').on("change",function(){
+    var value=$(this).val();
+    $('#timeslot3').empty();
+    var valueSliced=(value<10)?parseInt(value.slice(1),10):value;
+    if(value=='--'){
+        loadTime();
+    }else{
+        for(let i=valueSliced;i<=24;i++){
+            var hour=(i<10)?'0'+i:i;
+            $('#timeslot3').append('<option value="'+hour+'">'+hour+'</option>');
+        }
+    }   
+  });
+
+  $('#timeslot2').on("change",function(){
+      changeSelectableMinutes();
+  });
+  $('#timeslot3').on("change",function(){
+      changeSelectableMinutes();
+  });
+
+  function changeSelectableMinutes(){
+      var value2=$('#timeslot2').val();
+      $('#timeslot4').empty();
+      var value2Sliced=parseInt(value2.slice(0,1),10);
+
+      if($('#timeslot3').val()==$('#timeslot1').val()){
+          for(let i=value2Sliced+1;i<=5;i++){
+              var min=i+'0';
+              $('#timeslot4').append('<option value="'+min+'">'+min+'</option>');
+          }
+      }else{
+          for(let i=0;i<=5;i++){
+              var min=i+'0';
+              $('#timeslot4').append('<option value="'+min+'">'+min+'</option>');
+          }
+      }
+  }
+</script>
+
+<script>//지역 셀렉트박스 함수 
+
+    $('#userLocation').on("change",function(){
+        loadArea('loadChild',$(this),"");
+    });
+
+  function loadArea(selectedType,parentValue,childValue){
+      $.ajax({
+          url: "/region/api",
+          dataType: "JSON",
+          method: "GET"
+      }).done(function(res){
+          if(selectedType == 'loadParent'){//일정 생성할 때
+              console.log('loadParent');
+              $('#userLocation1').empty();
+              $('#userLocation2').empty();
+
+              $.each(res, function (index,value){
+                  var hasOption=$('#userLocation option[value="'+value.parentRegion+'"]').length;
+                  if(hasOption==0){
+                      if(value.parentRegion===parentValue){
+                          $('#userLocation').append('<option value="'+value.parentRegion+'" selected>'+value.parentRegion+'</option>');
+                      }else{
+                          $('#userLocation').append('<option value="'+value.parentRegion+'">'+value.parentRegion+'</option>');
+                      }
+
+                  }
+                  if(value.parentRegion===parentValue){
+                      var hasOption2=$('#userLocation2 option[value="'+value.parentRegion+'"]').length;
+                      if(hasOption2==0){
+                          if(value.childRegion===childValue){
+                              $('#userLocation2').append('<option value="'+value.childRegion+'" selected>'+value.childRegion+'</option>');
+                          }else{
+                              $('#userLocation2').append('<option value="'+value.childRegion+'">'+value.childRegion+'</option>');
+                          }
+                      }
+                  }
+              });
+          }else if(selectedType == 'loadChild'){//userLocation을 선택했을 때,일정 변경할 때
+              console.log('loadChild');
+              var selectedValueText = $(parentValue).find('option:selected').text();
+              $('#userLocation2').empty();
+              $.each(res, function (index,value){
+
+                  if(selectedValueText==value.parentRegion){
+
+                      $('#userLocation2').append('<option value="'+value.childRegion+'">'+value.childRegion+'</option>');
+                  }
+              });
+          }
+      });
+  }
+</script>
+
+<script>
+    // document.getElementById("loc1Re").onload = function() {
+    //     //실행될 코드
+        
+    // }
+
+
+    function checkRejectedValue(){
+        var dateRe=document.getElementById('dateRe').value;
+        var loc1Re=document.getElementById('loc1Re').value;
+        var loc2Re=document.getElementById('loc2Re').value;
+        
+        var sHourRe=document.getElementById('sHourRe').value;
+        var sMinRe=document.getElementById('sMinRe').value;
+        var eHourRe=document.getElementById('eHourRe').value;
+        var eMinRe=document.getElementById('eMinRe').value;
+
+        if(loc1Re!=null&&loc2Re==null){
+            
+            $('#userLocation').empty();
+            $('#userLocation').append('<option value="'+loc1Re+'" selected>'+loc1Re+'</option>');
+            
+        }else if(loc1Re!=null&&loc2Re!=null){
+            $('#userLocation').empty();
+            $('#userLocation2').empty();
+            $('#userLocation').append('<option value="'+loc1Re+'" selected>'+loc1Re+'</option>');
+            $('#userLocation2').append('<option value="'+loc2Re+'" selected>'+loc2Re+'</option>');
+            //$('#userLocation option[value="'+loc1Re+'"]').attr('selected','selected');
+            //$('#userLocation2 option[value="'+loc2Re+'"]').attr('selected','selected');
+            
+        }
+
+        if(sHourRe!=null&&eHourRe!=null){
+            $("timeslot1").empty();
+            $("timeslot3").empty();
+            $('#timeslot1').append('<option value="'+sHourRe+'" selected>'+sHourRe+'</option>');
+            $('#timeslot3').append('<option value="'+eHourRe+'" selected>'+eHourRe+'</option>');
+        }
+
+        if(sMinRe!=null&&eMinRe!=null){
+            $("timeslot2").empty();
+            $("timeslot4").empty();
+            $('#timeslot2').append('<option value="'+sMinRe+'" selected>'+sMinRe+'</option>');
+            $('#timeslot4').append('<option value="'+eMinRe+'" selected>'+eMinRe+'</option>');
+        }
+
+    }
+
+</script>

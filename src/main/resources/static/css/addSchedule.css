@@ -1,0 +1,142 @@
+#calendar-form-container{
+  display:inline-block;
+  width:80%;
+}
+#calendar-form-title{
+    
+  display:flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+#calendar-form-title>span{
+  flex:0 1 auto;
+  background-color:#FFE9D5;
+  border-radius:0.7rem;
+  padding: 0 0.5rem 0 0.5rem;
+  margin-bottom: 0.2rem;
+  font-size:1rem;
+  line-height:1.5rem;
+  vertical-align:center;
+  text-align: center;
+  color:#FF9838;
+}
+
+#calendar-form-title>div{
+  flex: 0 1 3rem;
+  display: flex;
+  flex-direction: row;
+}
+
+#calendar-form-title>div>button{
+  border:none;
+  background: transparent;
+}
+
+#calendar-form-title>div>button[disabled=disabled], #calendar-form-title>div>button:disabled {
+  opacity:0.2;
+}
+
+#calendar-form{
+  height:90%;
+  width:100%;
+  display:flex;
+  flex-direction: column;
+}
+
+.formItem{
+  display:inline-flex;
+  justify-content: start;
+  width:100%;
+  padding-top:0.5rem;
+}
+
+.formItem>div>input{
+  border: none;
+  background: transparent;
+}
+
+#timeslotBox{
+  display: inline-block;
+}
+
+#timeslotBox>div{
+  display: inline-block;
+}
+
+#timeslotBox>div>select{
+  display: inline-block;
+  border:none;
+  background-color: transparent;
+}
+
+#timeslotBox>span{
+  text-align: center;
+}
+
+#locationBox{
+  display: inline-block;
+}
+
+#locationBox>div{
+  display: inline-block;
+}
+#locationBox>div>select{
+  display: inline-block;
+  border:none;
+  background-color: transparent;
+}
+
+#colorBox{
+  display: flex;
+  justify-content: center;
+
+}
+#colorBox > *{
+  flex: 1 1 20%;
+}
+
+.formItem:last-child{
+  justify-content: center;
+}
+
+.formItem>button{
+  width:85%;
+  height:100%;
+  background-color:#FFEDDD;
+  border-radius:0.5rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 0.5rem;
+  margin-top:2%;
+}
+
+#form-bottom-box>button[disabled=disabled], #form-bottom-box>button:disabled {
+  opacity:0.2;
+}
+
+input[type='text']{
+  font-family: 'IM_Hyemin-Regular';
+}
+input[type='checkbox']{
+  font-family: 'IM_Hyemin-Regular';
+}    
+input[type="date"]{
+    font-family: 'IM_Hyemin-Regular';
+}
+input[type="select"]{
+    font-family: 'IM_Hyemin-Regular';
+}
+button{
+    font-family: 'IM_Hyemin-Regular';
+}
+.checkbox-container{
+    font-family: 'IM_Hyemin-Regular';
+}
+#colorBox input{
+    accent-color: #FFCA99;
+}
+select{
+    font-family: 'IM_Hyemin-Regular';
+}
