@@ -136,7 +136,7 @@ body{ /* 모든 서브페이지 최대한 통일하기 */
     padding:1rem 1rem 1rem 1rem;
 }
 
-#weather-check-container{
+#reminder-container2{
     display:inline-block;
     width: 80%;
     padding:1rem 1rem 1rem 1rem;
@@ -322,24 +322,24 @@ body{ /* 모든 서브페이지 최대한 통일하기 */
 
 
 
-#weather-check{
+#reminder2{
     height:100%;
     width:100%;
 }
 
-.weather-check-list>div{
+/* #reminder2>div{
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+} */
+
+#reminder2>div>label{
+    width:15%;
+}
+#reminder2>div>input{
+    width:70%;
+    border: none;
+    background: transparent;
+    line-height: 1.5rem;
 }
 
-.weather-check-list>div>label{
-    text-align: center;
-    color:#FF9838;
-}
-
-.weather-check-list>div>img{
-
-    width:4rem;
-    height:4rem;
-}

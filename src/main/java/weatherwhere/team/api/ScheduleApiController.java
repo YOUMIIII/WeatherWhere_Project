@@ -22,9 +22,6 @@ public class ScheduleApiController {
 
     private final ScheduleDtoRepository scheduleDtoRepository;
 
-    //dto 전용 레포지토리 생성
-    //지연로딩 , 양방향 참조 문제 , N+1 문제 등 피하기
-    //컨트롤러가 레포지토리를 의존하게 하기
     @GetMapping("/api/find")
     public List<ScheduleDto> scheduleTest(){
         List<ScheduleDto> events = scheduleDtoRepository.findScheduleDtos();
@@ -56,4 +53,13 @@ public class ScheduleApiController {
         return collect;
     }
 
+    @GetMapping("/api/find/member/upcoming")
+    public List<ScheduleDto> scheduleUpcoming(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember){
+        List<ScheduleDto> event = scheduleDtoRepository.findScheduleDtos()
+                .stream()
+                .filter(scheduleDto -> scheduleDto.getClassNames().equals(loginMember.getUserId()) && scheduleDto.getStart().isBefore(LocalDateTime.now().plusHours(1)))
+                .limit(2)
+                .collect(Collectors.toList());
+        return event;
+    }
 }

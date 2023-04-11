@@ -325,30 +325,54 @@
                 </div>
 
                 
-                <!-- <div id="reminder-container">
+                <div id="reminder-container">
                     <div id="reminder">
                         <div class="orange-title">
                             <div class="orange-title-text">reminder</div>
                         </div>
                         <div>
-                            <label for="stimeslot">😶</label>
-                            <input type="text" id="stimeslot" name="stimeslot" value="11:00 - 22:00" readonly>
+                            <label for="ssTimeslot">😶</label>
+                            <input type="text" id="ssTimeslot" name="ssTimeslot" value="" readonly>
                         </div>
                         <div>
                             <label for="ssLoc">😶</label>
-                            <input type="text" id="ssLoc" name="ssLocation" value="ABCDE시 ABCDEF구" readonly>
+                            <input type="text" id="ssLoc" name="ssLocation" value="" readonly>
                         </div>
                         <div>
                             <label for="ssTitle">😶</label>
-                            <input type="text" id="ssTitle" name="ssTitle" value="일정제목" readonly>
+                            <input type="text" id="ssTitle" name="ssTitle" value="" readonly>
                         </div>
                         <div>
                             <label for="ssContent">😶</label>
-                            <input type="text" id="ssContent" name="ssContent" value="일이삼사오육칠팔구십일이삼사오육" readonly>
+                            <input type="text" id="ssContent" name="ssContent" value="" readonly>
                         </div>
                     </div>
 
-                </div> -->
+                </div>
+                <div id="reminder-container2">
+                    <div id="reminder2">
+                        <div class="orange-title">
+                            <div class="orange-title-text">reminder</div>
+                        </div>
+                        <div>
+                            <label for="ssTimeslot2">😶</label>
+                            <input type="text" id="ssTimeslot2" name="ssTimeslot2" value="" readonly>
+                        </div>
+                        <div>
+                            <label for="ssLoc2">😶</label>
+                            <input type="text" id="ssLoc2" name="ssLocation2" value="" readonly>
+                        </div>
+                        <div>
+                            <label for="ssTitle2">😶</label>
+                            <input type="text" id="ssTitle2" name="ssTitle2" value="" readonly>
+                        </div>
+                        <div>
+                            <label for="ssContent2">😶</label>
+                            <input type="text" id="ssContent2" name="ssContent2" value="" readonly>
+                        </div>
+                    </div>
+
+                </div>
             
             </div>
         </div>
@@ -516,7 +540,7 @@
             });
             calendar.render();
         });
-
+        loadReminder();
     });
 
     // function loadTime(loadType,inputData){
@@ -568,9 +592,44 @@
 
     </script>
 
-    <!-- <script type=text/javascript>
-
-    </script> -->
+    <script type=text/javascript>
+        function loadReminder(){
+            $.ajax({
+                url:"/schedule/api/find/member/upcoming",
+                method:"GET",
+                dataType:"json",
+            }).done(function(res){
+                //ssLoc ssTimeslot new Date(eventDate);
+                for(var i=0;i<res.length;i++){
+                    if(i==0){
+                        var start1=new Date(res[0].start);
+                        var startHour1=start1.getHours();
+                        var startMin1=start1.getMinutes();
+                        var end1=new Date(res[0].end);
+                        var endHour1=end1.getHours();
+                        var endMin1=end1.getMinutes();
+                        $('#ssTitle').attr('value',res[0].title);
+                        $('#ssContent').attr('value',res[0].extendedProps.description);
+                        $('#ssTimeslot').attr('value',startHour1+":"+startMin1+"-"+endHour1+":"+endMin1);
+                        $('#ssLoc').attr('value',res[0].extendedProps.parentRegion.concat(res[0].extendedProps.childRegion));
+                    }else if(i==1){
+                        var start2=new Date(res[1].start);
+                        var startHour2=start2.getHours();
+                        var startMin2=start2.getMinutes();
+                        var end2=new Date(res[1].end);
+                        var endHour2=end2.getHours();
+                        var endMin2=end2.getMinutes();
+                        $('#ssTitle2').attr('value',res[1].title);
+                        $('#ssContent2').attr('value',res[1].extendedProps.description);
+                        $('#ssTimeslot2').attr('value',startHour2+":"+startMin2+"-"+endHour2+":"+endMin2);
+                        $('#ssLoc2').attr('value',res[1].extendedProps.parentRegion.concat(res[1].extendedProps.childRegion));
+                    }
+                }
+               
+                
+            });
+        }
+    </script>
 
     <!-- <script type=text/javascript>
         function onAdd(){
