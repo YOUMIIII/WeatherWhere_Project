@@ -34,13 +34,6 @@ public class BoardFileEntity extends TimeEntity {
         boardFileEntity.setBoardEntity(boardEntity);
         return boardFileEntity;
     }
-//    public static BoardFileEntity toBoardFileEntity(BoardEntity boardEntity, String originalFileName, String storedFileName, String filePath) {
-//        BoardFileEntity boardFileEntity = new BoardFileEntity();
-//        boardFileEntity.setOriginalFileName(originalFileName);
-//        boardFileEntity.setStoredFileName(storedFileName);
-//        boardFileEntity.setFilePath(filePath);
-//        boardFileEntity.setBoardEntity(boardEntity);
-//        return boardFileEntity;
-//    }
+
 }
 

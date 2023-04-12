@@ -11,10 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import weatherwhere.team.domain.member.Member;
-import weatherwhere.team.repository.board.BoardDTO;
-import weatherwhere.team.repository.board.CommentDTO;
-import weatherwhere.team.repository.board.FavoriteDTO;
-import weatherwhere.team.repository.board.FavoriteRepository;
+import weatherwhere.team.repository.board.*;
 import weatherwhere.team.service.BoardService;
 import weatherwhere.team.service.CommentService;
 import weatherwhere.team.web.SessionConst;
@@ -105,7 +102,7 @@ public class BoardController {
         System.out.println("\uD83E\uDDE1boardDTO 에 저장된 writer : " + findBoardDTO.getUserId()); //작성자 확인용
         System.out.println("로그인 ID loginMember = " + loginMember.getUserId()); // 로그인 ID 확인용
         String loginId = loginMember.getUserId();
-        boardService.favoriateSave(findBoardDTO, loginId); //게시글 정보와, 로그인 ID 넘기기
+        boardService.favoriteSave(findBoardDTO, loginId); //게시글 정보와, 로그인 ID 넘기기
 
         System.out.println("\uD83E\uDDE1글번호 = " + findBoardDTO.getId());
 //
@@ -182,17 +179,22 @@ public class BoardController {
 
         model.addAttribute("member", loginMember); // 사이드바
 //        model.addAttribute("boardUpdate", boardDTO);//
-        System.out.println("수정페이지 들어오는 버튼 클릭 후 model에 들어간 boardUpdate = " + boardDTO);
+        System.out.println("💚수정페이지 들어오는 버튼 클릭 후 model에 들어간 boardUpdate💚 = " + boardDTO);
 
+     //   model.addAttribute("file", boardDTO.getBoardFile());
+        System.out.println("💚boardDTO.보드파일💚 = " + boardDTO.getBoardFile());
         BoardDTO board = boardService.update(boardDTO);
-//        System.out.println("return findById(boardDTO.getId()) = " + board);
-        System.out.println("수정 후 모델에 들어갈 boardDTO = " + boardDTO);
+
+        //        System.out.println("return findById(boardDTO.getId()) = " + board);
+        System.out.println("💚수정 후 모델에 들어갈 boardDTO💚 = " + boardDTO);
+
         model.addAttribute("board", board);// detail의 board로 넘겨주기위해
 //        System.out.println("글 수정하고 수정버튼 클릭 후------------------------------------------------------------------");
 //        System.out.println("boardDTO = " + boardDTO);
 //        System.out.println("board = " + board);
-        return "main/infoboard/detail";
-//        return "redirect:/board/" + boardDTO.getId();
+//        return "main/infoboard/detail";
+        System.out.println("redirect:/board/" + boardDTO.getId());
+        return "redirect:/board/" + boardDTO.getId();
     }
 
     //삭제 코드 작성 완료

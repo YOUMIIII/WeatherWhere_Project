@@ -330,25 +330,9 @@ public class MypageController {
         System.out.println("💙" + "🧡" + "💚");
 
         // DB 에서 전체 게시글 데이터를 가져와서 list.html 에 보여준다.
-//        List<BoardDTO> boardDTOList = boardService.findAll();
-//        model.addAttribute("boardList", boardDTOList);
-
-        // DB 에서 전체 게시글 데이터를 가져와서 list.html 에 보여준다.
         List<FavoriteDTO> favoriteDTOList = boardService.findAll(loginMember.getUserId());
         model.addAttribute("boardList", favoriteDTOList);
         System.out.println("🧡favoriteDTOList = " + favoriteDTOList);
-
-
-//        pageable.getPageNumber();
- /*           Page<BoardDTO> boardList = boardService.paging(pageable);
-            int blockLimit = 3;
-            int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1; // 1 4 7 10 ~~
-            int endPage = ((startPage + blockLimit - 1) < boardList.getTotalPages()) ? startPage + blockLimit - 1 : boardList.getTotalPages();*/
-
-
-//            FavoriteEntity favoriteEntity의 getId()를 하면 되는데
-
-//           Page<FavoriteDTO> favoriteList = boardService.favoritePaging(pageable); //DB에서 꺼내오기 게시글DB에서 꺼내거는건데 기준에
 
         //  원래 아래 코드
         Page<BoardDTO> favoriteList = boardService.favoritePaging(pageable); //DB에서 꺼내오기 게시글DB에서 꺼내거는건데 기준에
@@ -358,16 +342,6 @@ public class MypageController {
 
         System.out.println("\uD83D\uDC9AfavoriteList.get() = " + favoriteList.get());
 
-        // page 갯수 20개
-        // 현재 사용자가 3페이지
-        // 1 2 3
-        // 현재 사용자가 7페이지
-        // 7 8 9
-        // 보여지는 페이지 갯수 3개
-        // 총 페이지 갯수 8개
-
-
-//            model.addAttribute("favoId", FavoriteEntity);
         model.addAttribute("boardList", favoriteList);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
@@ -375,7 +349,6 @@ public class MypageController {
         return "main/mypage/favorite";
     }
 
-    //    @GetMapping("/favorite/{id}") //detail.html 화면에 넘겨줄 정보들
     @GetMapping("/{id}") //detail.html 화면에 넘겨줄 정보들
     public String findById(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
                            @PathVariable Long id, Model model,
@@ -395,17 +368,15 @@ public class MypageController {
 //        BoardDTO boardDTO = boardService.findById(id);
         FavoriteDTO findFavoriteDTO = boardService.favoriteFindById(id);
         Long boardId = findFavoriteDTO.getBoardId();
-
-        //fav.Id가 있을떄
-        model.addAttribute("fav", findFavoriteDTO);
+        System.out.println("💚boardId = " + boardId);
 
         BoardDTO boardDTO = boardService.findById(boardId);
         System.out.println("\uD83D\uDC9A 상세보기 페이지로 반환된 boardDTO = " + boardDTO);
-        return "main/infoboard/detail";
+//        return "main/infoboard/detail";
+        return "main/mypage/favDetail";
     }
 
 
-//    @ResponseBody
     @PostMapping("/favdelete")
     public void favDelete(@RequestParam(value = "id") String[] id) throws Exception { //여기 id를 object로 받기
 

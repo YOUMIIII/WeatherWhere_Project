@@ -88,8 +88,10 @@ public class BoardEntity extends TimeEntity {
         boardEntity.setUserId(boardDTO.getUserId());
         boardEntity.setContents(boardDTO.getContents());
         boardEntity.setHits(boardDTO.getHits()); // 시작이 아니므로 조회수 가져와야함.
-        //todo(dayi) : 글 수정할 때 첨부파일 유지되도록 수정하기 위해 추가해야하는 부분 아직 작성 중
         boardEntity.setFileAttached(boardDTO.getFileAttached());
+        //todo(dayi) : 글 수정할 때 첨부파일 유지되도록 수정하기 위해 추가해야하는 부분 아직 작성 중
+//        boardEntity.setBoardFileEntityList(boardEntity.getBoardFileEntityList());
+        boardEntity.setBoardFileEntityList(boardEntity.getBoardFileEntityList());
         //지역 추가
         boardEntity.setParentRegion(boardDTO.getParentRegion());
         boardEntity.setChildRegion(boardDTO.getChildRegion());
@@ -104,7 +106,7 @@ public class BoardEntity extends TimeEntity {
         boardEntity.setTitle(boardDTO.getTitle());
         boardEntity.setUserId(boardDTO.getUserId());
         boardEntity.setContents(boardDTO.getContents());
-        boardEntity.setHits(0); //조회수 시작은 0
+        boardEntity.setHits(-1); //조회수 시작은 0
         boardEntity.setFileAttached(1); // 파일 있음.
         //지역 추가
         boardEntity.setParentRegion(boardDTO.getParentRegion());

@@ -48,7 +48,7 @@ public class BoardDTO {
         //첨부파일 여부
         if (boardEntity.getFileAttached() == 0) { //boardEntity에 첨부파일이 없다면
             boardDTO.setFileAttached(boardEntity.getFileAttached()); // 0
-        } else {
+        } else if(boardEntity.getBoardFileEntityList().size()!=0) {
             boardDTO.setFileAttached(boardEntity.getFileAttached()); // 1
             boardDTO.setOriginalFileName(boardEntity.getBoardFileEntityList().get(0).getOriginalFileName());
             boardDTO.setStoredFileName(boardEntity.getBoardFileEntityList().get(0).getStoredFileName());

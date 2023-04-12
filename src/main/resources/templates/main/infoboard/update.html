@@ -31,7 +31,9 @@
                     <input type="text" id="boardTitle" name="title" th:value="${board?.title}">
                     <input type="hidden" id="id" name="id" th:value="${board?.id}">
                     <input type="hidden" id="userId" name="userId" th:value="${board?.userId}">
+                    <input type="hidden" id="originalFileName" name="originalFileName" th:value="${board?.originalFileName}">
                     <input type="hidden" id="storedFileName" name="storedFileName" th:value="${board?.storedFileName}">
+                    <input type="hidden" id="fileAttached" name="fileAttached" th:value="${board?.fileAttached}">
                     <input type="hidden" id="parentRegion" name="parentRegion" th:value="${board?.parentRegion}">
                     <input type="hidden" id="childRegion" name="childRegion" th:value="${board?.childRegion}">
                 </div>
@@ -43,7 +45,7 @@
                 </p>
             </div>
             <div>
-                <input type="file" name="boardFile" multiple="multiple">
+                <input type="file" name="boardFile" multiple="multiple" th:text="${board?.storedFileName}">
             </div>
             <div class="button" id="update">
                 <input type="submit" name="update" value="수정">
