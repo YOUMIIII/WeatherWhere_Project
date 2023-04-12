@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,11 +15,7 @@ import weatherwhere.team.service.BoardService;
 import weatherwhere.team.service.CommentService;
 import weatherwhere.team.web.SessionConst;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.List;
 
 /*
@@ -105,16 +100,6 @@ public class BoardController {
         boardService.favoriteSave(findBoardDTO, loginId); //게시글 정보와, 로그인 ID 넘기기
 
         System.out.println("\uD83E\uDDE1글번호 = " + findBoardDTO.getId());
-//
-//        if (boardDTO.getBoardFile().isEmpty()) { //첨부파일 유무 확인
-//            boardDTO.setFileAttached(0);
-//        } else {
-//            boardDTO.setFileAttached(1);
-//
-//            boardDTO.setOriginalFileName(boardDTO.getBoardFile().getOriginalFilename());
-//            boardDTO.setStoredFileName("image_" + boardDTO.getOriginalFileName());
-//        }
-//        System.out.println("DB에 저장되는 boardDTO = " + boardDTO);
 
         return "main/infoboard/detail";
     }
@@ -149,13 +134,6 @@ public class BoardController {
         model.addAttribute("commentList", commentDTOList); //댓글 목록
         model.addAttribute("board", boardDTO); //게시글 정보
         model.addAttribute("page", pageable.getPageNumber());
-
-//        FavoriteDTO findFavoriteDTO = boardService.favoriteFindById(id);
-//        Long boardId = findFavoriteDTO.getBoardId();
-//
-//        BoardDTO boardDTO = boardService.findById(boardId);
-//        System.out.println("\uD83D\uDC9A 상세보기 페이지로 반환된 boardDTO = " + boardDTO);
-
 
         return "main/infoboard/detail";
     }

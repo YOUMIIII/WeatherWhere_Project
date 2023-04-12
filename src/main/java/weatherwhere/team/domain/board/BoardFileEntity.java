@@ -20,9 +20,6 @@ public class BoardFileEntity extends TimeEntity {
     @Column
     private String storedFileName;
 
-//    @Column
-//    private String filePath;
-
     @ManyToOne(fetch = FetchType.LAZY)// LAZY 지연로딩, EAGER 즉시로딩,  FetchType 기본은 EAGER
     @JoinColumn(name = "boardId") // 외래키
     private BoardEntity boardEntity;

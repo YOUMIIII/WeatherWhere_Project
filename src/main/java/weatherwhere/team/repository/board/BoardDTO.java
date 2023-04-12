@@ -6,7 +6,7 @@ import weatherwhere.team.domain.board.BoardEntity;
 
 import java.time.LocalDateTime;
 
-// DTO(Data Transfer Object), VO, Bean,         Entity
+// DTO(Data Transfer Object)
 @Getter
 @Setter
 @ToString
@@ -16,7 +16,6 @@ public class BoardDTO {
     private String title;
     private String contents;
     private String postType;
-    //todo(dayi) : DTO에 지역 넣기, 생성자, 메서드 손보기
     private String parentRegion;
     private String childRegion;
     private int hits;

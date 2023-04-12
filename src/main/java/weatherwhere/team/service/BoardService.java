@@ -98,7 +98,6 @@ public class BoardService {
         List<FavoriteDTO> favoriteDTOList = new ArrayList<>();
         for (FavoriteEntity favoriteEntity : favoriteEntityList) {
             favoriteDTOList.add(FavoriteDTO.toFavoriteDTOList(favoriteEntity));
-//            favoriteDTOList.add(BoardDTO.toBoardDTO(boardEntity));
         }
         return favoriteDTOList;
     }
@@ -181,7 +180,7 @@ public class BoardService {
     }
 
     public BoardDTO update(BoardDTO boardDTO) {
-        if (boardDTO.getBoardFile() != null) {
+        if (boardDTO.getBoardFile() != null) { //첨부파일 있을 때
             BoardEntity boardEntity = BoardEntity.toUpdateEntity(boardDTO);
             boardRepository.save(boardEntity);
 

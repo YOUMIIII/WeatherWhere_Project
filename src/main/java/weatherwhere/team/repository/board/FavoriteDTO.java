@@ -44,9 +44,6 @@ public class FavoriteDTO {
         favoriteDTO.setId(favoriteEntity.getId());
         favoriteDTO.setMemberId(favoriteEntity.getMemberId());
         favoriteDTO.setBoardId(favoriteEntity.getBoardEntity().getId());
-//        favoriteDTO.setBoardId(favoriteEntity.getBoardEntity().getId());
-//        favoriteDTO.setBoardDTO();
-//        favoriteDTO.setBoardEntity();
 
         return favoriteDTO;
     }
