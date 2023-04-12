@@ -85,19 +85,19 @@
                 <div class="scheduleContents">
                     <div class="time">
                         <div><img src="../../static/img/home/schedule_time.png" th:src="@{/img/home/schedule_time.png}" width="35px"></div>
-                        <div class="scheduleContext">09:00 am - 18:00pm</div>
+                        <div class="scheduleContext" id="ssTimeslot"></div>
                     </div>
                     <div class="location">
                         <div><img src="../../static/img/home/schedule_location.png" th:src="@{/img/home/schedule_location.png}" width="35px"></div>
-                        <div class="scheduleContext">서울시 강남구</div>
+                        <div class="scheduleContext" id="ssLoc"></div>
                     </div>
                     <div class="scheduleName">
                         <div><img src="../../static/img/home/schedule_name.png" th:src="@{/img/home/schedule_name.png}" width="35px"></div>
-                        <div class="scheduleContext">근무</div>
+                        <div class="scheduleContext" id="ssTitle"></div>
                     </div>
                     <div class="progress">
                         <div><img src="../../static/img/home/schedule_progress.png" th:src="@{/img/home/schedule_progress.png}" width="35px"></div>
-                        <div class="scheduleContext">진행중</div>
+                        <div class="scheduleContext" id="ssContent"></div>
                     </div>
                 </div>
             </div>
@@ -105,19 +105,19 @@
                 <div class="scheduleContents">
                     <div class="time">
                         <div><img src="../../static/img/home/schedule_time.png" th:src="@{/img/home/schedule_time.png}" width="35px"></div>
-                        <div class="scheduleContext">19:00 pm - 21:00pm</div>
+                        <div class="scheduleContext" id="ssTimeslot2"></div>
                     </div>
                     <div class="location">
                         <div><img src="../../static/img/home/schedule_location.png" th:src="@{/img/home/schedule_location.png}" width="35px"></div>
-                        <div class="scheduleContext">성남시 분당구</div>
+                        <div class="scheduleContext" id="ssLoc2"></div>
                     </div>
                     <div class="scheduleName">
                         <div><img src="../../static/img/home/schedule_name.png" th:src="@{/img/home/schedule_name.png}" width="35px"></div>
-                        <div class="scheduleContext">율동공원 산책</div>
+                        <div class="scheduleContext" id="ssTitle2"></div>
                     </div>
                     <div class="progress">
                         <div><img src="../../static/img/home/schedule_progress.png" th:src="@{/img/home/schedule_progress.png}" width="35px"></div>
-                        <div class="scheduleContext">진행예정</div>
+                        <div class="scheduleContext" id="ssContent2"></div>
                     </div>
                 </div>
             </div>
@@ -128,4 +128,56 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
     <script type="text/javascript" th:src="@{/js/menuactive.js}"></script>
 </body>
+<script>
+    document.addEventListener('DOMContentLoaded', function(){
+        loadReminder();
+    });
+
+</script>
+<script type=text/javascript>
+    function loadReminder(){
+        $.ajax({
+            url:"/schedule/api/find/member/upcoming",
+            method:"GET",
+            dataType:"json",
+        }).done(function(res){
+            //ssLoc ssTimeslot new Date(eventDate);
+            for(var i=0;i<res.length;i++){
+                if(i==0){
+                    var start1=new Date(res[0].start);
+                    var startHour1=start1.getHours();
+                    var startMin1=start1.getMinutes();
+                    var end1=new Date(res[0].end);
+                    var endHour1=end1.getHours();
+                    var endMin1=end1.getMinutes();
+                    $('#ssTitle').attr('value',res[0].title);
+                    $('#ssContent').attr('value',res[0].extendedProps.description);
+                    $('#ssTimeslot').attr('value',startHour1+":"+startMin1+"-"+endHour1+":"+endMin1);
+                    $('#ssLoc').attr('value',res[0].extendedProps.parentRegion.concat(res[0].extendedProps.childRegion));
+                    $('#ssTitle').text(res[0].title);
+                    $('#ssContent').text(res[0].extendedProps.description);
+                    $('#ssTimeslot').text(startHour1+":"+startMin1+"-"+endHour1+":"+endMin1);
+                    $('#ssLoc').text(res[0].extendedProps.parentRegion.concat(res[0].extendedProps.childRegion));
+                }else if(i==1){
+                    var start2=new Date(res[1].start);
+                    var startHour2=start2.getHours();
+                    var startMin2=start2.getMinutes();
+                    var end2=new Date(res[1].end);
+                    var endHour2=end2.getHours();
+                    var endMin2=end2.getMinutes();
+                    $('#ssTitle2').attr('value',res[1].title);
+                    $('#ssContent2').attr('value',res[1].extendedProps.description);
+                    $('#ssTimeslot2').attr('value',startHour2+":"+startMin2+"-"+endHour2+":"+endMin2);
+                    $('#ssLoc2').attr('value',res[1].extendedProps.parentRegion.concat(res[1].extendedProps.childRegion));
+                    $('#ssTitle2').text(res[1].title);
+                    $('#ssContent2').text(res[1].extendedProps.description);
+                    $('#ssTimeslot2').text(startHour2+":"+startMin2+"-"+endHour2+":"+endMin2);
+                    $('#ssLoc2').text(res[1].extendedProps.parentRegion.concat(res[1].extendedProps.childRegion));
+                }
+            }
+
+
+        });
+    }
+</script>
 </html>

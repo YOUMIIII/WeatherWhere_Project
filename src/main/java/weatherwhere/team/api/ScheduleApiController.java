@@ -57,7 +57,7 @@ public class ScheduleApiController {
     public List<ScheduleDto> scheduleUpcoming(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember){
         List<ScheduleDto> event = scheduleDtoRepository.findScheduleDtos()
                 .stream()
-                .filter(scheduleDto -> scheduleDto.getClassNames().equals(loginMember.getUserId()) && scheduleDto.getStart().isBefore(LocalDateTime.now().plusHours(1)))
+                .filter(scheduleDto -> scheduleDto.getClassNames().equals(loginMember.getUserId()) && scheduleDto.getStart().isBefore(LocalDateTime.now().plusHours(1))&&scheduleDto.getStart().isAfter(LocalDateTime.now()))
                 .limit(2)
                 .collect(Collectors.toList());
         return event;
