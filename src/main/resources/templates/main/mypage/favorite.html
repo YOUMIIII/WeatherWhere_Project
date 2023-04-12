@@ -41,8 +41,6 @@
                 <button class="favBtn" id="favsearch">검색</button>
             </div>
             <div id="delete">
-                <!--                <button class="favBtn" th:onclick="getCheck();">삭제</button>-->
-                <!--                <button class="favBtn" id="deleteBtn" th:onclick="doDelete();">삭제</button>-->
                 <button class="favBtn" id="deleteBtn">삭제</button>
             </div>
         </div>
@@ -59,11 +57,12 @@
 
                 </tr>
                 <tr th:each="bookmark: ${boardList}">
-                    <!--                    <th><input type="checkbox" id="checks" name="favcheck"/></th>-->
                     <td><input type="checkbox" id="checks" name="favcheck"/></td>
                     <td th:id="boardId" th:name="boardId" th:text="${bookmark?.id}"></td>
                     <td th:text="${bookmark?.postType}"></td>
-                    <td><a th:href="@{|/board/${bookmark?.id}|(page=${boardList.number + 1})}"
+<!--                    <td><a th:href="@{|/board/${bookmark?.id}|(page=${boardList.number + 1})}"-->
+<!--                    <td><a th:href="@{|/mypage/favDetail/${bookmark?.id}|(page=${boardList.number + 1})}"-->
+                    <td><a th:href="@{|/mypage/${bookmark?.id}|(page=${boardList?.number + 1})}"
                            th:text="${bookmark?.title}"></a></td>
                     <td th:text="${bookmark?.userId}"></td>
                     <td th:text="*{#temporals.format(bookmark?.postdateTime, 'yy/MM/dd')}"></td>

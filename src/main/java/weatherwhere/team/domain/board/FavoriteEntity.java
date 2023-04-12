@@ -32,6 +32,9 @@ public class FavoriteEntity {
 
     public static FavoriteEntity toSaveEntity(BoardEntity boardEntity, String memberId) { //즐겨찾기 저장할때
         FavoriteEntity favoriteEntity = new FavoriteEntity();
+
+        favoriteEntity.setId(boardEntity.getId());//글번호
+//        favoriteEntity.setId(favoriteEntity.getId());//글번호
         favoriteEntity.setMemberId(memberId); //로그인 ID
         favoriteEntity.setBoardEntity(boardEntity); //게시글 정보
 

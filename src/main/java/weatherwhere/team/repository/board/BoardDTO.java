@@ -6,7 +6,6 @@ import weatherwhere.team.domain.board.BoardEntity;
 
 import java.time.LocalDateTime;
 
-// DTO(Data Transfer Object)
 @Getter
 @Setter
 @ToString

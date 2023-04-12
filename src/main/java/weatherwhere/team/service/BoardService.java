@@ -168,16 +168,14 @@ public class BoardService {
         }
     }
 
-    public FavoriteDTO favoriteFindById(Long id) {
-        Optional<FavoriteEntity> byId = favoriteRepository.findById(id);
+    public BoardDTO favoriteFindById(Long id) {
 
-        System.out.println("byId = " + byId);
-        FavoriteEntity favoriteEntity = byId.get();
-        FavoriteDTO favoriteDTO = FavoriteDTO.toFavoriteDTOList(favoriteEntity);
-
-        return favoriteDTO;
-
+        Optional<BoardEntity> byId = boardRepository.findById(id);
+        BoardEntity boardEntity = byId.get();
+        BoardDTO boardDTO = BoardDTO.toBoardDTO(boardEntity);
+        return boardDTO;
     }
+
 
     public BoardDTO update(BoardDTO boardDTO) {
         if (boardDTO.getBoardFile() != null) { //첨부파일 있을 때

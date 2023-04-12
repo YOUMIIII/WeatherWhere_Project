@@ -349,7 +349,9 @@ public class MypageController {
         return "main/mypage/favorite";
     }
 
+//    @GetMapping("/favDetail/{id}") //detail.html 화면에 넘겨줄 정보들
     @GetMapping("/{id}") //detail.html 화면에 넘겨줄 정보들
+//    @GetMapping("/favorite/{id}") //detail.html 화면에 넘겨줄 정보들
     public String findById(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
                            @PathVariable Long id, Model model,
                            @PageableDefault(page = 1) Pageable pageable) {
@@ -361,18 +363,12 @@ public class MypageController {
          */
 //        boardService.updateHits(id);
 
-        //id가 아마 즐겨찾기 게시판 id 일 때
-        //-> BoardService.favoriteFindById로  favoriteDTO.boardId를 찾고 이걸로 ->  boardDTO.getId(id)를 하고
-        //return Long id 하기
-        //아래 코드 실행
-//        BoardDTO boardDTO = boardService.findById(id);
-        FavoriteDTO findFavoriteDTO = boardService.favoriteFindById(id);
-        Long boardId = findFavoriteDTO.getBoardId();
+        BoardDTO boardDTO = boardService.favoriteFindById(id);
+        Long boardId = boardDTO.getId();
         System.out.println("💚boardId = " + boardId);
 
-        BoardDTO boardDTO = boardService.findById(boardId);
-        System.out.println("\uD83D\uDC9A 상세보기 페이지로 반환된 boardDTO = " + boardDTO);
-//        return "main/infoboard/detail";
+        model.addAttribute("board", boardDTO);
+        System.out.println("🧡💚 상세보기 페이지로 반환된 boardDTO = " + boardDTO);
         return "main/mypage/favDetail";
     }
 
