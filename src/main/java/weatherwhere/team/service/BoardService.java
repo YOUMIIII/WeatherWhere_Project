@@ -112,7 +112,10 @@ public class BoardService {
         //타입변경한 엔티티와 로그인 ID를 즐겨찾기 엔티티에 넣기
         FavoriteEntity favoEntity = FavoriteEntity.toSaveEntity(boardEntity, loginId); //
 //💙
-        favoriteRepository.save(favoEntity); //이 엔티티 저장하기
+        if(!favoriteRepository.findByMemberIdAndBoardEntity(loginId, Optional.of(boardEntity)).isPresent()){
+            favoriteRepository.save(favoEntity); //이 엔티티 저장하기
+        }
+//        favoriteRepository.save(favoEntity); //이 엔티티 저장하기
 
     }
 
@@ -205,9 +208,11 @@ public class BoardService {
     public void deleteFavorite(Long id) {
 
         Optional<BoardEntity> boardRepositoryById = boardRepository.findById(id);
-        Long favId = favoriteRepository.findByBoardEntity(boardRepositoryById).get().getId();
-        System.out.println("💙favId = " + favId);
-        favoriteRepository.deleteById(favId);
+        if(favoriteRepository.findByBoardEntity(boardRepositoryById).isPresent()){
+            Long favId = favoriteRepository.findByBoardEntity(boardRepositoryById).get().getId();
+            System.out.println("💙favId = " + favId);
+            favoriteRepository.deleteById(favId);
+        }
     }
 
     public Page<BoardDTO> paging(Pageable pageable) {
