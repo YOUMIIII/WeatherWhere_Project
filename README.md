@@ -1,4 +1,4 @@
-# WheatherWhere :sunny:
+# WeatherWhere :sunny:
 
 ## [프로젝트 설명]
 ### :date: 개발기간
