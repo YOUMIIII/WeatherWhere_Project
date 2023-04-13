@@ -23,7 +23,7 @@
     <div id="boarddetailmain">
         <div id="boarddetailbtn">
             <input type="submit" id="addfavorite" name="boardetailmain" value="즐겨찾기 추가" th:onclick="addfavorite()">
-<!--                    th:?????????="${#strings.equals(fav?.id)}"-->
+            <!--                    th:?????????="${#strings.equals(fav?.id)}"-->
 
             <button th:onclick="|location.href='@{/board/paging/region(parentRegion=${board.parentRegion},childRegion=${board.childRegion},page=${page})}'|">
                 목록
@@ -56,7 +56,8 @@
                     <th>작성자</th>
                     <td th:text="${board?.userId}"></td>
                     <th>작성일</th>
-                    <td th:text="${board?.postdateTime}"></td>
+                    <!--                    <td th:text="${board?.postdateTime}"></td>-->
+                    <td th:text="*{#temporals.format(board?.postdateTime, 'yy/MM/dd')}"></td>
                 </tr>
                 <tr>
                     <th colspan="2">제목</th>
@@ -67,14 +68,15 @@
                 </tr>
                 <tr th:if="${board?.fileAttached == 1}">
                     <th>image</th>
-                    <td colspan="9"><img th:src="@{|/img/FileAttached/${board.storedFileName}|}" width="500px" alt=""></td>
+                    <td colspan="9"><img th:src="@{|/img/FileAttached/${board.storedFileName}|}" width="500px" alt="">
+                    </td>
                 </tr>
-    <!--            <input type="hidden" id="parentRegion" name="parentRegion" th:value="${board?.parentRegion}">-->
-    <!--            <input type="hidden" id="childRegion" name="childRegion" th:value="${board?.childRegion}">-->
+                <!--            <input type="hidden" id="parentRegion" name="parentRegion" th:value="${board?.parentRegion}">-->
+                <!--            <input type="hidden" id="childRegion" name="childRegion" th:value="${board?.childRegion}">-->
                 <!--        <input type="hidden" id="region" name="region" th:value="@{region}(region = ${board?.parentRegion} + ${board?.childRegion})">-->
                 <!--        <input type="hidden" id="region" name="region" th:value="${board?.parentRegion} + ${board?.childRegion}">-->
-    <!--            <input type="hidden" id="postdate" name="postdate" th:value="${board?.postdateTime}">-->
-    <!--            <input type="hidden" id="userId" name="userId" th:value="${member?.userId}">-->
+                <!--            <input type="hidden" id="postdate" name="postdate" th:value="${board?.postdateTime}">-->
+                <!--            <input type="hidden" id="userId" name="userId" th:value="${member?.userId}">-->
             </table>
         </div>
     </div>
@@ -101,7 +103,7 @@
                 <!--                <td th:text="${member?.userId}"></td>-->
                 <td th:text="${comment?.userId}"></td>
                 <td th:text="${comment?.commentContents}"></td>
-                <td th:text="${comment?.commentPostdate}"></td>
+                <td th:text="*{#temporals.format(comment?.commentPostdate,'yy/MM/dd HH:mm:ss')}"></td>
             </tr>
         </table>
     </div>
@@ -112,6 +114,7 @@
         const id = [[${board.id}]];
         location.href = "/board/update/" + id;
     }
+
 
 </script>
 <!--todo : 즐겨찾기 DB저장 목록에 지역을 추가해야함. 안그러면 작성글에서 지역이 지워짐.-->
@@ -165,6 +168,7 @@ console.log("요청실패", err);
 }
 
 
+
 </script>
 
 
@@ -199,6 +203,7 @@ const addfavorite = () => {
     alert(text);
 
 }
+
 
 
 </script>
