@@ -57,24 +57,25 @@
                       <option>제목</option>
                       <option>작성자</option>
                   </select>
+                  <input type="text" id="searchtext">
                   <button id="searchbox">검색</button>
               </div>
           </div>
           <div id="board">
               <table>
                   <tr>
-                      <th>번호</th>
-                      <th>유형</th>
+                      <th class="bnum">번호</th>
+                      <th class="btype">유형</th>
                       <th class="boardtitle">제목</th>
-                      <th>작성자</th>
-                      <th>작성일</th>
-                      <th>조회수</th>
+                      <th class="bwriter">작성자</th>
+                      <th class="bpostdate">작성일</th>
+                      <th class="bhits">조회수</th>
                   </tr>
 
                   <!--UserId와 title의 순서를 바꿈 왜 UserId 자리에 title이 오고 title 자리에 UserId가 오는 걸까???-->
                   <tr th:each="board: ${boardList}">
-                      <td th:text="${board.id}"></td>
-                      <td th:text="${board.postType}"></td>
+                      <td th:text="${board.id}">1</td>
+                      <td th:text="${board.postType}">질문해요</td>
                       <td><a th:href="@{|/board/${board.id}|(page=${boardList.number + 1})}" th:text="${board.title}"></a></td>
 <!--                      <td><a th:text="${board.userId}"></a></td>-->
                       <td th:text="${board.userId}"></td>

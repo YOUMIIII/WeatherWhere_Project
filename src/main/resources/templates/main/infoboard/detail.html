@@ -90,14 +90,14 @@
     <div id="comment-list">
         <table>
             <tr>
-                <th>댓글번호</th>
+                <!--<th>댓글번호</th>-->
                 <th>작성자</th>
                 <th>내용</th>
                 <th>작성시간</th>
             </tr>
             <tr th:each="comment: ${commentList}">
                 <!--                댓글 -->
-                <td th:text="${comment?.id}"></td>
+                <!--<td th:text="${comment?.id}"></td>-->
                 <!--                <td th:text="${member?.userId}"></td>-->
                 <td th:text="${comment?.userId}"></td>
                 <td th:text="${comment?.commentContents}"></td>
@@ -142,14 +142,11 @@ success: function (res) {
 console.log("요청성공", res);
 <!--화면 출력부분-->
 let output = "<table>";
-    output += "<tr><th>댓글번호</th>";
-        output += "<th>작성자</th>";
+        output += "<tr><th>작성자</th>";
         output += "<th>내용</th>";
         output += "<th>작성시간</th></tr>";
     for (let i in res) {
-    output += "<tr>";
-        output += "<td>" + res[i].id + "</td>";
-        output += "<td>" + res[i].userId + "</td>";
+        output += "<tr><td>" + res[i].userId + "</td>";
         output += "<td>" + res[i].commentContents + "</td>";
         output += "<td>" + res[i].commentPostdate + "</td>";
         output += "</tr>";

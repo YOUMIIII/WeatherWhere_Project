@@ -10,7 +10,7 @@
     margin:3rem 6rem 2rem 1rem;
     width:20%;
     border-radius:15px;
-    border:1px solid rgba(255, 152, 56,0.5);
+    /*border:1px solid rgba(255, 152, 56,0.5);*/
     display:grid;
     height:100%
 }
@@ -100,13 +100,20 @@ table{
 th, td{
     text-align:center;
     vertical-align:middle;
-    width:50px;
     height:45px;
     border-bottom:0.3px solid #2D3037;
 }
 
 th{
     background-color:#eeeeee;
+}
+
+.bnum{
+    width:60px;
+}
+
+.type{
+    width:100px;
 }
 
 .boardTitle{
@@ -258,4 +265,13 @@ a{
 #comment-list th{
     background-color:white;
 
+}
+
+#searchtext{
+    height:25px;
+    width:180px;
+}
+
+#boarddetailbtn div{
+    display:inline-block;
 }

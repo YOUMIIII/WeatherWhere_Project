@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>로그인</title>
     <!-- 네이버 로그인 소스   -->
-    <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+<!--    <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>-->
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
     <!-- 네이버 로그인 소스 끝   -->
     <link rel="stylesheet" type="text/css" href="../../static/css/default.css" th:href="@{/css/default.css}">
@@ -41,10 +41,10 @@
             </div>
             </form>
         </div>
-        <div id="hrLine">
+        <!--<div id="hrLine">
             <div class="hrLine"><hr></div><div id="hrOr">  or  </div><div class="hrLine"><hr></div>
-        </div>
-        <div id="otherLogin">
+        </div>-->
+        <!--<div id="otherLogin">
             <div id="naver_id_login"></div>
             <div>
                 <a href="javascript:loginWithKakao();"><img src="../../static/img/login/kakao_login.png" th:src="@{/img/login/kakao_login.png}" alt="카카오계정 로그인" width="60px"/></a>
@@ -87,7 +87,7 @@
                       }
                     </script>
             </div>
-        </div>
+        </div>-->
         <p class="signInLinks">
             <a th:href="@{/members/join}">회원가입</a> /
             <a th:href="@{/members/findId}">아이디 찾기</a> /
@@ -96,7 +96,7 @@
     </section>
 </div>
     <!-- 네이버 로그인 소스   -->
-    <script type="text/javascript">
+    <!--<script type="text/javascript">
             var naver_id_login = new naver_id_login("8PN1YmdvvarAm2s1bSj2", "http://localhost:8080/callback.html");
             var state = naver_id_login.getUniqState();
             naver_id_login.setButton("green", 1, 60);
@@ -104,7 +104,7 @@
             naver_id_login.setState(state);
             naver_id_login.setPopup();
             naver_id_login.init_naver_id_login();
-        </script>
+        </script>-->
     <!-- 네이버 로그인 소스 끝   -->
 
 </body>

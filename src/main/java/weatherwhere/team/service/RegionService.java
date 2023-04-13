@@ -3,8 +3,6 @@ package weatherwhere.team.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import weatherwhere.team.domain.Region;
@@ -41,7 +39,7 @@ public class RegionService {
         return regionRepository.findOne(id);
     }
 
-    @EventListener(ApplicationReadyEvent.class)
+//    @EventListener(ApplicationReadyEvent.class)
     public void sampleData(){
         List<Region> regions = Region.createOnlyRegion(resourceLocation);
         regionJdbcRepository.saveAll(regions);
